@@ -2,7 +2,6 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-
 CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -11,31 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainform.cpp \
-    windowsizeadapter.cpp
+    mainwindow.cpp
 
 HEADERS += \
-    mainform.h \
-    windowsizeadapter.h
+    mainwindow.h
 
 FORMS += \
-    mainform.ui
-
-TRANSLATIONS += \
-    SecondDownloader_zh_CN.ts
-CONFIG += lrelease
-CONFIG += embed_translations
-CONFIG(debug,debug|release){
-    DESTDIR = ../temp/bin/debug
-}else{
-    DESTDIR = ../temp/bin/release
-}
-
-
-win32:MOC_DIR = ../temp/moc
-
-win32:OBJECTS_DIR = ../temp/o
-win32:UI_DIR = ../temp/ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
