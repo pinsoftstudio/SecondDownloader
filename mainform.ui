@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="btnClose">
    <property name="geometry">
     <rect>
-     <x>745</x>
-     <y>18</y>
+     <x>780</x>
+     <y>10</y>
      <width>26</width>
      <height>24</height>
     </rect>
@@ -29,8 +29,8 @@
   <widget class="QPushButton" name="btnMin">
    <property name="geometry">
     <rect>
-     <x>707</x>
-     <y>18</y>
+     <x>740</x>
+     <y>10</y>
      <width>26</width>
      <height>24</height>
     </rect>
@@ -42,8 +42,8 @@
   <widget class="QPushButton" name="btnMenu">
    <property name="geometry">
     <rect>
-     <x>669</x>
-     <y>18</y>
+     <x>700</x>
+     <y>10</y>
      <width>26</width>
      <height>24</height>
     </rect>
@@ -61,8 +61,8 @@
   <widget class="QPushButton" name="btnChangeStyle">
    <property name="geometry">
     <rect>
-     <x>631</x>
-     <y>18</y>
+     <x>660</x>
+     <y>10</y>
      <width>26</width>
      <height>24</height>
     </rect>
@@ -81,13 +81,13 @@
    <property name="geometry">
     <rect>
      <x>80</x>
-     <y>50</y>
-     <width>701</width>
-     <height>471</height>
+     <y>40</y>
+     <width>721</width>
+     <height>481</height>
     </rect>
    </property>
-   <widget class="QWidget" name="page"/>
-   <widget class="QWidget" name="page_2"/>
+   <widget class="QWidget" name="a"/>
+   <widget class="QWidget" name="downloadContentPage"/>
   </widget>
   <widget class="QPushButton" name="btnsettings">
    <property name="geometry">

@@ -1,6 +1,5 @@
 #include "windowsizeadapter.h"
 #include "QDesktopWidget"
-#include "qmessagebox.h"
 WindowSizeAdapter::WindowSizeAdapter(QObject *parent)
     : QObject{parent}
 {
@@ -23,8 +22,8 @@ void WindowSizeAdapter::addWidget(QWidget *widget)
 
 bool WindowSizeAdapter::adaptAll()
 {
-    if(window!=nullptr ){
-        // if(window!=nullptr && widgets->count()!=0 ){
+
+    if(window!=nullptr && widgets.count()!=0 ){
         QDesktopWidget desktop;
 
 
@@ -32,9 +31,11 @@ bool WindowSizeAdapter::adaptAll()
         qint64 width=height*1.5;
         qint16 x=(desktop.width()-width)/2;
         qint16 y=(desktop.height()-height)/2;
+
+        //窗口长宽缩放以及窗口居中；
+        long double scaling=0.0000000000;
+        scaling=height/window->geometry().height();
         window->setGeometry(x,y,width,height);
-        //窗口长宽缩放；
-        double scaling=height/window->geometry().height();
         foreach(QWidget *w,widgets)
         {
             qint64 orignX=w->geometry().x();
@@ -47,16 +48,11 @@ bool WindowSizeAdapter::adaptAll()
             qint64 newWidth=orignWidth*scaling;
             qint64 newHeight=orignHeight*scaling;
             w->resize(QSize(newWidth,newHeight));
-
         }
-/*
-        for (int i=0;widgets->count();i++){
-            qint16 orignX=widgets->at(i).geometry().x();
-            qint16 orignY=widgets->at(i).geometry().y();
-            QWidget *w=widgets->at(i);
-
-        }*/
-        return 1;
+        //控件大小缩放以及控件位置调整
+        return 1;   
+    }
+    else{
+        return 0;
     }
 }
-
