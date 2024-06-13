@@ -15,7 +15,7 @@ void WindowSizeAdapter::setWindow(QWidget *w)
 
 void WindowSizeAdapter::addWidget(QWidget *widget)
 {
-
+    widgets.append(widget);
 }
 
 
@@ -26,8 +26,7 @@ bool WindowSizeAdapter::adaptAll()
     if(window!=nullptr ){
         // if(window!=nullptr && widgets->count()!=0 ){
         QDesktopWidget desktop;
-        // const scaling=0.68;
-        // Q_UNUSED(scaling);
+
 
         qint64 height=desktop.height()*0.68;
         qint64 width=height*1.5;
@@ -35,6 +34,21 @@ bool WindowSizeAdapter::adaptAll()
         qint16 y=(desktop.height()-height)/2;
         window->setGeometry(x,y,width,height);
         //窗口长宽缩放；
+        double scaling=height/window->geometry().height();
+        foreach(QWidget *w,widgets)
+        {
+            qint64 orignX=w->geometry().x();
+            qint64 orignY=w->geometry().y();
+            qint64 newX=orignX*scaling;
+            qint64 newY=orignY*scaling;
+            w->move(newX,newY);
+            qint64 orignWidth=w->geometry().width();
+            qint64 orignHeight=w->geometry().height();
+            qint64 newWidth=orignWidth*scaling;
+            qint64 newHeight=orignHeight*scaling;
+            w->resize(QSize(newWidth,newHeight));
+
+        }
 /*
         for (int i=0;widgets->count();i++){
             qint16 orignX=widgets->at(i).geometry().x();

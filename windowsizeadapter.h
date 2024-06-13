@@ -10,7 +10,7 @@ class WindowSizeAdapter : public QObject
 public:
     explicit WindowSizeAdapter(QObject *parent = nullptr);
     QWidget *window;    //需要自动调节的窗口
-    QList<QWidget> *widgets;
+    QList<QWidget*> widgets;
         //需要调节大小的布局
     void setWindow(QWidget *w);
     void addWidget(QWidget *widget);
