@@ -1,5 +1,7 @@
 #ifndef MAINFORM_H
 #define MAINFORM_H
+#include <QPainter>
+#include <QMouseEvent>
 #include <frmmainpage.h>
 #include <QWidget>
 #include <frmdownloadcontent.h>
@@ -21,12 +23,23 @@ public:
     void iniWindowFlagAndStyle();
     void addWidgetTostackedWidget();
     void adaptStackedWidgetAndSubControls();
+    void configWindowStyle();
+    void configWindowFlag();
 private:
     Ui::mainform *ui;
     frmMainPage *mainPage;
     frmDownloadContent *dwncontent;
     frmSettings *set;
     frmDonate *donate;
+    QPoint  m_lastPos;
+    bool    m_moving=false;
+    bool dark=false;
+
+protected:
+    void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 };
 

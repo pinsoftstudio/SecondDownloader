@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/mainform">
+        <file>qss/dark_mainform.qss.txt</file>
+        <file>qss/white_mainform.qss.txt</file>
+    </qresource>
+</RCC>

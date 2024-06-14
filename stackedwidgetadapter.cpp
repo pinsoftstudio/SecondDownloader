@@ -1,5 +1,5 @@
 #include "stackedwidgetadapter.h"
-
+#include <QDebug>
 StackedWidgetAdapter::StackedWidgetAdapter(QObject *parent)
     : QObject{parent}
 {
@@ -33,14 +33,17 @@ bool StackedWidgetAdapter::adapt()
                 //遍历子窗口所有控件
                 qint64 orignX=child->geometry().x();
                 qint64 orignY=child->geometry().y();
+                qDebug()<<"orignX"<<orignX<<"/n";
                 qint64 newX=orignX*scalingX;
                 qint64 newY=orignY*scalingY;
+                 qDebug()<<"newX"<<newX<<"/n";
                 qint64 orignWidth=child->width();
                 qint64 orignHeight=child->height();
                 qint64 newWidth=orignWidth*scalingX;
                 qint64 newHeight=orignHeight*scalingY;
                 child->move(newX,newY);
                 child->resize(newWidth,newHeight);
+
             }
 
         }

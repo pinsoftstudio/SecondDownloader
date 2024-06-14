@@ -3,6 +3,9 @@
 #include <windowsizeadapter.h>
 #include <QMessageBox>
 #include <stackedwidgetadapter.h>
+#include <QSettings>
+#include <QDebug>
+#include <QFile>
 mainform::mainform(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::mainform)
@@ -10,8 +13,8 @@ mainform::mainform(QWidget *parent)
     ui->setupUi(this);
     adaptWindowAndControls();
     addWidgetTostackedWidget();
-
-
+    adaptStackedWidgetAndSubControls();
+    configWindowStyle();
 
 
 }
@@ -55,4 +58,73 @@ void mainform::adaptStackedWidgetAndSubControls()
     StackedWidgetAdapter *swadpt=new StackedWidgetAdapter(ui->stackedWidget);
     swadpt->setStackedWidget(ui->stackedWidget);
     swadpt->adapt();
+}
+
+void mainform::configWindowStyle()
+{
+    Qt::WindowFlags flags;
+    setWindowFlags(flags|Qt::FramelessWindowHint);
+    QSettings settings("Pinsoft","SecondDownloader");
+    bool isDark=0;
+    QString rootReg="HKEY_LOCAL_MACHINE/SOFTWARE/Pinsoft/";
+    // QMessageBox::information(this,QString::asprintf(rooReg.toLocal8Bit(),"%sSecondDownloader/Style/isDark"),QString::asprintf(rooReg.toLocal8Bit()));
+    settings.setValue("Style/isDark",1);
+    isDark=settings.value("Style/isDark",0).toBool();
+    qDebug()<<isDark;
+    QFile *qssFile=new QFile(this);
+    if(isDark)
+        qssFile->setFileName(":/mainform/qss/dark_mainform.qss.txt");
+    else
+        qssFile->setFileName(":/mainform/qss/white_mainform.qss.txt");
+    QString styleSheet=qssFile->readAll();
+    setStyleSheet(styleSheet);
+    dark=isDark;
+    this->setAttribute(Qt::WA_TranslucentBackground);//设置窗口背景透明
+
+
+}
+
+void mainform::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    QColor color;
+    if(dark)
+        color.setRgb(97,97,97);
+    else
+        color.setRgb(249,249,249);
+    QPen pen;
+    pen.setWidth(0);
+    painter.setRenderHint(QPainter::Antialiasing);
+    // 设置抗锯齿，不然边框会有明显锯齿
+    painter.setBrush(color);
+    // 设置窗体颜色
+    QRect rect = this->rect();
+    painter.setPen(Qt::transparent);
+    painter.drawRoundedRect(rect,20,20);
+}
+
+void mainform::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        m_moving = true;
+        m_lastPos = event->globalPos() - pos();
+    }
+}
+
+void mainform::mouseMoveEvent(QMouseEvent *event)
+{
+
+    if (m_moving && (event->buttons() && Qt::LeftButton)
+        && (event->globalPos()-m_lastPos).manhattanLength() > QApplication::startDragDistance())
+    {
+        move(event->globalPos()-m_lastPos);
+        m_lastPos = event->globalPos() - pos();
+    }
+
+}
+
+void mainform::mouseReleaseEvent(QMouseEvent *event)
+{
+    m_moving=false;
 }
