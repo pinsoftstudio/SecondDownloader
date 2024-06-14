@@ -89,7 +89,7 @@
    <widget class="QWidget" name="a"/>
    <widget class="QWidget" name="downloadContentPage"/>
   </widget>
-  <widget class="QPushButton" name="btnsettings">
+  <widget class="QPushButton" name="btnSettings">
    <property name="geometry">
     <rect>
      <x>10</x>

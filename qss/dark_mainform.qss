@@ -1,0 +1,5 @@
+#btnMainPage,#btnDownloadContent,#btnSettings,#btnDonate{
+    background-color: rgb(97, 97, 97);
+    color: white;
+    border-radius: 2%;
+}

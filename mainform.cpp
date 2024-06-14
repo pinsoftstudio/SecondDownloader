@@ -31,7 +31,7 @@ void mainform::adaptWindowAndControls()
     adapter.addWidget(this->ui->stackedWidget);
     adapter.addWidget(this->ui->btnClose);
     adapter.addWidget(this->ui->btnMin);
-    adapter.addWidget(this->ui->btnsettings);
+    adapter.addWidget(this->ui->btnSettings);
     adapter.addWidget(this->ui->btnChangeStyle);
     adapter.addWidget(this->ui->btnMainPage);
     adapter.addWidget(this->ui->btnDownloadContent);
@@ -73,10 +73,11 @@ void mainform::configWindowStyle()
     qDebug()<<isDark;
     QFile *qssFile=new QFile(this);
     if(isDark)
-        qssFile->setFileName(":/mainform/qss/dark_mainform.qss.txt");
+        qssFile->setFileName(":/mainform/qss/dark_mainform.qss");
     else
-        qssFile->setFileName(":/mainform/qss/white_mainform.qss.txt");
-    QString styleSheet=qssFile->readAll();
+        qssFile->setFileName(":/mainform/qss/white_mainform.qss");
+    qssFile->open(QIODevice::ReadOnly);
+    QString styleSheet=QString::fromLatin1(qssFile->readAll());
     setStyleSheet(styleSheet);
     dark=isDark;
     this->setAttribute(Qt::WA_TranslucentBackground);//设置窗口背景透明
