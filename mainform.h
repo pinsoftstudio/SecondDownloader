@@ -20,7 +20,7 @@ public:
     void iniWindowMenu();
     void iniWindowFlagAndStyle();
     void addWidgetTostackedWidget();
-
+    void adaptStackedWidgetAndSubControls();
 private:
     Ui::mainform *ui;
     frmMainPage *mainPage;

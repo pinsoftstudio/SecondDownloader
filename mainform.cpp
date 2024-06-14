@@ -2,7 +2,7 @@
 #include "ui_mainform.h"
 #include <windowsizeadapter.h>
 #include <QMessageBox>
-
+#include <stackedwidgetadapter.h>
 mainform::mainform(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::mainform)
@@ -10,6 +10,7 @@ mainform::mainform(QWidget *parent)
     ui->setupUi(this);
     adaptWindowAndControls();
     addWidgetTostackedWidget();
+
 
 
 
@@ -47,4 +48,11 @@ void mainform::addWidgetTostackedWidget()
     ui->stackedWidget->insertWidget(3,donate);
     ui->stackedWidget->setCurrentIndex(0);
 
+}
+
+void mainform::adaptStackedWidgetAndSubControls()
+{
+    StackedWidgetAdapter *swadpt=new StackedWidgetAdapter(ui->stackedWidget);
+    swadpt->setStackedWidget(ui->stackedWidget);
+    swadpt->adapt();
 }

@@ -16,6 +16,7 @@ SOURCES += \
     frmsettings.cpp \
     main.cpp \
     mainform.cpp \
+    stackedwidgetadapter.cpp \
     windowsizeadapter.cpp
 
 HEADERS += \
@@ -24,6 +25,7 @@ HEADERS += \
     frmmainpage.h \
     frmsettings.h \
     mainform.h \
+    stackedwidgetadapter.h \
     windowsizeadapter.h
 
 FORMS += \
