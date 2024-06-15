@@ -43,6 +43,11 @@
      <height>24</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
@@ -68,8 +73,11 @@
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(&quot;:/mainform/res/Menu.png&quot;);</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnChangeStyle">
@@ -90,8 +98,12 @@
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(&quot;:/mainform/res/ChangeStyle_Dark.png&quot;);
+</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
   </widget>
   <widget class="QStackedWidget" name="stackedWidget">
@@ -126,6 +138,11 @@
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(&quot;:/mainform/res/Settings.png&quot;);
+
+</string>
    </property>
    <property name="text">
     <string/>
@@ -173,6 +190,10 @@
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(&quot;:/mainform/res/Donate.png&quot;);
+</string>
    </property>
    <property name="text">
     <string/>

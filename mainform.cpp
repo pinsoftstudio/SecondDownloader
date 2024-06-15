@@ -129,3 +129,9 @@ void mainform::mouseReleaseEvent(QMouseEvent *event)
 {
     m_moving=false;
 }
+
+void mainform::on_btnMin_clicked()
+{
+    showMinimized();
+}
+

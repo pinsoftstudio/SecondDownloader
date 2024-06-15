@@ -60,5 +60,14 @@ RESOURCES += \
     qss.qrc
 
 DISTFILES += \
+    res/Donate.png \
+    res/Download-Content.png \
     res/Main-Page.png \
+    res/Menu.png \
+    res/PSD/Donate.psd \
+    res/PSD/Download-Content.psd \
+    res/PSD/Main-Page.psd \
+    res/PSD/Menu.psd \
+    res/PSD/Settings.psd \
+    res/Settings.png \
     res/主页/多功能.psd
