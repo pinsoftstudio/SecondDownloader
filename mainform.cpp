@@ -90,7 +90,7 @@ void mainform::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     QColor color;
     if(dark)
-        color.setRgb(97,97,97);
+        color.setRgb(36,36,36);
     else
         color.setRgb(249,249,249);
     QPen pen;

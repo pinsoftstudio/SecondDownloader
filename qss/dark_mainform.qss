@@ -1,5 +1,16 @@
-#btnMainPage,#btnDownloadContent,#btnSettings,#btnDonate{
-    background-color: rgb(97, 97, 97);
-    color: white;
-    border-radius: 2%;
+#btnMainPage,#btnDownloadContent,#btnSettings,#btnDonate,#btnClose,#btnMin,#btnMenu,#btnChangeStyle{
+    background-color: rgb(36, 36, 36);
+    color: gray;
+    border-radius: 5%;
 }
+
+#btnClose:hover{
+    background-color: red;
+    color:white;
+}
+
+#btnClose:pressed
+{
+    background-color: rgb(241,112,122);
+}
+

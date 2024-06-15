@@ -58,3 +58,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     qss.qrc
+
+DISTFILES += \
+    res/Main-Page.png \
+    res/主页/多功能.psd

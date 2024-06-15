@@ -2,5 +2,7 @@
     <qresource prefix="/mainform">
         <file>qss/dark_mainform.qss</file>
         <file>qss/white_mainform.qss</file>
+        <file>res/Main-Page.png</file>
+        <file>res/Download-Content.png</file>
     </qresource>
 </RCC>
