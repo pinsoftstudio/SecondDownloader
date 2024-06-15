@@ -3,6 +3,7 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 
+
 CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -10,29 +11,30 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    frmdonate.cpp \
-    frmdownloadcontent.cpp \
-    frmmainpage.cpp \
-    frmsettings.cpp \
-    mainform.cpp \
-    stackedwidgetadapter.cpp \
-    windowsizeadapter.cpp
+    cpp/frmdonate.cpp \
+    cpp/frmdownloadcontent.cpp \
+    cpp/frmmainpage.cpp \
+    cpp/frmsettings.cpp \
+    cpp/main.cpp \
+    cpp/mainform.cpp \
+    cpp/stackedwidgetadapter.cpp \
+    cpp/windowsizeadapter.cpp
 
 HEADERS += \
-    frmdonate.h \
-    frmdownloadcontent.h \
-    frmmainpage.h \
-    frmsettings.h \
-    mainform.h \
-    stackedwidgetadapter.h \
-    windowsizeadapter.h
+    header/frmdonate.h \
+    header/frmdownloadcontent.h \
+    header/frmmainpage.h \
+    header/frmsettings.h \
+    header/mainform.h \
+    header/stackedwidgetadapter.h \
+    header/windowsizeadapter.h
 
 FORMS += \
-    frmdonate.ui \
-    frmdownloadcontent.ui \
-    frmmainpage.ui \
-    frmsettings.ui \
-    mainform.ui
+    ui/frmdonate.ui \
+    ui/frmdownloadcontent.ui \
+    ui/frmmainpage.ui \
+    ui/frmsettings.ui \
+    ui/mainform.ui
 
 TRANSLATIONS += \
     SecondDownloader_zh_CN.ts
@@ -56,7 +58,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    qss.qrc
+    qrc/qss.qrc
 
 DISTFILES += \
     res/Donate.png \
