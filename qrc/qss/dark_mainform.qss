@@ -1,0 +1,24 @@
+#btnMainPage,#btnDownloadContent,#btnSettings,#btnDonate,#btnClose,#btnMin,#btnMenu,#btnChangeStyle{
+    background-color: rgb(36, 36, 36);
+    color:white;
+    border-radius: 5%;
+}
+
+#btnClose:hover{
+    background-color: red;
+    
+}
+
+#btnClose:pressed
+{
+    background-color: rgb(241,112,122);
+}
+
+#btnMainPage:hover,#btnDownloadContent:hover,#btnSettings:hover,#btnDonate:hover,#btnMin:hover,#btnMenu:hover,#btnChangeStyle:hover{
+    background-color: rgb(95, 95, 95);
+}
+
+#btnMainPage:pressed,#btnDownloadContent:pressed,#btnSettings:pressed,#btnDonate:pressed,#btnMin:pressed,#btnMenu:pressed,#btnChangeStyle:pressed{
+    background-color: rgb(150, 150, 150);
+}
+

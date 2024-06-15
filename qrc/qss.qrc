@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/mainform">
+        <file>qss/dark_mainform.qss</file>
+        <file>qss/white_mainform.qss</file>
+        <file>res/Main-Page.png</file>
+        <file>res/Download-Content.png</file>
+        <file>res/Settings.png</file>
+        <file>res/Donate.png</file>
+        <file>res/Menu.png</file>
+        <file>res/ChangeStyle_Dark.png</file>
+    </qresource>
+</RCC>
