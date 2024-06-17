@@ -15,9 +15,10 @@ class frmDonate : public QWidget
 public:
     explicit frmDonate(QWidget *parent = nullptr);
     ~frmDonate();
-
+    void setDark(bool isDark);
 private:
     Ui::frmDonate *ui;
+    bool Dark=false;
 };
 
 #endif // FRMDONATE_H

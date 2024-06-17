@@ -15,9 +15,10 @@ class frmSettings : public QWidget
 public:
     explicit frmSettings(QWidget *parent = nullptr);
     ~frmSettings();
-
+    void setDark(bool isDark);
 private:
     Ui::frmSettings *ui;
+    bool Dark=false;
 };
 
 #endif // FRMSETTINGS_H

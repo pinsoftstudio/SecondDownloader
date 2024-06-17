@@ -18,5 +18,6 @@
     </qresource>
     <qresource prefix="/frmmain">
         <file>res/New.png</file>
+        <file>qss/dark_frmmain.qss</file>
     </qresource>
 </RCC>

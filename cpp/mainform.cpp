@@ -12,9 +12,10 @@ mainform::mainform(QWidget *parent)
 {
     ui->setupUi(this);
     adaptWindowAndControls();
+    configWindowStyle();
     addWidgetTostackedWidget();
     adaptStackedWidgetAndSubControls();
-    configWindowStyle();
+
 
 
 }
@@ -42,9 +43,13 @@ void mainform::adaptWindowAndControls()
 
 void mainform::addWidgetTostackedWidget()
 {   mainPage=new frmMainPage(this);
+    mainPage->setDark(dark);
     dwncontent=new frmDownloadContent(this);
+    dwncontent->setDark(dark);
     set=new frmSettings(this);
+    set->setDark(dark);
     donate=new frmDonate(this);
+    donate->setDark(dark);
     ui->stackedWidget->insertWidget(0,mainPage);
     ui->stackedWidget->insertWidget(1,dwncontent);
     ui->stackedWidget->insertWidget(2,set);
@@ -66,7 +71,7 @@ void mainform::configWindowStyle()
     setWindowFlags(flags|Qt::FramelessWindowHint);
     QSettings settings("Pinsoft","SecondDownloader");
     bool isDark=0;
-    QString rootReg="HKEY_LOCAL_MACHINE/SOFTWARE/Pinsoft/";
+    //QString rootReg="HKEY_LOCAL_MACHINE/SOFTWARE/Pinsoft/";
     // QMessageBox::information(this,QString::asprintf(rooReg.toLocal8Bit(),"%sSecondDownloader/Style/isDark"),QString::asprintf(rooReg.toLocal8Bit()));
     settings.setValue("Style/isDark",1);
     isDark=settings.value("Style/isDark",0).toBool();
@@ -78,6 +83,7 @@ void mainform::configWindowStyle()
         qssFile->setFileName(":/mainform/qss/white_mainform.qss");
     qssFile->open(QIODevice::ReadOnly);
     QString styleSheet=QString::fromLatin1(qssFile->readAll());
+    qssFile->close();
     setStyleSheet(styleSheet);
     dark=isDark;
     this->setAttribute(Qt::WA_TranslucentBackground);//设置窗口背景透明
@@ -96,9 +102,7 @@ void mainform::paintEvent(QPaintEvent *event)
     QPen pen;
     pen.setWidth(0);
     painter.setRenderHint(QPainter::Antialiasing);
-    // 设置抗锯齿，不然边框会有明显锯齿
     painter.setBrush(color);
-    // 设置窗体颜色
     QRect rect = this->rect();
     painter.setPen(Qt::transparent);
     painter.drawRoundedRect(rect,20,20);
