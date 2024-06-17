@@ -54,6 +54,9 @@
      <height>81</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(:/frmmain/res/New.png);</string>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -67,8 +70,12 @@
      <height>81</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(:/mainform/res/AllDownload.png);
+</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnDownloadedContent">
@@ -80,8 +87,12 @@
      <height>81</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(:/mainform/res/Downloaded.png);
+</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnDownloadingContent">
@@ -93,8 +104,11 @@
      <height>81</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(:/mainform/res/Downloading.png);</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnDownloadFailed">
@@ -106,8 +120,11 @@
      <height>81</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(:/mainform/res/DownloadFailed.png);</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnGetWebExtention">
@@ -119,8 +136,12 @@
      <height>81</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(:/mainform/res/WebExtention.png);
+</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnStackedDonate">
@@ -132,8 +153,11 @@
      <height>81</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(:/mainform/res/Donate_gradient.png);</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="btnAbout">
@@ -145,8 +169,11 @@
      <height>81</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(:/mainform/res/About.png);</string>
+   </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
   </widget>
  </widget>

@@ -224,16 +224,6 @@
     <string/>
    </property>
   </widget>
-  <widget class="QDial" name="dial">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>0</y>
-     <width>50</width>
-     <height>64</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections>

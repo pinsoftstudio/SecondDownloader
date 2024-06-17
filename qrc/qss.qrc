@@ -8,5 +8,15 @@
         <file>res/Donate.png</file>
         <file>res/Menu.png</file>
         <file>res/ChangeStyle_Dark.png</file>
+        <file>res/About.png</file>
+        <file>res/AllDownload.png</file>
+        <file>res/Donate_gradient.png</file>
+        <file>res/Downloaded.png</file>
+        <file>res/DownloadFailed.png</file>
+        <file>res/Downloading.png</file>
+        <file>res/WebExtention.png</file>
+    </qresource>
+    <qresource prefix="/frmmain">
+        <file>res/New.png</file>
     </qresource>
 </RCC>
