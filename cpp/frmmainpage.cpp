@@ -20,14 +20,14 @@ frmMainPage::~frmMainPage()
 
 void frmMainPage::setDark(bool isDark)
 {
-    QFile *qssFile=new QFile(this);
+    QFile qssFile(this);
     if(isDark)
-        qssFile->setFileName(":/frmmain/qss/dark_frmmain.qss");
+        qssFile.setFileName(":/frmmain/qss/dark_frmmain.qss");
     else
-        qssFile->setFileName(":/frmmain/qss/white_frmmain.qss");
-    qssFile->open(QIODevice::ReadOnly);
-    QString styleSheet=QString::fromLatin1(qssFile->readAll());
-    qssFile->close();
+        qssFile.setFileName(":/frmmain/qss/white_frmmain.qss");
+    qssFile.open(QIODevice::ReadOnly);
+    QString styleSheet=QString::fromLatin1(qssFile.readAll());
+    qssFile.close();
     setStyleSheet(styleSheet);
     Dark=isDark;
 }

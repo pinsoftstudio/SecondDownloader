@@ -6,6 +6,7 @@
 #include <QSettings>
 #include <QDebug>
 #include <QFile>
+#include <QIcon>
 mainform::mainform(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::mainform)
@@ -73,20 +74,28 @@ void mainform::configWindowStyle()
     bool isDark=0;
     //QString rootReg="HKEY_LOCAL_MACHINE/SOFTWARE/Pinsoft/";
     // QMessageBox::information(this,QString::asprintf(rooReg.toLocal8Bit(),"%sSecondDownloader/Style/isDark"),QString::asprintf(rooReg.toLocal8Bit()));
-    settings.setValue("Style/isDark",1);
     isDark=settings.value("Style/isDark",0).toBool();
     qDebug()<<isDark;
     QFile *qssFile=new QFile(this);
-    if(isDark)
+    if(isDark){
         qssFile->setFileName(":/mainform/qss/dark_mainform.qss");
-    else
+        dark=isDark;
+        ui->btnChangeStyle->setStyleSheet("border-image:url(:/mainform/res/ChangeStyle_dark.png)");
+        repaint();
+    }else{
         qssFile->setFileName(":/mainform/qss/white_mainform.qss");
+        dark=isDark;
+        ui->btnChangeStyle->setStyleSheet("border-image:url(:/mainform/res/ChangeStyle_white.png)");
+        repaint();
+    }
     qssFile->open(QIODevice::ReadOnly);
     QString styleSheet=QString::fromLatin1(qssFile->readAll());
     qssFile->close();
     setStyleSheet(styleSheet);
     dark=isDark;
-    this->setAttribute(Qt::WA_TranslucentBackground);//设置窗口背景透明
+
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    delete qssFile;//设置窗口背景透明
 
 
 }
@@ -137,5 +146,38 @@ void mainform::mouseReleaseEvent(QMouseEvent *event)
 void mainform::on_btnMin_clicked()
 {
     showMinimized();
+}
+
+
+void mainform::on_btnChangeStyle_clicked()
+{
+    QSettings settings("Pinsoft","SecondDownloader");
+    settings.setValue("Style/isDark",!dark);
+    dark=!dark;
+    QFile *qssFile=new QFile(this);
+    if(dark)
+    {
+        // QIcon ico("border-image:url(’:/mainform/res/ChangeStyle_dark.png");
+        // ui->btnChangeStyle->setIcon(ico);
+        repaint();
+        qssFile->setFileName(":/mainform/qss/dark_mainform.qss");
+        ui->btnChangeStyle->setStyleSheet("border-image:url(:/mainform/res/ChangeStyle_dark.png)");
+    }else{
+         // QIcon ico("border-image:url(’:/mainform/res/ChangeStyle_dark.png");
+         // ui->btnChangeStyle->setIcon(ico);
+         repaint();
+         qssFile->setFileName(":/mainform/qss/white_mainform.qss");
+         ui->btnChangeStyle->setStyleSheet("border-image:url(:/mainform/res/ChangeStyle_white.png)");
+    }
+    qssFile->open(QIODevice::ReadOnly);
+    QString styleSheet=QString::fromLatin1(qssFile->readAll());
+    qssFile->close();
+    delete qssFile;
+    setStyleSheet(styleSheet);
+    mainPage->setDark(dark);
+    dwncontent->setDark(dark);
+    set->setDark(dark);
+    donate->setDark(dark);
+        // ui->btnChangeStyle->setStyleSheet("border-image:url(’:/mainform/res/ChangeStyle_white.png‘)");
 }
 

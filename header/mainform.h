@@ -45,6 +45,7 @@ protected:
 private slots:
     void on_btnMin_clicked();
 
+    void on_btnChangeStyle_clicked();
 };
 
 #endif // MAINFORM_H

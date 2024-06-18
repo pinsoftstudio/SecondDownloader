@@ -74,7 +74,7 @@
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image:url(&quot;:/mainform/res/Menu.png&quot;);</string>
+    <string notr="true">border-image:url(&quot;:/mainform/res/Menu_dark.png&quot;);</string>
    </property>
    <property name="text">
     <string/>
@@ -99,7 +99,7 @@
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image:url(&quot;:/mainform/res/ChangeStyle_Dark.png&quot;);
+    <string notr="true">border-image:url(&quot;:/mainform/res/ChangeStyle_dark.png&quot;);
 </string>
    </property>
    <property name="text">

@@ -6,8 +6,6 @@
         <file>res/Download-Content.png</file>
         <file>res/Settings.png</file>
         <file>res/Donate.png</file>
-        <file>res/Menu.png</file>
-        <file>res/ChangeStyle_Dark.png</file>
         <file>res/About.png</file>
         <file>res/AllDownload.png</file>
         <file>res/Donate_gradient.png</file>
@@ -15,9 +13,13 @@
         <file>res/DownloadFailed.png</file>
         <file>res/Downloading.png</file>
         <file>res/WebExtention.png</file>
+        <file>res/ChangeStyle_white.png</file>
+        <file>res/Menu_dark.png</file>
+        <file>res/ChangeStyle_dark.png</file>
     </qresource>
     <qresource prefix="/frmmain">
         <file>res/New.png</file>
         <file>qss/dark_frmmain.qss</file>
+        <file>qss/white_frmmain.qss</file>
     </qresource>
 </RCC>
