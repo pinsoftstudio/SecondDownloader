@@ -40,6 +40,7 @@ void mainform::adaptWindowAndControls()
     adapter.addWidget(this->ui->btnDonate);
     adapter.addWidget(this->ui->btnMenu);
     adapter.adaptAll();
+    siderBarRect=adapter.getPaintRect();
 }
 
 void mainform::addWidgetTostackedWidget()
@@ -81,11 +82,13 @@ void mainform::configWindowStyle()
         qssFile->setFileName(":/mainform/qss/dark_mainform.qss");
         dark=isDark;
         ui->btnChangeStyle->setStyleSheet("border-image:url(:/mainform/res/ChangeStyle_dark.png)");
+        ui->btnMenu->setStyleSheet("border-image:url(:/mainform/res/Menu_dark.png)");
         repaint();
     }else{
         qssFile->setFileName(":/mainform/qss/white_mainform.qss");
         dark=isDark;
         ui->btnChangeStyle->setStyleSheet("border-image:url(:/mainform/res/ChangeStyle_white.png)");
+        ui->btnMenu->setStyleSheet("border-image:url(:/mainform/res/Menu_white.png)");
         repaint();
     }
     qssFile->open(QIODevice::ReadOnly);
@@ -95,7 +98,7 @@ void mainform::configWindowStyle()
     dark=isDark;
 
     this->setAttribute(Qt::WA_TranslucentBackground);
-    delete qssFile;//设置窗口背景透明
+    delete qssFile;
 
 
 }
@@ -103,6 +106,8 @@ void mainform::configWindowStyle()
 void mainform::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
+    QPainter siderBarPainter(this);
+
     QColor color;
     if(dark)
         color.setRgb(36,36,36);
@@ -115,6 +120,16 @@ void mainform::paintEvent(QPaintEvent *event)
     QRect rect = this->rect();
     painter.setPen(Qt::transparent);
     painter.drawRoundedRect(rect,20,20);
+    //画出整个窗口
+
+    QColor siderBarColor;
+    if(dark)
+        siderBarColor.setRgb(28,28,28);
+    else
+        siderBarColor.setRgb(243,243,243);
+    siderBarPainter.setBrush(siderBarColor);
+    siderBarPainter.setPen(Qt::transparent);
+    siderBarPainter.drawRoundedRect(siderBarRect,20,20);
 }
 
 void mainform::mousePressEvent(QMouseEvent *event)
@@ -161,12 +176,14 @@ void mainform::on_btnChangeStyle_clicked()
         // ui->btnChangeStyle->setIcon(ico);
         repaint();
         qssFile->setFileName(":/mainform/qss/dark_mainform.qss");
+        ui->btnMenu->setStyleSheet("border-image:url(:/mainform/res/Menu_dark.png)");
         ui->btnChangeStyle->setStyleSheet("border-image:url(:/mainform/res/ChangeStyle_dark.png)");
     }else{
          // QIcon ico("border-image:url(’:/mainform/res/ChangeStyle_dark.png");
          // ui->btnChangeStyle->setIcon(ico);
          repaint();
          qssFile->setFileName(":/mainform/qss/white_mainform.qss");
+         ui->btnMenu->setStyleSheet("border-image:url(:/mainform/res/Menu_white.png)");
          ui->btnChangeStyle->setStyleSheet("border-image:url(:/mainform/res/ChangeStyle_white.png)");
     }
     qssFile->open(QIODevice::ReadOnly);

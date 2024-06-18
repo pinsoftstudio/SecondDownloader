@@ -16,6 +16,7 @@
         <file>res/ChangeStyle_white.png</file>
         <file>res/Menu_dark.png</file>
         <file>res/ChangeStyle_dark.png</file>
+        <file>res/Menu_white.png</file>
     </qresource>
     <qresource prefix="/frmmain">
         <file>res/New.png</file>

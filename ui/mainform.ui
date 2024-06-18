@@ -121,40 +121,13 @@
    <widget class="QWidget" name="a"/>
    <widget class="QWidget" name="downloadContentPage"/>
   </widget>
-  <widget class="QPushButton" name="btnSettings">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>290</y>
-     <width>61</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-image:url(&quot;:/mainform/res/Settings.png&quot;);
-
-</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btnMainPage">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
-     <width>61</width>
-     <height>61</height>
+     <y>90</y>
+     <width>50</width>
+     <height>50</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -177,9 +150,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>400</y>
-     <width>61</width>
-     <height>61</height>
+     <y>270</y>
+     <width>50</width>
+     <height>50</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -204,8 +177,8 @@
     <rect>
      <x>10</x>
      <y>180</y>
-     <width>61</width>
-     <height>61</height>
+     <width>50</width>
+     <height>50</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -219,6 +192,33 @@
    </property>
    <property name="styleSheet">
     <string notr="true">border-image:url(:/mainform/res/Download-Content.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnSettings">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>360</y>
+     <width>50</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(&quot;:/mainform/res/Settings.png&quot;);
+
+</string>
    </property>
    <property name="text">
     <string/>

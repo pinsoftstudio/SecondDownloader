@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QList>
 #include <QHBoxLayout>
-
+#include <QRect>
 
 class WindowSizeAdapter : public QObject
 {
@@ -16,8 +16,9 @@ public:
         //需要调节大小的布局
     void setWindow(QWidget *w);
     void addWidget(QWidget *widget);
-
+    QRect getPaintRect();
     bool adaptAll();
+    long double windowScaling;
 
 signals:
 };

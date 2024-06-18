@@ -17,6 +17,16 @@ void WindowSizeAdapter::addWidget(QWidget *widget)
     widgets.append(widget);
 }
 
+QRect WindowSizeAdapter::getPaintRect()
+{
+    QRect reRect;
+    reRect.setX(0);
+    reRect.setY(0);
+    reRect.setHeight(window->height());
+    reRect.setWidth(window->width()*windowScaling);
+    return reRect;
+}
+
 
 
 
@@ -35,6 +45,7 @@ bool WindowSizeAdapter::adaptAll()
         //窗口长宽缩放以及窗口居中；
         long double scaling=0.0000000000;
         scaling=height/window->geometry().height();
+        windowScaling=scaling;
         window->setGeometry(x,y,width,height);
         foreach(QWidget *w,widgets)
         {

@@ -7,7 +7,7 @@
 #include <header/frmdownloadcontent.h>
 #include <header/frmsettings.h>
 #include <header/frmdonate.h>
-
+#include <QRect>
 namespace Ui {
 class mainform;
 }
@@ -35,7 +35,7 @@ private:
     QPoint  m_lastPos;
     bool    m_moving=false;
     bool dark=false;
-
+    QRect siderBarRect;
 protected:
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
