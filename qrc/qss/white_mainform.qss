@@ -1,9 +1,31 @@
-#btnMainPage,#btnDownloadContent,#btnSettings,#btnDonate,#btnClose,#btnMin,#btnMenu,#btnChangeStyle{
+#btnClose,#btnMin,#btnMenu,#btnChangeStyle{
     background-color: rgb(249, 249, 249);
+    color: black;
+    border-radius: 12%;
+
+}
+#btnMainPage,#btnDownloadContent,#btnSettings,#btnDonate{
+    background-color: rgb(243, 243,243);
     color: black;
     border-radius: 12%;
 }
 
+#btnMainPage[ischecked="true"]
+{
+    border-image: url(:/mainform/res/Main-Page_selected_gradient.png);
+}
+#btnDownloadContent[ischecked="true"]
+{
+    border-image: url(:/mainform/res/Download-Content_selected_gradient.png);
+}
+#btnSettings[ischecked="true"]
+{
+    border-image: url(:/mainform/res/Settings_selected_gradient.png);
+}
+#btnDonate[ischecked="true"]
+{
+    border-image: url(:/mainform/res/Donate_selected_gradient.png);
+}
 #btnClose:hover{
     background-color: red;
     

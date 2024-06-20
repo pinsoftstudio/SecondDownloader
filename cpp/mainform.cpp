@@ -16,7 +16,7 @@ mainform::mainform(QWidget *parent)
     configWindowStyle();
     addWidgetTostackedWidget();
     adaptStackedWidgetAndSubControls();
-
+    ui->btnMainPage->setStyleSheet("border-image: url(:/mainform/res/Main-Page_selected_gradient.png);");
 
 
 }
@@ -103,10 +103,42 @@ void mainform::configWindowStyle()
 
 }
 
+void mainform::refreshStyleSheet()
+{
+    QSettings settings("Pinsoft","SecondDownloader");
+    bool isDark=0;
+    //QString rootReg="HKEY_LOCAL_MACHINE/SOFTWARE/Pinsoft/";
+    // QMessageBox::information(this,QString::asprintf(rooReg.toLocal8Bit(),"%sSecondDownloader/Style/isDark"),QString::asprintf(rooReg.toLocal8Bit()));
+    isDark=settings.value("Style/isDark",0).toBool();
+    qDebug()<<isDark;
+    QFile *qssFile=new QFile(this);
+    if(isDark){
+        qssFile->setFileName(":/mainform/qss/dark_mainform.qss");
+        dark=isDark;
+        ui->btnChangeStyle->setStyleSheet("border-image:url(:/mainform/res/ChangeStyle_dark.png)");
+        ui->btnMenu->setStyleSheet("border-image:url(:/mainform/res/Menu_dark.png)");
+        repaint();
+    }else{
+        qssFile->setFileName(":/mainform/qss/white_mainform.qss");
+        dark=isDark;
+        ui->btnChangeStyle->setStyleSheet("border-image:url(:/mainform/res/ChangeStyle_white.png)");
+        ui->btnMenu->setStyleSheet("border-image:url(:/mainform/res/Menu_white.png)");
+        repaint();
+    }
+    qssFile->open(QIODevice::ReadOnly);
+    QString styleSheet=QString::fromLatin1(qssFile->readAll());
+    qssFile->close();
+    setStyleSheet(styleSheet);
+    dark=isDark;
+
+
+    delete qssFile;
+}
+
 void mainform::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    QPainter siderBarPainter(this);
+
 
     QColor color;
     if(dark)
@@ -120,6 +152,8 @@ void mainform::paintEvent(QPaintEvent *event)
     QRect rect = this->rect();
     painter.setPen(Qt::transparent);
     painter.drawRoundedRect(rect,20,20);
+    painter.end();
+     QPainter siderBarPainter(this);
     //画出整个窗口
 
     QColor siderBarColor;
@@ -196,5 +230,87 @@ void mainform::on_btnChangeStyle_clicked()
     set->setDark(dark);
     donate->setDark(dark);
         // ui->btnChangeStyle->setStyleSheet("border-image:url(’:/mainform/res/ChangeStyle_white.png‘)");
+}
+
+
+void mainform::on_btnMainPage_clicked(bool checked)
+{
+    if(checked){
+        ui->stackedWidget->setCurrentIndex(0);
+        ui->btnDownloadContent->setChecked(0);
+        ui->btnDonate->setChecked(0);
+        ui->btnSettings->setChecked(0);
+        ui->btnMainPage->setStyleSheet("border-image: url(:/mainform/res/"
+                                       "Main-Page_selected_gradient.png);");
+        ui->btnDownloadContent->setStyleSheet("border-image: url(:/mainform/res/"
+                                              "Download-Content.png)");
+        ui->btnDonate->setStyleSheet("border-image: url(:/mainform/res/"
+                                              "Donate.png)");
+        ui->btnSettings->setStyleSheet(" border-image: url(:/mainform/res/"
+                                       "Settings.png)");
+    }
+
+}
+
+void mainform::on_btnDownloadContent_clicked(bool checked)
+{
+
+    if(checked){
+        ui->stackedWidget->setCurrentIndex(1);
+        ui->btnMainPage->setChecked(0);
+        ui->btnDonate->setChecked(0);
+        ui->btnSettings->setChecked(0);
+        ui->btnMainPage->setStyleSheet("border-image: url(:/mainform/res/"
+                                       "Main-Page.png);");
+        ui->btnDownloadContent->setStyleSheet("border-image: url(:/mainform/res/"
+                                              "Download-Content_selected_gradient.png)");
+        ui->btnDonate->setStyleSheet("border-image: url(:/mainform/res/"
+                                     "Donate.png)");
+        ui->btnSettings->setStyleSheet(" border-image: url(:/mainform/res/"
+                                       "Settings.png)");
+    }
+
+}
+
+
+void mainform::on_btnDonate_clicked(bool checked)
+{
+
+    if(checked){
+        ui->stackedWidget->setCurrentIndex(2);
+        ui->btnMainPage->setChecked(0);
+        ui->btnDownloadContent->setChecked(0);
+        ui->btnSettings->setChecked(0);
+        ui->btnMainPage->setStyleSheet("border-image: url(:/mainform/res/"
+                                       "Main-Page.png);");
+        ui->btnDownloadContent->setStyleSheet("border-image: url(:/mainform/res/"
+                                              "Download-Content.png)");
+        ui->btnDonate->setStyleSheet("border-image: url(:/mainform/res/"
+                                     "Donate_selected_gradient.png)");
+        ui->btnSettings->setStyleSheet(" border-image: url(:/mainform/res/"
+                                       "Settings.png)");
+    }
+
+}
+
+
+void mainform::on_btnSettings_clicked(bool checked)
+{
+
+    if(checked){
+        ui->stackedWidget->setCurrentIndex(3);
+        ui->btnMainPage->setChecked(0);
+        ui->btnDownloadContent->setChecked(0);
+        ui->btnDonate->setChecked(0);
+        ui->btnMainPage->setStyleSheet("border-image: url(:/mainform/res/"
+                                       "Main-Page.png);");
+        ui->btnDownloadContent->setStyleSheet("border-image: url(:/mainform/res/"
+                                              "Download-Content.png)");
+        ui->btnDonate->setStyleSheet("border-image: url(:/mainform/res/"
+                                     "Donate.png)");
+        ui->btnSettings->setStyleSheet(" border-image: url(:/mainform/res/"
+                                       "Settings_selected_gradient.png)");
+    }
+
 }
 

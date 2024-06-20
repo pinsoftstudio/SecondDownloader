@@ -26,6 +26,8 @@ public:
     void adaptStackedWidgetAndSubControls();
     void configWindowStyle();
     void configWindowFlag();
+    QPainter *siderBarPainter;
+    void refreshStyleSheet();
 private:
     Ui::mainform *ui;
     frmMainPage *mainPage;
@@ -46,6 +48,10 @@ private slots:
     void on_btnMin_clicked();
 
     void on_btnChangeStyle_clicked();
+    void on_btnMainPage_clicked(bool checked);
+    void on_btnDownloadContent_clicked(bool checked);
+    void on_btnDonate_clicked(bool checked);
+    void on_btnSettings_clicked(bool checked);
 };
 
 #endif // MAINFORM_H

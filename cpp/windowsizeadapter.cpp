@@ -23,7 +23,7 @@ QRect WindowSizeAdapter::getPaintRect()
     reRect.setX(0);
     reRect.setY(0);
     reRect.setHeight(window->height());
-    reRect.setWidth(window->width()*windowScaling);
+    reRect.setWidth(70*windowScaling);
     return reRect;
 }
 

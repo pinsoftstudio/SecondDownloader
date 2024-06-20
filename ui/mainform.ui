@@ -145,6 +145,12 @@
    <property name="text">
     <string/>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="btnDonate">
    <property name="geometry">
@@ -171,6 +177,9 @@
    <property name="text">
     <string/>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="btnDownloadContent">
    <property name="geometry">
@@ -195,6 +204,9 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="btnSettings">
@@ -222,6 +234,9 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

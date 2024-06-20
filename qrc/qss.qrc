@@ -17,6 +17,10 @@
         <file>res/Menu_dark.png</file>
         <file>res/ChangeStyle_dark.png</file>
         <file>res/Menu_white.png</file>
+        <file>res/Donate_selected_gradient.png</file>
+        <file>res/Download-Content_selected_gradient.png</file>
+        <file>res/Main-Page_selected_gradient.png</file>
+        <file>res/Settings_selected_gradient.png</file>
     </qresource>
     <qresource prefix="/frmmain">
         <file>res/New.png</file>
