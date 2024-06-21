@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="btnClose">
    <property name="geometry">
     <rect>
-     <x>780</x>
+     <x>760</x>
      <y>10</y>
      <width>26</width>
      <height>24</height>
@@ -37,7 +37,7 @@
   <widget class="QPushButton" name="btnMin">
    <property name="geometry">
     <rect>
-     <x>740</x>
+     <x>720</x>
      <y>10</y>
      <width>26</width>
      <height>24</height>
@@ -58,7 +58,7 @@
   <widget class="QPushButton" name="btnMenu">
    <property name="geometry">
     <rect>
-     <x>700</x>
+     <x>680</x>
      <y>10</y>
      <width>26</width>
      <height>24</height>
@@ -83,7 +83,7 @@
   <widget class="QPushButton" name="btnChangeStyle">
    <property name="geometry">
     <rect>
-     <x>660</x>
+     <x>640</x>
      <y>10</y>
      <width>26</width>
      <height>24</height>

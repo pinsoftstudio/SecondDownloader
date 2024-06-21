@@ -23,10 +23,12 @@ bool StackedWidgetAdapter::adapt()
             qint64 widgetHeight=stackedWidget->widget(i)->height();
             qint64 widgetWidth=stackedWidget->widget(i)->width();
             //获取子窗口的大小，以便计算缩放比例来应用于子控件
-            double scalingX=0.0000;
-            double scalingY=0.0000;
-            scalingX=stackedWidgetWidth/widgetWidth;
-            scalingY=stackedWidgetHeight/widgetHeight;
+            // double scaling=(height+0.0001)/window->geometry().height();
+            // windowScaling=scaling;
+            double scalingX=(stackedWidgetWidth+0.000001)/widgetWidth;;
+            double scalingY=(stackedWidgetHeight+0.000001)/widgetHeight;;
+
+
             stackedWidget->widget(i)->resize(stackedWidgetWidth,stackedWidgetHeight);
             //调整StackedWidget中子窗口的大小
             for(QWidget *child:stackedWidget->widget(i)->findChildren<QWidget*>()){

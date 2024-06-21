@@ -1,7 +1,7 @@
 #btnClose,#btnMin,#btnMenu,#btnChangeStyle{
     background-color: rgb(249, 249, 249);
     color: black;
-    border-radius: 12%;
+    border-radius: 8%;
 
 }
 #btnMainPage,#btnDownloadContent,#btnSettings,#btnDonate{

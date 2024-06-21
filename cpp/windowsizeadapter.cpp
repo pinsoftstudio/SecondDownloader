@@ -1,5 +1,6 @@
 #include "header/windowsizeadapter.h"
 #include "QDesktopWidget"
+#include "qdebug.h"
 WindowSizeAdapter::WindowSizeAdapter(QObject *parent)
     : QObject{parent}
 {
@@ -39,12 +40,15 @@ bool WindowSizeAdapter::adaptAll()
 
         qint64 height=desktop.height()*0.68;
         qint64 width=height*1.5;
-        qint16 x=(desktop.width()-width)/2;
         qint16 y=(desktop.height()-height)/2;
-
+        qint16 x=(desktop.width()-width)/2;
+        qDebug()<<"desktopheight"<<desktop.height();
+        qDebug()<<"desktopwidth"<<desktop.width();
+        qDebug()<<"height"<<height;
+        qDebug()<<"width"<<width;
         //窗口长宽缩放以及窗口居中；
-        long double scaling=0.0000000000;
-        scaling=height/window->geometry().height();
+
+        double scaling=(height+0.0001)/window->geometry().height();
         windowScaling=scaling;
         window->setGeometry(x,y,width,height);
         foreach(QWidget *w,widgets)
@@ -53,7 +57,10 @@ bool WindowSizeAdapter::adaptAll()
             qint64 orignY=w->geometry().y();
             qint64 newX=orignX*scaling;
             qint64 newY=orignY*scaling;
-            w->move(newX,newY);
+             w->move(newX,newY);
+            qDebug()<<w->objectName();
+             qDebug()<<"x"<<newX;
+            qDebug()<<"y"<<newY;
             qint64 orignWidth=w->geometry().width();
             qint64 orignHeight=w->geometry().height();
             qint64 newWidth=orignWidth*scaling;
