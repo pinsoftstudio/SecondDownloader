@@ -16,18 +16,14 @@ SOURCES += \
     cpp/frmmainpage.cpp \
     cpp/frmsettings.cpp \
     cpp/main.cpp \
-    cpp/mainform.cpp \
-    cpp/stackedwidgetadapter.cpp \
-    cpp/windowsizeadapter.cpp
+    cpp/mainform.cpp
 
 HEADERS += \
     header/frmdonate.h \
     header/frmdownloadcontent.h \
     header/frmmainpage.h \
     header/frmsettings.h \
-    header/mainform.h \
-    header/stackedwidgetadapter.h \
-    header/windowsizeadapter.h
+    header/mainform.h
 
 FORMS += \
     ui/frmdonate.ui \

@@ -1,8 +1,8 @@
 #include "header/mainform.h"
 #include "ui_mainform.h"
-#include <header/windowsizeadapter.h>
+// #include <header/windowsizeadapter.h>
 #include <QMessageBox>
-#include <header/stackedwidgetadapter.h>
+// #include <header/stackedwidgetadapter.h>
 #include <QSettings>
 #include <QDebug>
 #include <QFile>
@@ -12,10 +12,10 @@ mainform::mainform(QWidget *parent)
     , ui(new Ui::mainform)
 {
     ui->setupUi(this);
-    adaptWindowAndControls();
+    // adaptWindowAndControls();
     configWindowStyle();
     addWidgetTostackedWidget();
-    adaptStackedWidgetAndSubControls();
+    // adaptStackedWidgetAndSubControls();
     ui->btnMainPage->setStyleSheet("border-image: url(:/mainform/res/Main-Page_selected_gradient.png);");
 
 
@@ -26,22 +26,22 @@ mainform::~mainform()
     delete ui;
 }
 
-void mainform::adaptWindowAndControls()
-{
-     WindowSizeAdapter   adapter;
-    adapter.setWindow(this);
-    adapter.addWidget(this->ui->stackedWidget);
-    adapter.addWidget(this->ui->btnClose);
-    adapter.addWidget(this->ui->btnMin);
-    adapter.addWidget(this->ui->btnSettings);
-    adapter.addWidget(this->ui->btnChangeStyle);
-    adapter.addWidget(this->ui->btnMainPage);
-    adapter.addWidget(this->ui->btnDownloadContent);
-    adapter.addWidget(this->ui->btnDonate);
-    adapter.addWidget(this->ui->btnMenu);
-    adapter.adaptAll();
-    siderBarRect=adapter.getPaintRect();
-}
+// void mainform::adaptWindowAndControls()
+// {
+//      WindowSizeAdapter   adapter;
+//     adapter.setWindow(this);
+//     adapter.addWidget(this->ui->stackedWidget);
+//     adapter.addWidget(this->ui->btnClose);
+//     adapter.addWidget(this->ui->btnMin);
+//     adapter.addWidget(this->ui->btnSettings);
+//     adapter.addWidget(this->ui->btnChangeStyle);
+//     adapter.addWidget(this->ui->btnMainPage);
+//     adapter.addWidget(this->ui->btnDownloadContent);
+//     adapter.addWidget(this->ui->btnDonate);
+//     adapter.addWidget(this->ui->btnMenu);
+//     adapter.adaptAll();
+//     siderBarRect=adapter.getPaintRect();
+// }
 
 void mainform::addWidgetTostackedWidget()
 {   mainPage=new frmMainPage(this);
@@ -60,12 +60,12 @@ void mainform::addWidgetTostackedWidget()
 
 }
 
-void mainform::adaptStackedWidgetAndSubControls()
-{
-    StackedWidgetAdapter *swadpt=new StackedWidgetAdapter(ui->stackedWidget);
-    swadpt->setStackedWidget(ui->stackedWidget);
-    swadpt->adapt();
-}
+// void mainform::adaptStackedWidgetAndSubControls()
+// {
+//     StackedWidgetAdapter *swadpt=new StackedWidgetAdapter(ui->stackedWidget);
+//     swadpt->setStackedWidget(ui->stackedWidget);
+//     swadpt->adapt();
+// }
 
 void mainform::configWindowStyle()
 {

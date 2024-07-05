@@ -19,11 +19,11 @@ class mainform : public QWidget
 public:
     explicit mainform(QWidget *parent = nullptr);
     ~mainform();
-    void adaptWindowAndControls();
+    // void adaptWindowAndControls();
     void iniWindowMenu();
     void iniWindowFlagAndStyle();
     void addWidgetTostackedWidget();
-    void adaptStackedWidgetAndSubControls();
+    // void adaptStackedWidgetAndSubControls();
     void configWindowStyle();
     void configWindowFlag();
     QPainter *siderBarPainter;

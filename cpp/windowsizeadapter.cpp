@@ -1,5 +1,5 @@
 #include "header/windowsizeadapter.h"
-#include "QDesktopWidget"
+#include "QScreen"
 #include "qdebug.h"
 WindowSizeAdapter::WindowSizeAdapter(QObject *parent)
     : QObject{parent}
@@ -35,7 +35,7 @@ bool WindowSizeAdapter::adaptAll()
 {
 
     if(window!=nullptr && widgets.count()!=0 ){
-        QDesktopWidget desktop;
+        QScreen desktop;
 
 
         qint64 height=desktop.height()*0.68;

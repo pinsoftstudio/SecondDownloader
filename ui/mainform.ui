@@ -24,7 +24,8 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>22</pointsize>
     </font>
    </property>
    <property name="cursor">
@@ -45,6 +46,7 @@
    </property>
    <property name="font">
     <font>
+     <family>微软雅黑</family>
      <pointsize>12</pointsize>
     </font>
    </property>
