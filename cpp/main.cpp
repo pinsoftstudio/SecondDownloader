@@ -1,8 +1,12 @@
-
+#include <QOperatingSystemVersion>
+#include <QSettings>
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
-#include <header/mainform.h>
+#include <QFile>
+#include <header/mainwindow.h>
+#include <header/Style.h>
+#include <header/dialogquestion.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -16,8 +20,32 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    mainform w;
+
+    // QSettings settings("Pinsoft","SecondDownloader");
+    // bool isDark=0;
+    // //QString rootReg="HKEY_LOCAL_MACHINE/SOFTWARE/Pinsoft/";
+    // // QMessageBox::information(this,QString::asprintf(rooReg.toLocal8Bit(),"%sSecondDownloader/Style/isDark"),QString::asprintf(rooReg.toLocal8Bit()));
+    // isDark=settings.value("Style/isDark",0).toBool();
+    // qDebug()<<isDark;
+    // QFile qssFile;
+    // if(isDark){
+    //     qssFile.setFileName(":/common/qss/white_base.qss");
+
+
+    // }else{
+    //      qssFile.setFileName(":/common/qss/white_base.qss");
+
+
+    // }
+    // qssFile.open(QIODevice::ReadOnly);
+    // QString styleSheet=QString::fromLatin1(qssFile.readAll());
+    // qssFile.close();
+    // a.setStyleSheet(styleSheet);
+    setCommonStyle();
+
+    MainWindow w;
     w.show();
+
 
     return a.exec();
 }

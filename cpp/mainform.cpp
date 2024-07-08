@@ -1,5 +1,5 @@
 #include "header/mainform.h"
-#include "ui_mainform.h"
+
 // #include <header/windowsizeadapter.h>
 #include <QMessageBox>
 // #include <header/stackedwidgetadapter.h>

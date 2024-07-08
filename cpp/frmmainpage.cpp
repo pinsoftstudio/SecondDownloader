@@ -4,6 +4,8 @@
 #include <QFile>
 #include <QDate>
 #include <QObject>
+#include <header/Style.h>
+#include <header/dialogquestion.h>
 frmMainPage::frmMainPage(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmMainPage)
@@ -11,6 +13,9 @@ frmMainPage::frmMainPage(QWidget *parent)
     ui->setupUi(this);
     qint64 days=getInstalledDays();
     ui->labMain->setText(tr("已接管下载任务 %1 天").arg(days+1));
+    addToStyleControl(this);
+    ui->pushButton->setProperty("highlight","true");
+    setThisStyle();
 }
 
 frmMainPage::~frmMainPage()
@@ -47,5 +52,20 @@ qint64 frmMainPage::getInstalledDays()
     return downloadedDates;
 }
 
+void frmMainPage::closeEvent(QCloseEvent *event)
+{
+    event->accept();
+}
 
+
+
+
+
+
+void frmMainPage::on_pushButton_clicked()
+{
+    DialogQuestion *q=new DialogQuestion();
+    q->setAttribute(Qt::WA_DeleteOnClose);
+    q->exec();
+}
 

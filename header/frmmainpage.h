@@ -2,7 +2,7 @@
 #define FRMMAINPAGE_H
 
 #include <QWidget>
-
+#include<QCloseEvent>
 
 namespace Ui {
 class frmMainPage;
@@ -20,6 +20,10 @@ private:
     Ui::frmMainPage *ui;
     bool Dark=false;
     qint64 getInstalledDays();
+protected:
+    void closeEvent(QCloseEvent *event) override;
+private slots:
+    void on_pushButton_clicked();
 };
 
 #endif // FRMMAINPAGE_H

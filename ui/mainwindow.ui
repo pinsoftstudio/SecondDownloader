@@ -6,52 +6,447 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>655</width>
-    <height>469</height>
+    <width>879</width>
+    <height>605</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>SecondDownloader</string>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
-  <property name="animated">
-   <bool>true</bool>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/*QPushButton*/
+
+QPushButton {  
+    border: 1px solid rgb(236,236,236); 
+	border-bottom-color: rgb(211, 211, 211);
+    border-radius: 4px;  
+    background-color: rgb(254, 254, 254); 
+	color:black;
+
+}  
+
+QPushButton:hover
+{
+	background-color:rgb(250, 250, 250);
+ }
+
+QPushButton:pressed {  
+    background-color: rgb(250, 250, 250); 
+	border-bottom-color:rgb(236, 236, 236);
+	color:grey;
+}
+
+/*QLineEdit*/
+QLineEdit {  
+    border: 1px solid rgb(229,229,229); 
+	border-bottom-color: rgb(134,134, 134);
+    border-radius: 5px;  
+    background-color: rgb(251, 251, 251); 
+	color:black;
+
+}  
+
+QLineEdit:hover
+{
+	background-color:rgb(246,246,246);
+ }
+
+QLineEdit:focus{
+	border-bottom-width: 2px;
+	background-color: rgb(255, 255, 255);
+	border-bottom-color: rgb(0, 103, 192);
+
+}
+/*QComboBox*/
+QComboBox::drop-down{
+	subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+	image: url(:/qss/base/res/drop-down.png);
+}
+QComboBox {  
+    border: 1px solid rgb(236,236,236); 
+	border-bottom-color: rgb(211, 211, 211);
+    border-radius: 4px;  
+    background-color: rgb(254, 254, 254); 
+	color:black;
+
+}  
+
+QComboBox:hover
+{
+	background-color:rgb(250, 250, 250);
+ }
+
+ QComboBox:pressed {  
+    background-color: rgb(250, 250, 250); 
+	border-bottom-color:rgb(236, 236, 236);
+	color:grey;
+}
+
+QComboBox QAbstractItemView {
+    border: 1px solid rgb(236,236,236); 
+	background-color: rgb(249,249,249);
+    border-radius: 6px;
+    padding: 1px 2px 1px 2px; 
+    min-width: 9em;   
+	outline:none;
+	
+}
+
+QComboBox QAbstractItemView::item {
+	border-radius: 6px;
+    height: 30px;  
+	color:black;
+	
+	background-color: rgb(249,249,249);
+
+}
+QComboBox QAbstractItemView::item:selected{
+	padding:3px;
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:2px solid rgb(0,103,192);
+
+} 
+
+QComboBox QAbstractItemView::item:hover {
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:none ;
+	background-color: rgb(240,240,240);
+	border-radius: 6px;
+
+
+	
+}
+QComboBox QAbstractItemView::item:pressed {
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:none ;
+	background-color: rgb(243,243,243);
+	border-radius: 6px;
+}
+QCheckBox::indicator:unchecked{
+  	border: 1px solid grey;
+	border-radius:4px;
+	background-color:white;
+}
+QCheckBox::indicator:unchecked:hover{
+  	border: 1px solid grey;
+	border-radius:4px;
+	background-color:rgb(227,227,227);
+}
+QCheckBox::indicator:checked{
+	border-image:url(:/qss/base/res/tick.png);
+	background-color: rgb(23, 143, 255);
+	/*border: 2px solid grey;*/
+	border-radius:4px;
+}
+QCheckBox::indicator:checked:hover{
+	border-image:url(:/qss/base/res/tick.png);
+	background-color: rgb(0,128,227);
+	/*border: 2px solid grey;*/
+	border-radius:4px;
+}
+QProgressBar {  
+     
+    background-color:  rgb(164,160,164); 
+    color: rgb(164,160,164); 
+	max-height:1px;
+    text-align: center; 
+}  
+QProgressBar::chunk {  
+    background-color:  rgb(0,120,212);
+}
+
+
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>160</y>
-      <width>591</width>
-      <height>141</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>655</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="leftMargin">
+         <number>2</number>
+        </property>
+        <item>
+         <widget class="QToolButton" name="toolMenu">
+          <property name="minimumSize">
+           <size>
+            <width>31</width>
+            <height>31</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>31</width>
+            <height>31</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Maximum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>160</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolMain">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>201</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>201</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>  主页</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>55</width>
+          <height>55</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoRepeat">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::DelayedPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolDownload">
+        <property name="minimumSize">
+         <size>
+          <width>201</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>201</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>  下载内容</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>55</width>
+          <height>55</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoRepeat">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::DelayedPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolDonate">
+        <property name="minimumSize">
+         <size>
+          <width>201</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>201</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>  赞助</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>55</width>
+          <height>55</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoRepeat">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::DelayedPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolSettings">
+        <property name="minimumSize">
+         <size>
+          <width>201</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>201</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>  设置</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>55</width>
+          <height>55</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoRepeat">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::DelayedPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>368</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="minimumSize">
+       <size>
+        <width>651</width>
+        <height>591</height>
+       </size>
+      </property>
+      <widget class="QWidget" name="page"/>
+      <widget class="QWidget" name="page_2"/>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
