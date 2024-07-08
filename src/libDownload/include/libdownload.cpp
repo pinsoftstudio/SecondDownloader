@@ -1,6 +1,7 @@
 #include "libdownload.h"
 #include "QFile"
 #include "cstdio"
+#include "QString"
 static int progress_callback(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow) {
     LibDownload *downloader = static_cast<LibDownload*>(clientp);
     downloader->setCnow(dlnow);
@@ -17,8 +18,12 @@ size_t function(void *bufptr, size_t size, size_t nitems, FILE *userp){
     return written;
 }
 
-LibDownload::LibDownload(QString startBytes,QString endBytes,QObject *parent = nullptr) : QThread(parent) {
+LibDownload::LibDownload(QString startBytes,QString endBytes,QString savingLocation,QString downloadURL,QObject *parent = nullptr) : QThread(parent) {
 
+    StartBytes=startBytes.toStdString();
+    EndBytes=endBytes.toStdString();
+    location=savingLocation.toStdString();
+    URL=downloadURL;
 }
 
 LibDownload::~LibDownload()
