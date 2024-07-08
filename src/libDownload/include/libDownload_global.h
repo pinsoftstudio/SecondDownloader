@@ -1,0 +1,12 @@
+#ifndef LIBDOWNLOAD_GLOBAL_H
+#define LIBDOWNLOAD_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(LIBDOWNLOAD_LIBRARY)
+#define LIBDOWNLOAD_EXPORT Q_DECL_EXPORT
+#else
+#define LIBDOWNLOAD_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // LIBDOWNLOAD_GLOBAL_H
