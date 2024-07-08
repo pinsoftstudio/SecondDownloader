@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QPainter>
 #include <header/RadiusFramelessDialog.h>
+#include <QString>
 namespace Ui {
 class DialogQuestion;
 }
@@ -15,7 +16,13 @@ class DialogQuestion : public RadiusFrameLessDialog
 public:
     explicit DialogQuestion(QWidget *parent = nullptr);
     ~DialogQuestion();
+    QString strTitle;
+
+    QString strText;
     bool Dark=0;
+    void setTitle(QString &title);
+    void setText(QString &text);
+
 private:
     Ui::DialogQuestion *ui;
 

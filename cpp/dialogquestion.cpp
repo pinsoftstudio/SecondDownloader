@@ -6,7 +6,7 @@ DialogQuestion::DialogQuestion(QWidget *parent)
     , ui(new Ui::DialogQuestion)
 {
      ui->setupUi(this);
-    ui->pushButton->setProperty("highlight","true");
+    ui->btnYes->setProperty("highlight","true");
     addToStyleControl(this);
     setThisStyle();
 
@@ -24,6 +24,20 @@ DialogQuestion::DialogQuestion(QWidget *parent)
 DialogQuestion::~DialogQuestion()
 {
     delete ui;
+}
+
+void DialogQuestion::setTitle(QString &title)
+{
+    strTitle=title;
+    setWindowTitle(strTitle);
+    ui->labTitle->setText(strTitle);
+
+}
+
+void DialogQuestion::setText(QString &text)
+{
+    strText=text;
+     ui->label_2->setText(strText);
 }
 
 // void DialogQuestion::paintEvent(QPaintEvent *event)

@@ -14,7 +14,7 @@ frmMainPage::frmMainPage(QWidget *parent)
     qint64 days=getInstalledDays();
     ui->labMain->setText(tr("已接管下载任务 %1 天").arg(days+1));
     addToStyleControl(this);
-    ui->pushButton->setProperty("highlight","true");
+    // ui->pushButton->setProperty("highlight","true");
     setThisStyle();
 }
 
@@ -64,8 +64,11 @@ void frmMainPage::closeEvent(QCloseEvent *event)
 
 void frmMainPage::on_pushButton_clicked()
 {
-    DialogQuestion *q=new DialogQuestion();
-    q->setAttribute(Qt::WA_DeleteOnClose);
-    q->exec();
+    DialogQuestion q;
+    QString title="你好";
+    QString text="你好吗？";
+    q.setTitle(title);
+    q.setText(text);
+    q.exec();
 }
 

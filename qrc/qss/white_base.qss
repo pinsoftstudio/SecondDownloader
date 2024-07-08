@@ -38,9 +38,9 @@ QPushButton[highlight="true"]:pressed{
 	border: 0px ;
 }
 
-QPushButton:focus{
+/* QPushButton:focus{
 	border:3px solid rgb(35,35,35);
-}
+} */
 
 /*QLineEdit*/
 QLineEdit {  

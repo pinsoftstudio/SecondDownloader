@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>SecondDownloader</string>
   </property>
   <property name="styleSheet">
    <string notr="true">/*QPushButton*/
