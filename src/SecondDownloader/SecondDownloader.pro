@@ -17,25 +17,26 @@ SOURCES += \
     cpp/frmsettings.cpp \
     cpp/main.cpp \
     cpp/mainwindow.cpp \
-    cpp/dialogquestion.cpp
+    # cpp/dialogquestion.cpp
 
 HEADERS += \
-    header/RadiusFramelessDialog.h \
+    # header/RadiusFramelessDialog.h \
     header/mainwindow.h \
     header/frmdonate.h \
     header/frmdownloadcontent.h \
     header/frmmainpage.h \
     header/frmsettings.h \
     header/Style.h \
-    header/dialogquestion.h
+    # header/dialogquestion.h
+
 FORMS += \
-    ui/dialogquestion.ui \
+    # ui/dialogquestion.ui \
     ui/mainwindow.ui \
     ui/frmdonate.ui \
     ui/frmdownloadcontent.ui \
     ui/frmmainpage.ui \
     ui/frmsettings.ui \
-    ui/mainwindow_copy.ui
+
 
 TRANSLATIONS += \
     SecondDownloader_zh_CN.ts
@@ -44,23 +45,30 @@ CONFIG += embed_translations
 
 SUBDIRS+=subProject/libDownload/libDownload
 CONFIG(debug,debug|release){
-    DESTDIR = ../temp/bin/
+    DESTDIR = $$PWD/../temp/bin/debug
 }else{
-    DESTDIR = ../temp/bin/
+    DESTDIR = $$PWD/../temp/bin/release
 }
 
 
-win32:MOC_DIR = ../temp/moc
+win32:MOC_DIR = $$PWD/../temp/SecondDownloader/moc
 
-win32:OBJECTS_DIR = ../temp/o
-win32:UI_DIR = ../temp/ui
+win32:OBJECTS_DIR =$$PWD/../temp/SecondDownloader/o
+win32:UI_DIR = $$PWD/../temp/SecondDownloader/ui
 win32:LIBS += -luxtheme
-INCLUDEPATH +=../libDownload/include
-LIBS +=../temp/bin/libDownload.lib
+INCLUDEPATH +=$$PWD/../libDownload/include
+CONFIG(debug,debug|release){
+   LIBS +=$$PWD/../temp/bin/debug/libDownload.lib
+}else{
+     LIBS +=$$PWD/../temp/bin/release/libDownload.lib
+}
+
+# LIBS +=../temp/bin/libDownload.lib
+# LIBS +=$$PWD/../temp/bin
 #Default rules for deployment.
-# qnx: target.path = /tmp/$${TARGET}/bin
-# else: unix:!android: target.path = /opt/$${TARGET}/bin
-# win32:target.path=../build/bin
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+win32:target.path=../build/bin
 !isEmpty(target.path): INSTALLS += target
 
 msvc {

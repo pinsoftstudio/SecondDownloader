@@ -1,15 +1,14 @@
-#include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <header/mainwindow.h>
 #include <header/Style.h>
 #include <header/mainwindow.h>
+#include <header/frmmainpage.h>
+#include <header/frmdownloadcontent.h>
+#include <header/frmsettings.h>
+#include <header/frmdonate.h>
+#include "QCloseEvent"
 #include "QSettings"
 #include "QDebug"
-#include "header/frmmainpage.h"
-#include "header/frmdownloadcontent.h"
-#include "header/frmsettings.h"
-#include "header/frmdonate.h"
-#include "QCloseEvent"
+#include <header/frmdownloadcontent.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -40,10 +39,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::addWidgetTostackedWidget()
 {
-    mainPage=new frmMainPage(this);
-    mainPage->setDark(dark);
+    frmDownloadContent *dwncontent;
     dwncontent=new frmDownloadContent(this);
     dwncontent->setDark(dark);
+    mainPage=new frmMainPage(this);
+    mainPage->setDark(dark);
+    connect(mainPage,SIGNAL(downloadThreadExist(DownloadWindow*)),this,SLOT(ondownloadThreadExist(DownloadWindow*)));
     set=new frmSettings(this);
     set->setDark(dark);
     donate=new frmDonate(this);
@@ -60,6 +61,11 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+// void MainWindow::ondownloadThreadexist(DownloadWindow *DownloadWindow)
+// {
+
+// }
 
 // void MainWindow::closeEvent(QCloseEvent *event)
 // {
@@ -260,4 +266,6 @@ void MainWindow::on_toolSettings_clicked()
     ui->stackedWidget->setCurrentIndex(3);
      setThisStyle();
 }
+
+
 

@@ -11,6 +11,7 @@
         <file>res/icon.ico</file>
         <file>res/started.png</file>
         <file>res/warning.png</file>
+        <file>res/SecondDownloader-inner.png</file>
     </qresource>
     <qresource prefix="/common">
         <file>qss/white_base.qss</file>

@@ -1,7 +1,8 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 
-SUBDIRS = libDownload SecondDownloader
+SUBDIRS = libDownload SecondDownloader \
+    src/libDialog
 
 libDownload.file = src/libDownload/libDownload.pro
 

@@ -20,15 +20,16 @@ size_t function(void *bufptr, size_t size, size_t nitems, FILE *userp){
 
 LibDownload::LibDownload(QString startBytes,QString endBytes,QString savingLocation,QString downloadURL,QObject *parent = nullptr) : QThread(parent) {
 
+    curl_global_init(CURL_GLOBAL_ALL);
     StartBytes=startBytes.toStdString();
     EndBytes=endBytes.toStdString();
     location=savingLocation.toStdString();
-    URL=downloadURL;
+    URL=downloadURL.toStdString();
 }
 
 LibDownload::~LibDownload()
 {
-    curl_global_init(CURL_GLOBAL_ALL);
+
 }
 
 void LibDownload::setCnow(double now)
@@ -43,44 +44,44 @@ void LibDownload::setCtotal(double total)
 
 void LibDownload::run()
 {
-    curl=curl_easy_init();
-    if(!curl){
-        emit downloadFailed();
-        return;
-    }else {
-        QString fileName=downloadUrl.right(downloadUrl.length()-
-                                             downloadUrl.lastIndexOf("/"));
-        QString saveFilePath=location+fileName;
+    // curl=curl_easy_init();
+    // if(!curl){
+    //     emit downloadFailed();
+    //     return;
+    // }else {
+    //     QString fileName=downloadUrl.right(downloadUrl.length()-
+    //                                          downloadUrl.lastIndexOf("/"));
+    //     QString saveFilePath=location+fileName;
 
-        file = fopen(saveFilePath.toLocal8Bit().constData(), "wb");
-        if(file!=nullptr){
+    //     file = fopen(saveFilePath.toLocal8Bit().constData(), "wb");
+    //     if(file!=nullptr){
 
-            curl_easy_setopt(curl,CURLOPT_URL,downloadUrl.toUtf8().constData());
-            //指定下载URL
-            curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,function);
-            //指定下载写入的回调函数
-            curl_easy_setopt(curl,CURLOPT_WRITEDATA,file);
-            //指定下载的文件
-            curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
-            curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, progress_callback);
-            curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, this);
+    //         curl_easy_setopt(curl,CURLOPT_URL,downloadUrl.toUtf8().constData());
+    //         //指定下载URL
+    //         curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,function);
+    //         //指定下载写入的回调函数
+    //         curl_easy_setopt(curl,CURLOPT_WRITEDATA,file);
+    //         //指定下载的文件
+    //         curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
+    //         curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, progress_callback);
+    //         curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, this);
 
-            if(QFile(saveFilePath).exists()){
-                QFile(saveFilePath).moveToTrash();
-            }
-            res=curl_easy_perform(curl);
-        }else {
-            emit downloadFailed();
-            return;
-        }
-        if(res == CURLE_OK){
-            emit downloadFinished();
-        }else{
-            emit downloadFailed();
-        }
-        fclose(file);
-        curl_easy_cleanup(curl);
-        file=nullptr;
+    //         if(QFile(saveFilePath).exists()){
+    //             QFile(saveFilePath).moveToTrash();
+    //         }
+    //         res=curl_easy_perform(curl);
+    //     }else {
+    //         emit downloadFailed();
+    //         return;
+    //     }
+    //     if(res == CURLE_OK){
+    //         emit downloadFinished();
+    //     }else{
+    //         emit downloadFailed();
+    //     }
+    //     fclose(file);
+    //     curl_easy_cleanup(curl);
+    //     file=nullptr;
 
-    }
+    // }
 }

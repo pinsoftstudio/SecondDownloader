@@ -50,10 +50,16 @@
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image:url(:/frmmain/res/icon.ico)</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../qrc/qss.qrc">:/frmmain/res/SecondDownloader-inner.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

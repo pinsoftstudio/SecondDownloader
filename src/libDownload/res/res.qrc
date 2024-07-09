@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/common">
+        <file>res/SecondDownloader-inner.png</file>
+    </qresource>
+</RCC>

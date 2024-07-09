@@ -4,8 +4,9 @@
 #include <QFile>
 #include <QDate>
 #include <QObject>
-#include <header/Style.h>
-#include <header/dialogquestion.h>
+#include "header/Style.h"
+// #include "header/dialogquestion.h"
+#include <newdownloadwindow.h>
 frmMainPage::frmMainPage(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmMainPage)
@@ -102,5 +103,18 @@ void frmMainPage::on_pushButton_clicked(bool checked)
         settings.setValue("stopped",1);
         //其他操作...
     }
+}
+
+
+void frmMainPage::on_toolNew_clicked()
+{
+    newDownload=new NewDownloadWindow;
+    newDownload->show();
+    connect(newDownload,SIGNAL(downloadThreadExist(DownloadWindow*)),this,SLOT(ondownloadThreadExist(DownloadWindow*)));
+}
+
+void frmMainPage::ondownloadThreadExist(DownloadWindow *downloadwindow)
+{
+    emit downloadThreadExist(downloadwindow);
 }
 

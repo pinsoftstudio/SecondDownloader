@@ -2,7 +2,7 @@
 #define LIBDOWNLOAD_H
 
 #include "libDownload_global.h"
-#include "curl.h"
+#include "curl/curl.h"
 #include "QThread"
 #include "cstdio"
 #include "string"
@@ -20,14 +20,14 @@ class LIBDOWNLOAD_EXPORT LibDownload:public QThread
     Q_OBJECT
 
 public:
-    explicit LibDownload(QString startBytes,QString endBytes,QString downloadURL,QObject *parent);
+    explicit LibDownload(QString startBytes,QString endBytes,QString savingLocation,QString downloadURL,QObject *parent);
     ~LibDownload();
     void getDownloadProgress(double &now,double &total);
     void setCnow(double now);
     void setCtotal(double total);
 private:
     QString downloadUrl;
-    QString location;
+    // QString location;
     CURL *curl;
     FILE *file;
     CURLcode res;

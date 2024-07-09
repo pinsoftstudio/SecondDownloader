@@ -4,9 +4,9 @@
 #include <QLocale>
 #include <QTranslator>
 #include <QFile>
-#include <header/mainwindow.h>
-#include <header/Style.h>
-#include <header/dialogquestion.h>
+#include "header/mainwindow.h"
+#include "header/Style.h"
+// #include "header/dialogquestion.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
