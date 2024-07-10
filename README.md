@@ -1,5 +1,5 @@
-<img src="imgs/ico.png" height="30" style="display:inline-block;" />  
-<h1 style="display:inline-block; margin-left: 10px;"  align="center">SecondDownloader</h1>
+  
+<img src="imgs/ico.png" height="64" align="left" /><h1 style="display:inline-block;" >SecondDownloader</h1>
 
 
 > 一个强大的文件多线程下载器，支持 Windows 10/11、Linux 操作系统.
