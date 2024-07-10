@@ -11,16 +11,20 @@ CONFIG += c++17
 
 SOURCES += \
     libdialog.cpp   \
-    dialogquestion.cpp
+    dialogquestion.cpp  \
+    dialogcrtinf.cpp
 
 HEADERS += \
     libDialog_global.h \
     libdialog.h \
     RadiusFramelessDialog.h \
     Style.h \
-    dialogquestion.h
+    dialogquestion.h    \
+    dialogcrtinf.h
 FORMS   +=\
-    dialogquestion.ui
+    dialogquestion.ui   \
+    dialogcrtinf.ui
+
 # Default rules for deployment.
 unix {
     target.path = /usr/lib

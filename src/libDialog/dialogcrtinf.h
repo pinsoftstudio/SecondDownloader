@@ -1,5 +1,5 @@
-#ifndef DIALOGQUESTION_H
-#define DIALOGQUESTION_H
+#ifndef DIALOGCRTINF_H
+#define DIALOGCRTINF_H
 
 #include <QDialog>
 #include <QPainter>
@@ -7,16 +7,16 @@
 #include <QString>
 #include "libDialog_global.h"
 namespace Ui {
-class DialogQuestion;
+class DialogCrtInf;
 }
 
-class LIBDIALOG_EXPORT DialogQuestion : public RadiusFrameLessDialog
+class LIBDIALOG_EXPORT DialogCrtInf : public RadiusFrameLessDialog
 {
     Q_OBJECT
 
 public:
-    explicit DialogQuestion(QWidget *parent = nullptr);
-    ~DialogQuestion();
+    explicit DialogCrtInf(QWidget *parent = nullptr);
+    ~DialogCrtInf();
     QString strTitle;
 
     QString strText;
@@ -25,11 +25,11 @@ public:
     void setText(QString &text);
 
 private:
-    Ui::DialogQuestion *ui;
+    Ui::DialogCrtInf *ui;
 
 protected:
     // void paintEvent(QPaintEvent *event);
 
 };
 
-#endif // DIALOGQUESTION_H
+#endif // DIALOGCRTINF_H

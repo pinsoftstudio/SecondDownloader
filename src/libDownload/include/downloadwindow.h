@@ -12,13 +12,15 @@ class LIBDOWNLOAD_EXPORT DownloadWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit DownloadWindow(QWidget *parent = nullptr);
+    explicit DownloadWindow(QString url,QString saveFileName,QWidget *parent = nullptr);
     ~DownloadWindow();
 
 
 private:
     Ui::DownloadWindow *ui;
     LibDownload *downloader;
+    QString URL;
+    QString savedFilename;
 signals:
     void  downloadThreadExist(DownloadWindow *download);
 private slots:

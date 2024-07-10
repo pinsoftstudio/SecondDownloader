@@ -2,6 +2,7 @@
 #include "ui_newdownloadwindow.h"
 #include "Style.h"
 #include "QUrl"
+#include <dialogcrtinf.h>
 NewDownloadWindow::NewDownloadWindow(QWidget *parent): QWidget(parent)
     , ui(new Ui::NewDownloadWindow)
 {
@@ -32,10 +33,21 @@ void NewDownloadWindow::ondownloadThreadExist(DownloadWindow *downloadwindow)
 
 void NewDownloadWindow::on_btnStart_clicked()
 {
-    QUrl url(ui->lineurl->text());
+    QString strurl=ui->lineurl->text();
+    QUrl url(strurl);
 
-    downloadmessagewindow=new  DownloadMessageWindow;
+    if(url.scheme().isEmpty()){
+        DialogCrtInf criticalBox;
+        QString title="错误";
+        QString text="下载地址不合法！";
+        criticalBox.setTitle(title);
+        criticalBox.setText(text);
+        criticalBox.exec();
+        return;
+    }
+    downloadmessagewindow=new  DownloadMessageWindow(strurl,this,nullptr);
     connect(downloadmessagewindow,SIGNAL(downloadThreadExist(DownloadWindow*)),this,SLOT(ondownloadThreadExist(DownloadWindow*)));
+    downloadmessagewindow->setWindowModality(Qt::ApplicationModal);
     downloadmessagewindow->show();
 }
 

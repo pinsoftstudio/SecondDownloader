@@ -1,5 +1,7 @@
 QT += widgets gui
 
+LIBS += -lshell32
+QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"
 TEMPLATE = lib
 DEFINES += LIBDOWNLOAD_LIBRARY
 

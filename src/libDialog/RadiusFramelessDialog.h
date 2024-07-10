@@ -2,6 +2,7 @@
 #define RADIUSFRAMELESSDIALOG_H
 
 #endif // RADIUSFRAMELESSDIALOG_H
+
 #include <QDialog>
 #include <QPaintEvent>
 #include <QPainter>
