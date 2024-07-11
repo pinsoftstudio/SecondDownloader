@@ -25,10 +25,11 @@ private:
     QString finalSize;
     QString savingLocation;
     QString savedFileName;
-    long double size;
+    qint64 size=0;
     void iniUi();
     QPixmap getFilePixmap(QString fileLocation);
     QWidget *LastWindow;
+    QTimer tmGetprogress;
 signals:
     void  downloadThreadExist(DownloadWindow *downloadwindow);
 private slots:
@@ -37,6 +38,7 @@ private slots:
     void on_btnStart_clicked();
     void ongeterror();
     void on_btnChoose_clicked();
+
 };
 
 #endif // DOWNLOADMESSAGEWINDOW_H

@@ -43,6 +43,7 @@ DownloadMessageWindow::DownloadMessageWindow(QString url,QWidget *lastWindow,QWi
     thread->start();
 
 
+
 }
 
 DownloadMessageWindow::~DownloadMessageWindow()
@@ -55,7 +56,7 @@ void DownloadMessageWindow::iniUi()
     ui->lineurl->setText(URL);
     QUrl qurl(URL);
     QString fileName;
-    QSettings set("PinsoftStudio","SecondDownlaoder");
+    QSettings set("Pinsoft","SecondDownlaoder");
     if(set.value("Download/SavingLocation/isDefault",1).toBool()==1){
         QString qtSavingLoaction=QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
         savingLocation=QDir::toNativeSeparators(qtSavingLoaction);
@@ -110,30 +111,35 @@ QPixmap DownloadMessageWindow::getFilePixmap(QString fileLocation)
 void DownloadMessageWindow::ondownloadThreadExist(DownloadWindow *downloadwindow)
 {
     emit downloadThreadExist(downloadwindow);
+
 }
 
 void DownloadMessageWindow::onresultready(qint64 filesize)
 {
+    size=filesize;
+    qint64 calsize;
     if(filesize>0){
         if(filesize>=1024*1024){
-            size=filesize/1024.00/1024.00;
-            finalSize=tr("文件大小： %1 MB").arg(size,0,'f',2);
+            calsize=filesize/1024.00/1024.00;
+            finalSize=tr("文件大小： %1 MB").arg(calsize,0,'f',2);
         }else if(filesize>=1024){
-            size=filesize/1024.00;
-            finalSize=tr("文件大小： %1 KB").arg(size,0,'f',2);
+            calsize=filesize/1024.00;
+            finalSize=tr("文件大小： %1 KB").arg(calsize,0,'f',2);
         }else {
-            size=filesize;
-            finalSize=tr("文件大小： %1 B").arg(size,0,'f',2);
+            calsize=filesize;
+            finalSize=tr("文件大小： %1 B").arg(calsize,0,'f',2);
         }
         ui->labfilesize->setText(finalSize);
     }else{
         ui->labfilesize->setText("文件大小：未知");
     }
+    ui->btnStart->setEnabled(1);
 }
 
 void DownloadMessageWindow::on_btnStart_clicked()
 {
-    downloadwindow=new DownloadWindow(URL,savedFileName);
+    downloadwindow=new DownloadWindow(URL,savedFileName,size);
+    qDebug()<<size;
     connect(downloadwindow,SIGNAL(downloadThreadExist(DownloadWindow*)),SLOT(ondownloadThreadExist(DownloadWindow*)));
     downloadwindow->show();
     LastWindow->close();
@@ -145,6 +151,7 @@ void DownloadMessageWindow::on_btnStart_clicked()
 void DownloadMessageWindow::ongeterror()
 {
     ui->labfilesize->setText("文件大小： 未知");
+    ui->btnStart->setEnabled(1);
 }
 
 void DownloadMessageWindow::on_btnChoose_clicked()
@@ -164,8 +171,9 @@ void DownloadMessageWindow::on_btnChoose_clicked()
         }
         ui->linelocation->setText(savedFileName);
     }
-    QSettings set("PinsoftStudio","SecondDownlaoder");
+    QSettings set("Pinsoft","SecondDownlaoder");
     set.setValue("Download/SavingLocation/isDefault",0);
     set.setValue("Download/SavingLocation/location",savingLocation);
 }
+
 

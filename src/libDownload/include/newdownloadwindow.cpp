@@ -3,6 +3,8 @@
 #include "Style.h"
 #include "QUrl"
 #include <dialogcrtinf.h>
+#include <QClipboard>
+#include <QMimeData>
 NewDownloadWindow::NewDownloadWindow(QWidget *parent): QWidget(parent)
     , ui(new Ui::NewDownloadWindow)
 {
@@ -14,7 +16,13 @@ NewDownloadWindow::NewDownloadWindow(QWidget *parent): QWidget(parent)
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);
     ui->btnStart->setProperty("highlight","true");
-
+    const QClipboard *clip=QApplication::clipboard();
+    const QMimeData *mime=clip->mimeData();
+    QUrl url(mime->text());
+    if(!url.scheme().isEmpty()){
+        ui->lineurl->setText(mime->text());
+        ui->lineurl->selectAll();
+    }
 
 
 }

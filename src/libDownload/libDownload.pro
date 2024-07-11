@@ -14,6 +14,7 @@ CONFIG += c++17
 SOURCES += \
     include/downloadmessagewindow.cpp \
     include/downloadwindow.cpp \
+    include/fileappender.cpp \
     include/libdownload.cpp \
     include/newdownloadwindow.cpp
 
@@ -21,6 +22,7 @@ HEADERS += \
     Style.h \
     include/downloadmessagewindow.h \
     include/downloadwindow.h \
+    include/fileappender.h \
     include/libDownload_global.h \
     include/libdownload.h \
     include/newdownloadwindow.h

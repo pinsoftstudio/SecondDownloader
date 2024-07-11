@@ -20,23 +20,25 @@ class LIBDOWNLOAD_EXPORT LibDownload:public QThread
     Q_OBJECT
 
 public:
-    explicit LibDownload(QString startBytes,QString endBytes,QString savingLocation,QString downloadURL,QObject *parent);
+    explicit LibDownload(QString startBytes,QString endBytes,QString savingLocation,QString &downloadURL,QObject *parent);
     ~LibDownload();
     void getDownloadProgress(double &now,double &total);
     void setCnow(double now);
     void setCtotal(double total);
+    void setUnknown(bool unknown);
 private:
     QString downloadUrl;
     // QString location;
     CURL *curl;
-    FILE *file;
+    FILE *fp;
     CURLcode res;
     double Cnow=0;
     double Ctotal=0;
-    std::string location;
-    std::string StartBytes;
-    std::string EndBytes;
-    std::string URL;
+    bool unknownTotal=0;
+    QString location;
+   QString StartBytes;
+    QString EndBytes;
+    QString URL;
 protected:
     void run() Q_DECL_OVERRIDE;
 signals:
