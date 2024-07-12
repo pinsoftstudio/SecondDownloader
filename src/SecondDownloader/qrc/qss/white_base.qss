@@ -26,6 +26,9 @@ QPushButton[highlight="true"]{
 	border:1px solid rgb(20,115,197);
 	border-bottom: 2px solid rgb(0,62,115);
 }
+QPushButton[highlight="true"]:disabled{
+	background-color: rgb(3, 41, 74);
+}
 QPushButton[highlight="true"]:hover{
 	color: white;
 	background-color: rgb(25,117,197);

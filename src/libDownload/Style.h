@@ -43,18 +43,19 @@ static void setThisStyle()
 
 
     foreach (QWidget *aw, w) {
-        QString windowName=aw->metaObject()->className();
-        QFile qssFile;
-        if(dark){
-            qssFile.setFileName(QStringLiteral(":/surface/qss/dark_%1.qss").arg(windowName));
-        }else{
-            qssFile.setFileName(QStringLiteral(":/surface/qss/white_%1.qss").arg(windowName));
+        if(aw!=NULL){
+            QString windowName=aw->metaObject()->className();
+            QFile qssFile;
+            if(dark){
+                qssFile.setFileName(QStringLiteral(":/surface/qss/dark_%1.qss").arg(windowName));
+            }else{
+                qssFile.setFileName(QStringLiteral(":/surface/qss/white_%1.qss").arg(windowName));
+            }
+            qssFile.open(QIODevice::ReadOnly);
+            QString styleSheet=QString::fromLatin1(qssFile.readAll());
+            qssFile.close();
+            aw->setStyleSheet(styleSheet);
         }
-        qssFile.open(QIODevice::ReadOnly);
-        QString styleSheet=QString::fromLatin1(qssFile.readAll());
-        qssFile.close();
-        aw->setStyleSheet(styleSheet);
-
 
 
     }
@@ -66,6 +67,17 @@ static void setThisStyle()
 static void addToStyleControl(QWidget *widget){
 
     w.append(widget);
+}
+static void removeAll(){
+    w.clear();
+}
+static void removeFromControl(QWidget *widget){
+
+
+        w.removeOne(widget);
+
+
+
 }
 
 static void changeDark(bool toDark){

@@ -10,6 +10,9 @@
 #include <QString>
 #include <QDebug>
 #include <dialogcrtinf.h>
+#include <QWidget>
+#include "dialogdownloaded.h"
+#include "dialogcrtinf.h"
 DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalBytes,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DownloadWindow)
@@ -38,6 +41,7 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);
     // downloader=new LibDownload
+    //setAttribute(Qt::WA_DeleteOnClose);
     startDownload();
 
 }
@@ -47,8 +51,29 @@ DownloadWindow::~DownloadWindow()
     delete ui;
 }
 
+void DownloadWindow::makeAtray()
+{
+    tray=new QSystemTrayIcon(this);
+    trayMenu=new QMenu(this);
+    trayMenu->addAction(&actProgress);
+    setVisible(0);
+
+    tray->setIcon(QIcon(":/common/res/SecondDownloader-inner.png"));
+    connect(&actProgress,&QAction::triggered,this,&DownloadWindow::onMessageClicked);
+    tray->setContextMenu(trayMenu);
+    tray->show();
+    connect(tray,&QSystemTrayIcon::messageClicked,this,&DownloadWindow::onMessageClicked);
+    connect(tray,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this,SLOT(onTrayActivated(QSystemTrayIcon::ActivationReason)));
+
+    tray->showMessage(tr("下载对话框已隐藏至托盘"),tr("点击我或托盘查看下载进度。"),QSystemTrayIcon::Information);
+
+}
+
 void DownloadWindow::startDownload()
 {
+
+
     tempPath=QStandardPaths::writableLocation(QStandardPaths::TempLocation)+"/"+randomPath()+"/";
     QDir mkpth(tempPath);
     if(!mkpth.exists()){
@@ -62,8 +87,8 @@ void DownloadWindow::startDownload()
         isMultipal=true;
         qint64 mod=TotalBytes%8;
         qint64 commonToDownload=(TotalBytes-mod)/8;
-        qint64 lastToDownload=commonToDownload+mod;
-        qint64 startBytes=0;
+        // qint64 lastToDownload=commonToDownload+mod;
+        qint64 startBytes=-1;
 
         for(int i=0;i<7;i++){
             tempFilePathNames.append(tempPath+randomPath()+".downloading");
@@ -113,6 +138,59 @@ QString DownloadWindow::randomPath()
 
 }
 
+void DownloadWindow::getSuitableUnit(long double &bytes, QString &unit)
+{
+    double tempBytes=0;
+    if(bytes>=1024*1024*1024){
+        tempBytes=bytes/1024.00/1024.00/1024.00;
+
+        unit="GB";
+    }else if(bytes>=1024*1024){
+        tempBytes=bytes/1024.00/1024.00;
+        unit="MB";
+    }else if(bytes>=1024){
+        tempBytes=bytes/1024.00;
+        unit="KB";
+    }else {
+        tempBytes=bytes;
+        unit="B";
+    }
+    bytes=tempBytes;
+}
+
+void DownloadWindow::closeEvent(QCloseEvent *event)
+{
+    if(needtoclose){
+        event->accept();
+
+    }else{
+        makeAtray();
+         event->ignore();
+
+    }
+
+}
+
+void DownloadWindow::cleanup()
+{
+    if(isMultipal){
+        tmGetProgress->stop();
+        tmsetMainProgress->stop();
+
+        for(int i=0;i<8;i++){
+            if(downloaders[i]->isRunning()){
+                disconnect(downloaders[i],&LibDownload::started,this,&DownloadWindow::ondownloadFailed);
+                disconnect(downloaders[i],&LibDownload::finished,this,&DownloadWindow::ondownloadFinished);
+                downloaders[i]->terminate();
+                downloaders[i]->wait();
+            }
+        }
+    }
+    QDir dir;
+    QFileInfo fi(QDir::fromNativeSeparators(savedFilename));
+    dir.rmdir(fi.absolutePath());
+}
+
 void DownloadWindow::ondownloadThreadExist(DownloadWindow *download)
 {
 
@@ -120,6 +198,8 @@ void DownloadWindow::ondownloadThreadExist(DownloadWindow *download)
 
 void DownloadWindow::ondownloadFailed()
 {
+
+
     // DialogCrtInf crtInf;
     // QString title="错误";
     // QString text="下载失败！";
@@ -129,8 +209,35 @@ void DownloadWindow::ondownloadFailed()
 }
 void DownloadWindow::ondownloadFinished()
 {
-    if(isMultipal){
 
+
+    if(isMultipal){
+        finishedThreads++;
+        if(finishedThreads==8){
+            for(int i=0;i<8;i++){
+                downloaders[i]->terminate();
+                downloaders[i]->wait();
+                progressbar[i]->setMaximum(100);
+                progressbar[i]->setValue(100);
+                ui->labbytes->setText(tr("下载状态：全部下载完成！"));
+                ui->labstate->setText(tr("下载完成！"));
+                setWindowTitle(tr("下载完成！"));
+                actProgress.setText(tr("合并文件中..."));
+            }
+            tmGetProgress->stop();
+            tmsetMainProgress->stop();
+             ui->mainProgress->setValue(0);
+            ui->labstate->setText(tr("正在合并为一个文件..."));
+             setWindowTitle(tr("正在合并为一个文件..."));
+            appender=new fileAppender(savedFilename,this);
+            for(int j=0;j<8;j++){
+             appender->addToFileList(tempFilePathNames[j]);
+            }
+            connect(appender,&fileAppender::appendFailed,this,&DownloadWindow::onAppendFailed);
+            connect(appender,&fileAppender::appendSucceed,this,&DownloadWindow::onAppendSucceed);
+            connect(appender,SIGNAL(appendProgress(int,int)),this,SLOT(onGetAppendProgress(int,int)));
+            appender->start();
+        }
     }
 }
 
@@ -145,8 +252,6 @@ void DownloadWindow::ontmGetProgress()
             progressbar[i]->setMaximum(static_cast<qint64>(total));
             progressbar[i]->setValue(downloaded[i]);
             // downloadedBytes+=now;
-
-
         }
     }
 }
@@ -156,8 +261,9 @@ void DownloadWindow::onsetMainProgress(){
         qint64 totalDownloaded=0;
         for(int i=0;i<8;i++){
             totalDownloaded+=downloaded[i];
-             ui->mainProgress->setMaximum(TotalBytes);
+            ui->mainProgress->setMaximum(TotalBytes);
             ui->mainProgress->setValue(totalDownloaded);
+
         }
         nowDownloaded=totalDownloaded;
         qint64 thisDownloaded=nowDownloaded-lastDownloaded;
@@ -178,8 +284,91 @@ void DownloadWindow::onsetMainProgress(){
             }
             ui->labstate->setText(str.arg(speed, 0, 'f', 2));
         }
-        lastDownloaded=nowDownloaded;
+            lastDownloaded=nowDownloaded;
+            long double downloaded=nowDownloaded;
+            long double totals=TotalBytes;
+            QString totalunit="";
+            QString downloadedunit="";
+            getSuitableUnit(downloaded,downloadedunit);
+            getSuitableUnit(totals,totalunit);
+            actProgress.setText(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
+            ui->labbytes->setText(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
+            // if(tray!=Q_NULLPTR){
+            //     tray->setToolTip(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
+            // }
+
+
+
     }
 
+
+}
+
+void DownloadWindow::onGetAppendProgress(int now, int total)
+{
+    // ui->labstate->setText(tr("正在合并为一个文件..."));
+    ui->mainProgress->setMaximum(total);
+    ui->mainProgress->setValue(now);
+}
+
+
+
+void DownloadWindow::onAppendFailed()
+{
+     ui->labstate->setText(tr("合并失败！"));
+
+}
+
+void DownloadWindow::onAppendSucceed()
+{
+    ui->labstate->setText(tr("合并成功！"));
+     setWindowTitle(tr("合并成功！"));
+    appender->terminate();
+    appender->wait();
+    DialogDownloaded *diadown=new DialogDownloaded;
+    diadown->setSavedLocation(savedFilename);
+    diadown->show();
+    needtoclose=1;
+
+    close();
+}
+
+void DownloadWindow::onMessageClicked()
+{
+    delete tray;
+    show();
+}
+
+void DownloadWindow::onTrayActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    if(reason==QSystemTrayIcon::Trigger){
+        delete tray;
+        show();
+    }
+}
+
+void DownloadWindow::onActionTriggered()
+{
+    delete tray;
+    show();
+}
+
+
+
+
+
+void DownloadWindow::on_btncancel_clicked()
+{
+
+    cleanup();
+
+    needtoclose=1;
+    close();
+}
+
+
+void DownloadWindow::on_btnmin_clicked()
+{
+    makeAtray();
 }
 

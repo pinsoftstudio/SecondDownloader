@@ -49,9 +49,7 @@ LibDownload::~LibDownload()
     if (curl) {
         curl_easy_cleanup(curl);
     }
-    if (fp) {
-        fclose(fp);
-    }
+
 }
 
 void LibDownload::getDownloadProgress(double &now, double &total)
@@ -98,6 +96,9 @@ void LibDownload::run()
     headers = curl_slist_append(headers, ("Range: " + range.toStdString()).c_str());
 
     curl_easy_setopt(curl, CURLOPT_URL, URL.toStdString().c_str());
+    curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, 5);
+    curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, 1000);
+    curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 20);
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_to_file);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &file);

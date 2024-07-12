@@ -30,7 +30,7 @@ private:
     QString downloadUrl;
     // QString location;
     CURL *curl;
-    FILE *fp;
+
     CURLcode res;
     double Cnow=0;
     double Ctotal=0;

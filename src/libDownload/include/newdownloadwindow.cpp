@@ -23,6 +23,7 @@ NewDownloadWindow::NewDownloadWindow(QWidget *parent): QWidget(parent)
         ui->lineurl->setText(mime->text());
         ui->lineurl->selectAll();
     }
+    //setAttribute(Qt::WA_DeleteOnClose);
 
 
 }
