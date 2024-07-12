@@ -268,17 +268,17 @@ void DownloadWindow::onsetMainProgress(){
         nowDownloaded=totalDownloaded;
         qint64 thisDownloaded=nowDownloaded-lastDownloaded;
         if(thisDownloaded>0){
-            long double speed=thisDownloaded/1024.00/1024.00*4;
+            long double speed=thisDownloaded/1024.00/1024.00*4.00;
             QString str;
             if(speed>=1){
                 str=tr("正在下载...( %1 MB/s)");
                 // ui->label->setText(str.arg("正在下载...").arg(speed, 0, 'f', 2));
             }else if(speed*1024>=1){
-                speed=thisDownloaded/1024*12.5;
+                speed=thisDownloaded/1024.00*4.00;
                 str=tr("正在下载...( %1 KB/s)");
                 // ui->label->setText(str.arg("正在下载...").arg(speed, 0, 'f', 2));
             }else if(speed>=1){
-                speed=thisDownloaded*12.5;
+                speed=thisDownloaded*4.00;
                 str=tr("正在下载...( %1 B/s)");
                 // ui->label->setText(str.arg("正在下载...").arg(speed, 0, 'f', 2));
             }
