@@ -8,15 +8,12 @@
 #include <QPainter>
 #include <QPen>
 #include <QColor>
+#include "Style.h"
 class RadiusFrameLessDialog:public QDialog
 {
 public:
     explicit RadiusFrameLessDialog(QWidget *parent = nullptr);
     ~RadiusFrameLessDialog();
-    void setDark(bool dark);
-
-private:
-    bool Dark=1;
 protected:
     void paintEvent(QPaintEvent *event);
 };
@@ -32,10 +29,6 @@ inline RadiusFrameLessDialog::~RadiusFrameLessDialog()
 
 }
 
-inline void RadiusFrameLessDialog::setDark(bool dark)
-{
-    Dark=dark;
-}
 
 inline void RadiusFrameLessDialog::paintEvent(QPaintEvent *event)
 {
@@ -43,7 +36,7 @@ inline void RadiusFrameLessDialog::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     QColor color;
-    if(Dark)
+    if(isDark())
          color.setRgb(43,43,43);
     else
         color.setRgb(255,255,255);
@@ -61,7 +54,7 @@ inline void RadiusFrameLessDialog::paintEvent(QPaintEvent *event)
     painter.end();
     QPainter shadePainter(this);
     shadePainter.setPen(Qt::transparent);
-    if(Dark)
+    if(isDark())
         color.setRgb(32,32,32);
     else
         color.setRgb(243,243,243);

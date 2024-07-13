@@ -7,18 +7,10 @@ DialogCrtInf::DialogCrtInf(QWidget *parent)
     , ui(new Ui::DialogCrtInf)
 {
      ui->setupUi(this);
-    ui->btnYes->setProperty("highlight","true");
-    addToStyleControl(this);
-    setThisStyle();
-
-
-    Dark=getIsDark();
-    setDark(Dark);
-
-
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
+    ui->btnYes->setProperty("highlight","true");
 
 }
 
@@ -41,25 +33,5 @@ void DialogCrtInf::setText(QString &text)
      ui->label_2->setText(strText);
 }
 
-// void DialogCrtInf::paintEvent(QPaintEvent *event)
-// {
-
-
-//     QPainter painter(this);
-//     QColor color;
-
-//     if(Dark)
-//         color.setRgb(36,36,36);
-//     else
-//         color.setRgb(249,249,249);
-//     QPen pen;
-//     pen.setWidth(0);
-//     painter.setRenderHint(QPainter::Antialiasing);
-//     painter.setBrush(color);
-//     QRect rect = this->rect();
-//     painter.setPen(Qt::transparent);
-//     painter.drawRoundedRect(rect,20,20);
-
-// }
 
 

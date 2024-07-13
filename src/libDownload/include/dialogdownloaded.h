@@ -18,7 +18,7 @@ public:
 
 private:
     Ui::DialogDownloaded *ui;
-    bool Dark;
+
     QString fileLocation;
     QString folderLocation;
 

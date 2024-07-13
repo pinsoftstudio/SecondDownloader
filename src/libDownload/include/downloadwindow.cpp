@@ -35,8 +35,7 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
 
     }
     ui->laburl->setText(QStringLiteral("URL: %1").arg(URL));
-    addToStyleControl(this);
-    setThisStyle();
+
     // curl_global_init(CURL_GLOBAL_ALL);
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);

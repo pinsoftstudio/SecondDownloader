@@ -17,13 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     addWidgetTostackedWidget();
-    addToStyleControl(this);
     ui->toolMain->setProperty("select","true");
 
     // ui->toolDownload->setProperty("select","false");
     // ui->toolDonate->setProperty("select","false");
     // ui->toolSettings->setProperty("select","false");
-    setThisStyle();
     setClassToolButtonStyle();
 
     //BUG:Qt 6.7 QToolButton无法connectSlotByName()
@@ -41,14 +39,10 @@ void MainWindow::addWidgetTostackedWidget()
 {
     frmDownloadContent *dwncontent;
     dwncontent=new frmDownloadContent(this);
-    dwncontent->setDark(dark);
     mainPage=new frmMainPage(this);
-    mainPage->setDark(dark);
     connect(mainPage,SIGNAL(downloadThreadExist(DownloadWindow*)),this,SLOT(ondownloadThreadExist(DownloadWindow*)));
     set=new frmSettings(this);
-    set->setDark(dark);
     donate=new frmDonate(this);
-    donate->setDark(dark);
 
     ui->stackedWidget->insertWidget(0,mainPage);
     ui->stackedWidget->insertWidget(1,dwncontent);
@@ -62,33 +56,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// void MainWindow::ondownloadThreadexist(DownloadWindow *DownloadWindow)
-// {
-
-// }
-
-// void MainWindow::closeEvent(QCloseEvent *event)
-// {
-//     event->accept();
-// }
-
-
-// void MainWindow::closeEvent(QCloseEvent *event)  override
-// {
-//     // 在这里处理关闭事件
-//     // 例如，你可能想在这里弹出对话框询问用户是否真的想退出
-//     // 如果不想关闭窗口，可以调用 event->ignore();
-
-//     // 如果调用 event->accept();（或默认），窗口将关闭
-
-// }
-
-
-
 void MainWindow::setClassToolButtonStyle()
 {
 
-    if(dark){
+    if(isDark()){
         ui->toolMain->setIcon(QIcon(":/MainWindow/res/Main-Page_dark.png"));
         ui->toolDownload->setIcon(QIcon(":/MainWindow/res/Download-Content_dark.png"));
         ui->toolDonate->setIcon(QIcon(":/MainWindow/res/Donate_dark.png"));
@@ -142,27 +113,6 @@ void MainWindow::setClassToolButtonStyle()
     }
     ui->toolMenu->setChecked(!maxed);
 }
-
-
-// void MainWindow::on_toolMenu_clicked(bool checked)
-// {
-
-//     QSettings settings("Pinsoft","SecondDownloader");
-//     if(checked){
-//         settings.setValue("MainWindow/ToolbarMaxed",0);
-//     }else{
-//         settings.setValue("MainWindow/ToolbarMaxed",1);
-//     }
-//     if(checked){
-//         ui->toolMain->setToolButtonStyle(Qt::ToolButtonIconOnly);
-//         ui->toolDownload->setToolButtonStyle(Qt::ToolButtonIconOnly);
-//         ui->toolDonate->setToolButtonStyle(Qt::ToolButtonIconOnly);
-//         ui->toolSettings->setToolButtonStyle(Qt::ToolButtonIconOnly);
-
-//     }
-// }
-
-
 
 
 void MainWindow::on_toolMenu_clicked()
@@ -226,7 +176,7 @@ void MainWindow::on_toolMain_clicked()
     ui->toolDonate->setProperty("select","false");
     ui->toolSettings->setProperty("select","false");
     ui->stackedWidget->setCurrentIndex(0);
-    setThisStyle();
+    setCommonStyle();
 
 
 }
@@ -240,7 +190,7 @@ void MainWindow::on_toolDownload_clicked()
     ui->toolDonate->setProperty("select","false");
     ui->toolSettings->setProperty("select","false");
     ui->stackedWidget->setCurrentIndex(1);
-     setThisStyle();
+    setCommonStyle();
 }
 
 
@@ -252,7 +202,7 @@ void MainWindow::on_toolDonate_clicked()
     ui->toolDonate->setProperty("select","true");
     ui->toolSettings->setProperty("select","false");
     ui->stackedWidget->setCurrentIndex(2);
-     setThisStyle();
+    setCommonStyle();
 }
 
 
@@ -264,7 +214,7 @@ void MainWindow::on_toolSettings_clicked()
     ui->toolDonate->setProperty("select","false");
     ui->toolSettings->setProperty("select","true");
     ui->stackedWidget->setCurrentIndex(3);
-     setThisStyle();
+    setCommonStyle();
 }
 
 

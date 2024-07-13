@@ -170,3 +170,42 @@ QProgressBar::chunk {
 }
 
 
+
+
+
+
+
+/*MainWindow*/
+#MainWindow QToolButton{
+    padding-left: 2px;
+    border-radius: 6px;
+    color:black;
+
+}
+#MainWindow QToolButton:hover{
+    background-color:rgb(234,234,234) ;
+}
+#MainWindow QToolButton:pressed{
+    background-color:rgb(237,237,237) ;
+
+}
+#MainWindow QToolButton[select="true"]{
+    border-left: 2px solid qlineargradient(spread:reflect, x1:1, y1:0.517636, x2:1, y2:1, stop:0.631285 rgba(0, 103, 192, 255), stop:0.636872 rgba(243, 243, 243, 255));
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color:rgb(234,234,234) ;
+}
+
+#MainWindow{
+    background-color:rgb(243,243,243) ;
+
+}
+#MainWindow #stackedWidget{
+    background-color: white;
+    border-radius: 10px;
+
+
+}
+
+
+

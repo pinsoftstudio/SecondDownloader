@@ -8,14 +8,6 @@ DialogQuestion::DialogQuestion(QWidget *parent)
 {
      ui->setupUi(this);
     ui->btnYes->setProperty("highlight","true");
-    addToStyleControl(this);
-    setThisStyle();
-
-
-    Dark=getIsDark();
-    setDark(Dark);
-
-
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);

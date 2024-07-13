@@ -20,7 +20,7 @@ public:
     QString strTitle;
 
     QString strText;
-    bool Dark=0;
+
     void setTitle(QString &title);
     void setText(QString &text);
 

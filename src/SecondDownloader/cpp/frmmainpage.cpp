@@ -14,10 +14,8 @@ frmMainPage::frmMainPage(QWidget *parent)
     ui->setupUi(this);
     qint64 days=getInstalledDays();
     ui->labMain->setText(tr("已接管下载任务 %1 天").arg(days+1));
-    addToStyleControl(this);
     iniControl();
     // ui->pushButton->setProperty("highlight","true");
-    setThisStyle();
 }
 
 frmMainPage::~frmMainPage()

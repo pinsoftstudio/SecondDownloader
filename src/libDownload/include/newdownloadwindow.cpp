@@ -10,9 +10,6 @@ NewDownloadWindow::NewDownloadWindow(QWidget *parent): QWidget(parent)
 {
     if(parent!=nullptr)  setParent(this);
      ui->setupUi(this);
-    setCommonStyle();
-    addToStyleControl(this);
-    setThisStyle();
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);
     ui->btnStart->setProperty("highlight","true");

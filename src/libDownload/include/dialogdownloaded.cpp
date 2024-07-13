@@ -9,11 +9,7 @@ DialogDownloaded::DialogDownloaded(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::DialogDownloaded)
 {
-    addToStyleControl(this);
-    setThisStyle();
-    Dark=getIsDark();
     ui->setupUi(this);
-
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::FramelessWindowHint|Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground);
@@ -40,7 +36,7 @@ void DialogDownloaded::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     QColor color;
-    if(Dark)
+    if(isDark())
         color.setRgb(43,43,43);
     else
         color.setRgb(255,255,255);
@@ -58,7 +54,7 @@ void DialogDownloaded::paintEvent(QPaintEvent *event)
     painter.end();
     QPainter shadePainter(this);
     shadePainter.setPen(Qt::transparent);
-    if(Dark)
+    if(isDark())
         color.setRgb(32,32,32);
     else
         color.setRgb(243,243,243);

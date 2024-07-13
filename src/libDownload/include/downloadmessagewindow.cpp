@@ -20,10 +20,6 @@ DownloadMessageWindow::DownloadMessageWindow(QString url,QWidget *lastWindow,QWi
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);
     ui->btnStart->setProperty("highlight","true");
-    addToStyleControl(this);
-    setThisStyle();
-
-
     // ui->linelocation->setText(qurl.fileName());
 
     iniUi();
