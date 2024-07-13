@@ -13,7 +13,7 @@ DialogDownloaded::DialogDownloaded(QWidget *parent)
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::FramelessWindowHint|Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground);
-    //setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 DialogDownloaded::~DialogDownloaded()

@@ -40,7 +40,7 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);
     // downloader=new LibDownload
-    //setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_DeleteOnClose);
     startDownload();
 
 }

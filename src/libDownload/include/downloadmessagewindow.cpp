@@ -10,11 +10,15 @@
 #include "QFileInfo"
 #include <Style.h>
 #include <QFileDialog>
-DownloadMessageWindow::DownloadMessageWindow(QString url,QWidget *lastWindow,QWidget *parent)
+DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, bool passedNull, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DownloadMessageWindow)
 {
-    LastWindow=lastWindow;
+    passedNULL=passedNull;
+    if(!passedNull){
+        LastWindow=lastWindow;
+
+    }
     URL=url;
     ui->setupUi(this);
     Qt::WindowFlags flags;
@@ -138,8 +142,11 @@ void DownloadMessageWindow::on_btnStart_clicked()
     qDebug()<<size;
     connect(downloadwindow,SIGNAL(downloadThreadExist(DownloadWindow*)),SLOT(ondownloadThreadExist(DownloadWindow*)));
     downloadwindow->show();
-    LastWindow->close();
     close();
+    if(!passedNULL){
+        LastWindow->close();
+
+    }
 
 
 }

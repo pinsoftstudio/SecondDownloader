@@ -30,4 +30,15 @@
         <file>res/alipay.jpg</file>
         <file>res/wechatpay.png</file>
     </qresource>
+    <qresource prefix="/menu">
+        <file>res/menuico/about.png</file>
+        <file>res/menuico/donate.png</file>
+        <file>res/menuico/exit.png</file>
+        <file>res/menuico/github-fill.png</file>
+        <file>res/menuico/main.png</file>
+        <file>res/menuico/manage.png</file>
+        <file>res/menuico/new.png</file>
+        <file>res/menuico/settings.png</file>
+        <file>res/menuico/update.png</file>
+    </qresource>
 </RCC>

@@ -20,7 +20,7 @@ NewDownloadWindow::NewDownloadWindow(QWidget *parent): QWidget(parent)
         ui->lineurl->setText(mime->text());
         ui->lineurl->selectAll();
     }
-    //setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_DeleteOnClose);
 
 
 }
@@ -51,7 +51,7 @@ void NewDownloadWindow::on_btnStart_clicked()
         criticalBox.exec();
         return;
     }
-    downloadmessagewindow=new  DownloadMessageWindow(strurl,this,nullptr);
+    downloadmessagewindow=new  DownloadMessageWindow(strurl,this,0,nullptr);
     connect(downloadmessagewindow,SIGNAL(downloadThreadExist(DownloadWindow*)),this,SLOT(ondownloadThreadExist(DownloadWindow*)));
     downloadmessagewindow->setWindowModality(Qt::ApplicationModal);
     downloadmessagewindow->show();

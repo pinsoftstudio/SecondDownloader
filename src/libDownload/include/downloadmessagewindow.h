@@ -15,7 +15,7 @@ class LIBDOWNLOAD_EXPORT DownloadMessageWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit DownloadMessageWindow(QString url,QWidget *lastWindow,QWidget *parent = nullptr);
+    explicit DownloadMessageWindow(QString url, QWidget *lastWindow,bool passedNull, QWidget *parent = nullptr);
     ~DownloadMessageWindow();
 
 private:
@@ -27,6 +27,7 @@ private:
     QString savedFileName;
     qint64 size=0;
     void iniUi();
+    bool passedNULL;
     QPixmap getFilePixmap(QString fileLocation);
     QWidget *LastWindow;
     QTimer tmGetprogress;

@@ -9,7 +9,7 @@
 #include "QSettings"
 #include "QDebug"
 #include <header/frmdownloadcontent.h>
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(int mode, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
@@ -17,7 +17,30 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     addWidgetTostackedWidget();
-    ui->toolMain->setProperty("select","true");
+    switch (mode) {
+    case 0:
+        ui->stackedWidget->setCurrentIndex(0);
+        on_toolMain_clicked();
+        break;
+    case 1:
+        ui->stackedWidget->setCurrentIndex(1);
+        on_toolDownload_clicked();
+        break;
+    case 2:
+        ui->stackedWidget->setCurrentIndex(2);
+         on_toolSettings_clicked();
+        break;
+    case 3:
+        ui->stackedWidget->setCurrentIndex(3);
+        on_toolDonate_clicked();
+        break;
+
+    default:
+        break;
+
+
+    }
+
 
     // ui->toolDownload->setProperty("select","false");
     // ui->toolDonate->setProperty("select","false");
@@ -48,7 +71,8 @@ void MainWindow::addWidgetTostackedWidget()
     ui->stackedWidget->insertWidget(1,dwncontent);
     ui->stackedWidget->insertWidget(2,set);
     ui->stackedWidget->insertWidget(3,donate);
-    ui->stackedWidget->setCurrentIndex(0);
+
+
 
 }
 MainWindow::~MainWindow()
