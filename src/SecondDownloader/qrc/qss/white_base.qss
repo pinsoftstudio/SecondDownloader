@@ -1,5 +1,8 @@
 /*QPushButton*/
-
+*{
+	color: black;
+	
+}
 QPushButton {  
     border: 1px solid rgb(236,236,236); 
 	border-bottom-color: rgb(211, 211, 211);
@@ -11,6 +14,7 @@ QPushButton {
 
 QPushButton:hover
 {
+	
 	background-color:rgb(250, 250, 250);
  }
 
@@ -169,6 +173,51 @@ QProgressBar::chunk {
 	border-radius:  8px;
 }
 
+QTreeWidget::header:pressed {  
+    background-color: rgb(234, 234, 234);
+}  
+
+QTreeWidget QHeaderView::section:last{
+	border-top-right-radius: 6px;
+ 
+	border-bottom-right-radius: 6px;
+}
+ QTreeWidget QHeaderView::section:first{
+	border-top-left-radius: 6px;
+ 
+	border-bottom-left-radius: 6px;
+}
+QTreeWidget QHeaderView::section {  
+    background-color: rgb(245, 245, 245); 
+    color: black; 
+    padding-left: 4px; 
+	min-height:30px;
+	border-radius:0px;
+
+   
+}  
+QTreeWidget::item{  
+	min-height:30px;
+ 	color: black; 
+	 border: none;
+	 border-radius:0px;
+	 outline:none;
+}
+QTreeWidget::item:hover
+{
+	outline:none;
+	border: none;
+	border-radius:0px;
+	background-color:rgb(250, 250, 250);
+ }
+QTreeWidget::item:selected {  
+    
+	background-color: rgb(240, 240, 240); 
+	border: none;
+	border-radius:0px;
+	outline:none;
+}
+  
 
 
 
@@ -206,6 +255,7 @@ QProgressBar::chunk {
 
 
 }
+
 
 
 

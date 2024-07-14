@@ -7,6 +7,7 @@ frmSettings::frmSettings(QWidget *parent)
     , ui(new Ui::frmSettings)
 {
     ui->setupUi(this);
+
 }
 
 frmSettings::~frmSettings()

@@ -9,7 +9,27 @@
 #include "QEvent"
 #include "QSystemTrayIcon"
 #include "QMenu"
+#include "QSharedMemory"
+#include "QDataStream"
 // #include <QStatusBar>
+
+// struct sendShareDownloadData{
+//     QString  percentFinished="0.00";
+//     enum downloadItemState{PREDOWNLOAD,DOWNLOADING,SUCCEED,FAILED};
+//     QString URL;
+//     QString fileLocation;
+//     downloadItemState state=PREDOWNLOAD;
+
+// };
+// QDataStream& operator<<(QDataStream& out, const sendShareDownloadData& data) {
+//     out << data.percentFinished.toUtf8() << data.URL.toUtf8() << data.fileLocation.toUtf8();
+//     return out;
+// }
+
+// QDataStream& operator>>(QDataStream& in, sendShareDownloadData& data) {
+//     in >> data.percentFinished.toUtf8() >> data.URL .toUtf8()>> data.fileLocation.toUtf8();
+//     return in;
+// }
 namespace Ui {
 class DownloadWindow;
 }
@@ -21,7 +41,7 @@ class LIBDOWNLOAD_EXPORT DownloadWindow : public QWidget
 public:
     explicit DownloadWindow(QString url,QString saveFileName,qint64 totalBytes,QWidget *parent = nullptr);
     ~DownloadWindow();
-
+    // struct sendShareDownloadData data;
 
 private:
     // Qt UI 相关
@@ -30,7 +50,9 @@ private:
     QProgressBar *progressbar[8];
     QMenu *trayMenu;
     QAction actProgress;
-
+    QSharedMemory *share;
+    QSharedMemory *passKey;
+    void iniSharedMemory();
     // 自定义类或其他类实例
     LibDownload *downloaders[8];
     fileAppender *appender;
@@ -53,6 +75,7 @@ private:
     // Qt 定时器
     QTimer *tmGetProgress;
     QTimer *tmsetMainProgress;
+    QTimer *tmsendMemory;
 
     // 成员函数
     void makeAtray();
@@ -62,6 +85,8 @@ private:
     void closeEvent(QCloseEvent *event) override;
     void cleanup();
     int percent=0;
+    QString state;
+
     // QStatusBar *statusBar;
     // double downloadedBytes;
 
@@ -84,6 +109,7 @@ private slots:
 
     void on_btncancel_clicked();
     void on_btnmin_clicked();
+    void onsendMemory();
 };
 
 #endif // DOWNLOADWINDOW_H
