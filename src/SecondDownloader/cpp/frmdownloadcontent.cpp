@@ -44,7 +44,9 @@ frmDownloadContent::frmDownloadContent(QWidget *parent)
     tmRefreashDat=new QTimer;
     connect(tmRefreashDat,&QTimer::timeout,this,&frmDownloadContent::refreashDatFile);
     tmRefreashDat->start(5000);
+    iniTree();
     setDisplayMode(frmDownloadContent::all);
+
 
 }
 
@@ -149,6 +151,7 @@ void frmDownloadContent::onUpdateShare()
             QString sizeGetted;
             QString finalState;
             QString speed;
+
             updateShare->setKey(aKey);
             if(!updateShare->create(4096)){
                 updateShare->attach();
@@ -181,6 +184,7 @@ void frmDownloadContent::onUpdateShare()
                         aitem->setData(frmDownloadContent::state,Qt::UserRole,QVariant(stateGetted));
                         if(finalState=="下载成功" || finalState=="下载失败"){
                             aitem->setText(frmDownloadContent::downloadSpeed,"");
+                            // aitem->setText(frmDownloadContent::location,QDir::toNativeSeparators(filePathNameGetted));
                         }else{
                             aitem->setText(frmDownloadContent::downloadSpeed,speed);
                         }
@@ -241,9 +245,11 @@ void frmDownloadContent::addTreeItems(QString memoryShareName)
                      QFileInfo(QDir::toNativeSeparators(filePathNameGetted)).fileName());
     newItem->setText(frmDownloadContent::filesize,sizeGetted);
     newItem->setText(frmDownloadContent::downloadSpeed,speed);
+    newItem->setText(frmDownloadContent::location,QDir::toNativeSeparators(filePathNameGetted));
     newItem->setData(frmDownloadContent::fileName,Qt::UserRole,QVariant(urlGetted));
     newItem->setData(frmDownloadContent::filesize,Qt::UserRole,QVariant(memoryShareName));
     newItem->setData(frmDownloadContent::state,Qt::UserRole,QVariant(stateGetted));
+
     if(stateGetted=="pre"){
         finalState=tr("准备下载");
     }else if(stateGetted=="downloading"){
@@ -322,16 +328,20 @@ void frmDownloadContent::refreashDatFile()
         QDataStream datastream(&dataFile);
         datastream.setByteOrder(QDataStream::LittleEndian);
         int count=ui->treeWidget->topLevelItemCount();
+        QSettings set("Pinsoft","SecondDownloader");
+        set.setValue("DownloadContent",count);
         for(int i=0;i<count;i++){
             QString afileName;
             QString afileSize;
             QString afileState;
             QString aurl;
+            QString apathName;
             QTreeWidgetItem *aitem=ui->treeWidget->topLevelItem(i);
             afileName=aitem->text(frmDownloadContent::fileName);
             afileSize=aitem->text(frmDownloadContent::filesize);
             aurl=aitem->data(frmDownloadContent::fileName,Qt::UserRole).toString();
             afileState=aitem->data(frmDownloadContent::state,Qt::UserRole).toString();
+            apathName=aitem->text(frmDownloadContent::location);
             QByteArray btArray;
             btArray=afileName.toUtf8();
             qsizetype size=btArray.length();
@@ -344,6 +354,11 @@ void frmDownloadContent::refreashDatFile()
             datastream.writeBytes(btArray,btArray.length());
 
             btArray=aurl.toUtf8();
+            size=btArray.length();
+            datastream.writeRawData((char*)&size,sizeof(qsizetype));
+            datastream.writeBytes(btArray,btArray.length());
+
+            btArray=apathName.toUtf8();
             size=btArray.length();
             datastream.writeRawData((char*)&size,sizeof(qsizetype));
             datastream.writeBytes(btArray,btArray.length());
@@ -425,15 +440,61 @@ void frmDownloadContent::iniTree()
 {
     if(QFile("data/download.dat").exists()){
         QFile file("data/download.dat");
+        QSettings set("Pinsoft","SecondDownloader");
+        int itemCount=set.value("DownloadContent",0).toInt();
         if(file.open(QIODevice::ReadOnly)){
-            QDataStream datastream(&file);
-            datastream.setByteOrder(QDataStream::LittleEndian);
-            qsizetype size;
-            datastream.readRawData((char*)&size,sizeof(qsizetype));
-            char *buf;
-            datastream.readBytes(buf,size);
-            QString filename=QString::fromLocal8Bit(buf,size);
+            for (int i=0;i<itemCount;i++){
+
+                QDataStream datastream(&file);
+                datastream.setByteOrder(QDataStream::LittleEndian);
+                qsizetype size;
+                char *buf;
+                datastream.readRawData((char*)&size,sizeof(qsizetype));
+                datastream.readBytes(buf,size);
+                QString afilename=QString::fromLocal8Bit(buf,size);
+
+                datastream.readRawData((char*)&size,sizeof(qsizetype));
+                datastream.readBytes(buf,size);
+                QString afilesize=QString::fromLocal8Bit(buf,size);
+
+                datastream.readRawData((char*)&size,sizeof(qsizetype));
+                datastream.readBytes(buf,size);
+                QString aurl=QString::fromLocal8Bit(buf,size);
+
+                datastream.readRawData((char*)&size,sizeof(qsizetype));
+                datastream.readBytes(buf,size);
+                QString apathName=QString::fromLocal8Bit(buf,size);
+                QTreeWidgetItem *aitem=new  QTreeWidgetItem(ui->treeWidget);
+
+                datastream.readRawData((char*)&size,sizeof(qsizetype));
+                datastream.readBytes(buf,size);
+                QString astate=QString::fromLocal8Bit(buf,size);
+
+
+
+                aitem->setText(frmDownloadContent::fileName,afilename);
+                aitem->setText(frmDownloadContent::filesize,afilesize);
+                QString finalState;
+                if(astate.trimmed()=="pre"){
+                    finalState=tr("准备下载");
+                }else if(astate.trimmed()=="downloading"){
+                    finalState=tr("正在下载");
+                }else if(astate.trimmed()=="failed"){
+                    finalState=tr("下载失败");
+                }else if(astate.trimmed()=="succeed"){
+                    finalState=tr("下载成功");
+                }
+                aitem->setText(frmDownloadContent::state,finalState);
+                aitem->setData(frmDownloadContent::state,Qt::UserRole,QVariant(astate.trimmed()));
+                aitem->setText(frmDownloadContent::location,apathName.trimmed());
+                aitem->setData(frmDownloadContent::fileName,Qt::UserRole,aurl.trimmed());
+                ui->treeWidget->addTopLevelItem(aitem);
+                aitem=nullptr;
+
+
             // QString filename=datastream.readBytes()
+            }
+            file.close();
         }
     }
 

@@ -302,6 +302,11 @@ QPushButton:checked:pressed{
        <string>状态</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>保存位置</string>
+      </property>
+     </column>
     </widget>
    </item>
    <item>
