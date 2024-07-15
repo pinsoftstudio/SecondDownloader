@@ -21,6 +21,8 @@ public:
     ~frmDownloadContent();
     void setDark(bool isDark);
     enum treeColNum{fileName=0,filesize,downloadSpeed,state};
+    enum displayMode{all=0,downloading,succeed,faild};
+    void setDisplayMode(frmDownloadContent::displayMode mode);
 
 private:
     Ui::frmDownloadContent *ui;
@@ -33,6 +35,8 @@ private:
     QStringList keyGetted;
     QSharedMemory *innerMemory;
     QSharedMemory *updateShare;
+    QTimer *tmRefreashDat;
+    void iniTree();
 private slots:
     void onExistSThread(DownloadWindow* downloadwindow);
     void on_btnSelect_clicked(bool checked);
@@ -41,7 +45,14 @@ private slots:
     void onUpdateShare();
     void addTreeItems(QString memoryShareName);
     void getShareName();
+    void refreashDatFile();
 
+
+
+    void on_btnAll_clicked();
+    void on_btnDownloading_clicked();
+    void on_btnSucceed_clicked();
+    void on_btnFailed_clicked();
 };
 
 #endif // FRMDOWNLOADCONTENT_H

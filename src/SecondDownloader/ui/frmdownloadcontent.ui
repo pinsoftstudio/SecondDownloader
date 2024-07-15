@@ -49,8 +49,33 @@
          <height>31</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton:checked{
+	color: white;
+	background-color: rgb(0,103,192);
+	border:1px solid rgb(20,115,197);
+	border-bottom: 2px solid rgb(0,62,115);
+}
+QPushButton:selected:disabled{
+	background-color: rgb(3, 41, 74);
+}
+QPushButton:checked:hover{
+	color: white;
+	background-color: rgb(25,117,197);
+	border:1px solid rgb(43,128,202);
+	border-bottom: 2px solid rgb(15,70,118);
+}
+QPushButton:checked:pressed{
+	color: rgb(194,218,239);
+	background-color: rgb(25,117,197);
+	border: 0px ;
+}</string>
+       </property>
        <property name="text">
         <string>全部</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -84,8 +109,33 @@
          <height>31</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton:checked{
+	color: white;
+	background-color: rgb(0,103,192);
+	border:1px solid rgb(20,115,197);
+	border-bottom: 2px solid rgb(0,62,115);
+}
+QPushButton:selected:disabled{
+	background-color: rgb(3, 41, 74);
+}
+QPushButton:checked:hover{
+	color: white;
+	background-color: rgb(25,117,197);
+	border:1px solid rgb(43,128,202);
+	border-bottom: 2px solid rgb(15,70,118);
+}
+QPushButton:checked:pressed{
+	color: rgb(194,218,239);
+	background-color: rgb(25,117,197);
+	border: 0px ;
+}</string>
+       </property>
        <property name="text">
         <string>下载中</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -119,8 +169,33 @@
          <height>31</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton:checked{
+	color: white;
+	background-color: rgb(0,103,192);
+	border:1px solid rgb(20,115,197);
+	border-bottom: 2px solid rgb(0,62,115);
+}
+QPushButton:selected:disabled{
+	background-color: rgb(3, 41, 74);
+}
+QPushButton:checked:hover{
+	color: white;
+	background-color: rgb(25,117,197);
+	border:1px solid rgb(43,128,202);
+	border-bottom: 2px solid rgb(15,70,118);
+}
+QPushButton:checked:pressed{
+	color: rgb(194,218,239);
+	background-color: rgb(25,117,197);
+	border: 0px ;
+}</string>
+       </property>
        <property name="text">
         <string>下载成功</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -154,8 +229,33 @@
          <height>31</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton:checked{
+	color: white;
+	background-color: rgb(0,103,192);
+	border:1px solid rgb(20,115,197);
+	border-bottom: 2px solid rgb(0,62,115);
+}
+QPushButton:selected:disabled{
+	background-color: rgb(3, 41, 74);
+}
+QPushButton:checked:hover{
+	color: white;
+	background-color: rgb(25,117,197);
+	border:1px solid rgb(43,128,202);
+	border-bottom: 2px solid rgb(15,70,118);
+}
+QPushButton:checked:pressed{
+	color: rgb(194,218,239);
+	background-color: rgb(25,117,197);
+	border: 0px ;
+}</string>
+       </property>
        <property name="text">
         <string>下载失败</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

@@ -41,6 +41,10 @@ frmDownloadContent::frmDownloadContent(QWidget *parent)
     tmUpdateShare=new QTimer;
     connect(tmUpdateShare,&QTimer::timeout,this,&frmDownloadContent::onUpdateShare);
     tmUpdateShare->start(100);
+    tmRefreashDat=new QTimer;
+    connect(tmRefreashDat,&QTimer::timeout,this,&frmDownloadContent::refreashDatFile);
+    tmRefreashDat->start(5000);
+    setDisplayMode(frmDownloadContent::all);
 
 }
 
@@ -172,12 +176,15 @@ void frmDownloadContent::onUpdateShare()
                 for(int i=0;i<count;i++){
                     QTreeWidgetItem *aitem=ui->treeWidget->topLevelItem(i);
                     if(aitem->
-                        data(frmDownloadContent::state,Qt::UserRole)==aKey){
+                        data(frmDownloadContent::filesize,Qt::UserRole)==aKey){
                         aitem->setText(frmDownloadContent::state,finalState);
+                        aitem->setData(frmDownloadContent::state,Qt::UserRole,QVariant(stateGetted));
                         if(finalState=="下载成功" || finalState=="下载失败"){
                             aitem->setText(frmDownloadContent::downloadSpeed,"");
+                        }else{
+                            aitem->setText(frmDownloadContent::downloadSpeed,speed);
                         }
-                        aitem->setText(frmDownloadContent::downloadSpeed,speed);
+
                         aitem=nullptr;
                     }
                 }
@@ -229,13 +236,14 @@ void frmDownloadContent::addTreeItems(QString memoryShareName)
         goto tryagain;
     }
     QTreeWidgetItem *newItem=new QTreeWidgetItem(ui->treeWidget);
+
     newItem->setText(frmDownloadContent::fileName,
                      QFileInfo(QDir::toNativeSeparators(filePathNameGetted)).fileName());
     newItem->setText(frmDownloadContent::filesize,sizeGetted);
     newItem->setText(frmDownloadContent::downloadSpeed,speed);
     newItem->setData(frmDownloadContent::fileName,Qt::UserRole,QVariant(urlGetted));
-    newItem->setData(frmDownloadContent::state,Qt::UserRole,QVariant(memoryShareName));
-
+    newItem->setData(frmDownloadContent::filesize,Qt::UserRole,QVariant(memoryShareName));
+    newItem->setData(frmDownloadContent::state,Qt::UserRole,QVariant(stateGetted));
     if(stateGetted=="pre"){
         finalState=tr("准备下载");
     }else if(stateGetted=="downloading"){
@@ -246,6 +254,7 @@ void frmDownloadContent::addTreeItems(QString memoryShareName)
         finalState=tr("下载成功");
     }
     newItem->setText(frmDownloadContent::state,finalState);
+
     keyGetted.append(memoryShareName);
     ui->treeWidget->addTopLevelItem(newItem);
 
@@ -303,5 +312,154 @@ void frmDownloadContent::getShareName()
 
 
 
+}
+
+void frmDownloadContent::refreashDatFile()
+{
+    if(!QDir("data/").exists()){QDir().mkdir("data/");}
+    QFile dataFile("data/download.dat");
+    if(dataFile.open(QIODevice::WriteOnly)){
+        QDataStream datastream(&dataFile);
+        datastream.setByteOrder(QDataStream::LittleEndian);
+        int count=ui->treeWidget->topLevelItemCount();
+        for(int i=0;i<count;i++){
+            QString afileName;
+            QString afileSize;
+            QString afileState;
+            QString aurl;
+            QTreeWidgetItem *aitem=ui->treeWidget->topLevelItem(i);
+            afileName=aitem->text(frmDownloadContent::fileName);
+            afileSize=aitem->text(frmDownloadContent::filesize);
+            aurl=aitem->data(frmDownloadContent::fileName,Qt::UserRole).toString();
+            afileState=aitem->data(frmDownloadContent::state,Qt::UserRole).toString();
+            QByteArray btArray;
+            btArray=afileName.toUtf8();
+            qsizetype size=btArray.length();
+            datastream.writeRawData((char*)&size,sizeof(qsizetype));
+            datastream.writeBytes(btArray,btArray.length());
+
+            btArray=afileSize.toUtf8();
+            size=btArray.length();
+            datastream.writeRawData((char*)&size,sizeof(qsizetype));
+            datastream.writeBytes(btArray,btArray.length());
+
+            btArray=aurl.toUtf8();
+            size=btArray.length();
+            datastream.writeRawData((char*)&size,sizeof(qsizetype));
+            datastream.writeBytes(btArray,btArray.length());
+
+            btArray=afileState.toUtf8();
+            size=btArray.length();
+            datastream.writeRawData((char*)&size,sizeof(qsizetype));
+            datastream.writeBytes(btArray,btArray.length());
+            aitem=nullptr;
+
+        }
+
+        dataFile.close();
+    }
+
+}
+
+void frmDownloadContent::setDisplayMode(displayMode mode)
+{
+    int count=ui->treeWidget->topLevelItemCount();
+    switch (mode) {
+    case 0:
+        ui->btnAll->setChecked(1);
+        ui->btnDownloading->setChecked(0);
+        ui->btnSucceed->setChecked(0);
+        ui->btnFailed->setChecked(0);
+        for(int i=0;i<count;i++){
+            QTreeWidgetItem *aitem=ui->treeWidget->topLevelItem(i);
+            aitem->setHidden(0);
+        }
+
+        break;
+    case 1:
+        ui->btnAll->setChecked(0);
+        ui->btnDownloading->setChecked(1);
+        ui->btnSucceed->setChecked(0);
+        ui->btnFailed->setChecked(0);
+        for(int i=0;i<count;i++){
+            QTreeWidgetItem *aitem=ui->treeWidget->topLevelItem(i);
+            if(aitem->data(frmDownloadContent::state,Qt::UserRole).toString()=="downloading"
+                ||aitem->data(frmDownloadContent::state,Qt::UserRole).toString()=="pre"){
+                aitem->setHidden(0);
+            }else{
+                aitem->setHidden(1);
+            }
+        }
+        break;
+    case 2:
+        ui->btnAll->setChecked(0);
+        ui->btnDownloading->setChecked(0);
+        ui->btnSucceed->setChecked(1);
+        ui->btnFailed->setChecked(0);
+        for(int i=0;i<count;i++){
+            QTreeWidgetItem *aitem=ui->treeWidget->topLevelItem(i);
+            if(aitem->data(frmDownloadContent::state,Qt::UserRole).toString()=="succeed"){
+                aitem->setHidden(0);
+            }else{
+                aitem->setHidden(1);
+            }
+        }
+        break;
+    case 3:
+        ui->btnAll->setChecked(0);
+        ui->btnDownloading->setChecked(0);
+        ui->btnSucceed->setChecked(0);
+        ui->btnFailed->setChecked(1);
+        for(int i=0;i<count;i++){
+            QTreeWidgetItem *aitem=ui->treeWidget->topLevelItem(i);
+            if(aitem->data(frmDownloadContent::state,Qt::UserRole).toString()=="failed"){
+                aitem->setHidden(0);
+            }else{
+                aitem->setHidden(1);
+            }
+        }
+    }
+}
+
+void frmDownloadContent::iniTree()
+{
+    if(QFile("data/download.dat").exists()){
+        QFile file("data/download.dat");
+        if(file.open(QIODevice::ReadOnly)){
+            QDataStream datastream(&file);
+            datastream.setByteOrder(QDataStream::LittleEndian);
+            qsizetype size;
+            datastream.readRawData((char*)&size,sizeof(qsizetype));
+            char *buf;
+            datastream.readBytes(buf,size);
+            QString filename=QString::fromLocal8Bit(buf,size);
+            // QString filename=datastream.readBytes()
+        }
+    }
+
+}
+
+
+void frmDownloadContent::on_btnAll_clicked()
+{
+    setDisplayMode(frmDownloadContent::all);
+}
+
+
+void frmDownloadContent::on_btnDownloading_clicked()
+{
+    setDisplayMode(frmDownloadContent::downloading);
+}
+
+
+void frmDownloadContent::on_btnSucceed_clicked()
+{
+    setDisplayMode(frmDownloadContent::succeed);
+}
+
+
+void frmDownloadContent::on_btnFailed_clicked()
+{
+    setDisplayMode(frmDownloadContent::faild);
 }
 

@@ -50,7 +50,7 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
     startDownload();
     tmsendMemory=new QTimer;
     connect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
-    tmsendMemory->start(100);
+    tmsendMemory->start(50);
 
 }
 
@@ -298,8 +298,8 @@ void DownloadWindow::ondownloadFinished()
     if(isMultipal){
         finishedThreads++;
         if(finishedThreads==8){
-            state="succeed";
-            strspeed="";
+
+
             for(int i=0;i<8;i++){
                 downloaders[i]->terminate();
                 downloaders[i]->wait();
@@ -324,6 +324,8 @@ void DownloadWindow::ondownloadFinished()
             connect(appender,&fileAppender::appendSucceed,this,&DownloadWindow::onAppendSucceed);
             connect(appender,SIGNAL(appendProgress(int,int)),this,SLOT(onGetAppendProgress(int,int)));
             appender->start();
+            state="succeed";
+            strspeed="";
 
         }
     }
@@ -427,7 +429,7 @@ void DownloadWindow::onAppendSucceed()
     tmsendMemory->stop();
     disconnect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
     close();
-     cleanup();
+    cleanup();
 }
 
 void DownloadWindow::onMessageClicked()
