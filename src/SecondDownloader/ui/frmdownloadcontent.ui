@@ -202,62 +202,6 @@
        <string>状态</string>
       </property>
      </column>
-     <item>
-      <property name="text">
-       <string>sysdiag.exe</string>
-      </property>
-      <property name="text">
-       <string>24MB</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string>下载完成</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>SecondDownloader.exe</string>
-      </property>
-      <property name="text">
-       <string>60MB</string>
-      </property>
-      <property name="text">
-       <string>15MB/s</string>
-      </property>
-      <property name="text">
-       <string>正在下载</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Office 2024 Pro</string>
-      </property>
-      <property name="text">
-       <string>2.8GB</string>
-      </property>
-      <property name="text">
-       <string>60MB/s</string>
-      </property>
-      <property name="text">
-       <string>正在下载</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>360setup.exe</string>
-      </property>
-      <property name="text">
-       <string>200MB</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string>下载失败</string>
-      </property>
-     </item>
     </widget>
    </item>
    <item>

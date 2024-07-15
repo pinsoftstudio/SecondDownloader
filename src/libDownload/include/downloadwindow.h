@@ -11,25 +11,7 @@
 #include "QMenu"
 #include "QSharedMemory"
 #include "QDataStream"
-// #include <QStatusBar>
 
-// struct sendShareDownloadData{
-//     QString  percentFinished="0.00";
-//     enum downloadItemState{PREDOWNLOAD,DOWNLOADING,SUCCEED,FAILED};
-//     QString URL;
-//     QString fileLocation;
-//     downloadItemState state=PREDOWNLOAD;
-
-// };
-// QDataStream& operator<<(QDataStream& out, const sendShareDownloadData& data) {
-//     out << data.percentFinished.toUtf8() << data.URL.toUtf8() << data.fileLocation.toUtf8();
-//     return out;
-// }
-
-// QDataStream& operator>>(QDataStream& in, sendShareDownloadData& data) {
-//     in >> data.percentFinished.toUtf8() >> data.URL .toUtf8()>> data.fileLocation.toUtf8();
-//     return in;
-// }
 namespace Ui {
 class DownloadWindow;
 }
@@ -64,7 +46,7 @@ private:
     QList<QString> tempFilePathNames;
     bool isMultipal = 1;
     bool needtoclose = 0;
-    qint64 TotalBytes;
+    qint64 TotalBytes=0;
     qint64 commonToDownload;
     qint64 lastToDownload;
     qint64 downloaded[8];
@@ -86,6 +68,8 @@ private:
     void cleanup();
     int percent=0;
     QString state;
+    QString key;
+    QString strspeed="0B/s";
 
     // QStatusBar *statusBar;
     // double downloadedBytes;

@@ -15,14 +15,17 @@
 #include "dialogcrtinf.h"
 #include <QBuffer>
 #include <iostream>
+#include <QThread>
+#include <QMessageBox>
 DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalBytes,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DownloadWindow)
 {
     URL=url;
     savedFilename=saveFileName;
-    iniSharedMemory();
+
     TotalBytes=totalBytes;
+    iniSharedMemory();
 
     qDebug()<<TotalBytes;
     ui->setupUi(this);
@@ -43,7 +46,7 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);
     // downloader=new LibDownload
-    setAttribute(Qt::WA_DeleteOnClose);
+    // setAttribute(Qt::WA_DeleteOnClose);
     startDownload();
     tmsendMemory=new QTimer;
     connect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
@@ -53,8 +56,7 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
 
 DownloadWindow::~DownloadWindow()
 {
-    share->detach();
-    passKey->detach();
+
     delete ui;
 
 
@@ -63,40 +65,24 @@ DownloadWindow::~DownloadWindow()
 void DownloadWindow::iniSharedMemory()
 {
     qDebug()<<"head";
-    QString   key=randomPath();
-    passKey=new QSharedMemory("passkey");
-
-    if(!passKey->create(1024)){
-        qDebug()<<"Create passKey memory error.";
-        passKey->attach();
-
-    }
-    if(!passKey->lock()){
-        passKey->detach();
-        qDebug()<<"Lock passKey memory error.";
-        return;
-    }
-    char *toKey=static_cast<char*>(passKey->data());
-    QBuffer keyBuffer;
-    keyBuffer.open(QBuffer::WriteOnly);
-    QDataStream keyStream(&keyBuffer);
-    keyStream<<key.toUtf8();
-
-    memcpy(toKey,keyBuffer.data().data(),keyBuffer.size());
-    passKey->unlock();
-      // 共享key
-
-
-
-    share=new QSharedMemory(randomPath());
-
+    key=randomPath();
+    long  double totals=TotalBytes;
+    QString unit;
+    getSuitableUnit(totals,unit);
+    share=new QSharedMemory(key);
+    qDebug()<<"passkey:"<<key;
     if(!share->create(4096)){
+        if(share->attach()){
+            qDebug()<<"share attached";
+        }else{
+            qDebug()<<"share attached error";
+        }
         return;
         qDebug()<<"Create share memory error.";
 
     }
     if(!share->lock()){
-        share->detach();
+
         qDebug()<<"Lock share memory error.";
         return;
     }
@@ -105,9 +91,37 @@ void DownloadWindow::iniSharedMemory()
     buffer.open(QBuffer::WriteOnly);
     QDataStream stream(&buffer);
     state="pre";
-    stream<<savedFilename.toUtf8()<<URL.toUtf8()<<state.toUtf8();
+    //QMessageBox::information(this,"",QStringLiteral("%1 %2").arg(totals,0,'f',2).arg(unit));
+    stream<<savedFilename<<URL<<state<<QStringLiteral("%1 %2").arg(totals,0,'f',2).arg(unit)<<strspeed;
     memcpy(to,buffer.data().data(),buffer.size());
     share->unlock();
+
+    passKey=new QSharedMemory("passkey");
+
+    if(!passKey->create(1024)){
+        qDebug()<<"Create passKey memory error.";
+        passKey->attach();
+
+    }
+    link:
+    if(!passKey->lock()){
+            QThread::msleep(1000);
+        qDebug()<<"Lock passKey memory error.";
+            goto link;
+    }
+
+    char *toKey=static_cast<char*>(passKey->data());
+    QBuffer keyBuffer;
+    keyBuffer.open(QBuffer::WriteOnly);
+    QDataStream keyStream(&keyBuffer);
+    keyStream<<key;
+
+    memcpy(toKey,keyBuffer.data(),keyBuffer.size());
+    passKey->unlock();
+      // 共享key
+
+
+
 
 
 }
@@ -202,7 +216,7 @@ QString DownloadWindow::randomPath()
 
 void DownloadWindow::getSuitableUnit(long double &bytes, QString &unit)
 {
-    double tempBytes=0;
+    long double tempBytes=0;
     if(bytes>=1024*1024*1024){
         tempBytes=bytes/1024.00/1024.00/1024.00;
 
@@ -251,6 +265,14 @@ void DownloadWindow::cleanup()
     QDir dir;
     QFileInfo fi(QDir::fromNativeSeparators(savedFilename));
     dir.rmdir(fi.absolutePath());
+    if(share->isAttached()){
+        share->detach();
+    }
+    if(passKey->isAttached()){
+        passKey->detach();
+    }
+
+    tmsendMemory->stop();
 }
 
 void DownloadWindow::ondownloadThreadExist(DownloadWindow *download)
@@ -261,7 +283,7 @@ void DownloadWindow::ondownloadThreadExist(DownloadWindow *download)
 void DownloadWindow::ondownloadFailed()
 {
     state="failed";
-
+    // cleanup();
     // DialogCrtInf crtInf;
     // QString title="错误";
     // QString text="下载失败！";
@@ -276,13 +298,15 @@ void DownloadWindow::ondownloadFinished()
     if(isMultipal){
         finishedThreads++;
         if(finishedThreads==8){
+            state="succeed";
+            strspeed="";
             for(int i=0;i<8;i++){
                 downloaders[i]->terminate();
                 downloaders[i]->wait();
                 progressbar[i]->setMaximum(100);
                 progressbar[i]->setValue(100);
                 ui->labbytes->setText(tr("下载状态：全部下载完成！"));
-                state="finished";
+
                 ui->labstate->setText(tr("下载完成！"));
                 setWindowTitle(tr("下载完成！"));
                 actProgress.setText(tr("合并文件中..."));
@@ -300,6 +324,7 @@ void DownloadWindow::ondownloadFinished()
             connect(appender,&fileAppender::appendSucceed,this,&DownloadWindow::onAppendSucceed);
             connect(appender,SIGNAL(appendProgress(int,int)),this,SLOT(onGetAppendProgress(int,int)));
             appender->start();
+
         }
     }
 }
@@ -330,22 +355,27 @@ void DownloadWindow::onsetMainProgress(){
         }
         nowDownloaded=totalDownloaded;
         qint64 thisDownloaded=nowDownloaded-lastDownloaded;
+        QString tempspeed;
         if(thisDownloaded>0){
             long double speed=thisDownloaded/1024.00/1024.00*4.00;
             QString str;
             if(speed>=1){
                 str=tr("正在下载...( %1 MB/s)");
+                tempspeed=QStringLiteral("%1 MB/s");
                 // ui->label->setText(str.arg("正在下载...").arg(speed, 0, 'f', 2));
             }else if(speed*1024>=1){
                 speed=thisDownloaded/1024.00*4.00;
                 str=tr("正在下载...( %1 KB/s)");
+                tempspeed=QStringLiteral("%1 KB/s");
                 // ui->label->setText(str.arg("正在下载...").arg(speed, 0, 'f', 2));
             }else if(speed>=1){
                 speed=thisDownloaded*4.00;
                 str=tr("正在下载...( %1 B/s)");
+                tempspeed=QStringLiteral("%1 B/s");
                 // ui->label->setText(str.arg("正在下载...").arg(speed, 0, 'f', 2));
             }
             ui->labstate->setText(str.arg(speed, 0, 'f', 2));
+            strspeed=tempspeed.arg(speed, 0, 'f', 2);
         }
             lastDownloaded=nowDownloaded;
             long double downloaded=nowDownloaded;
@@ -356,6 +386,7 @@ void DownloadWindow::onsetMainProgress(){
             getSuitableUnit(totals,totalunit);
             actProgress.setText(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
             ui->labbytes->setText(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
+            state="downloading";
             // if(tray!=Q_NULLPTR){
             //     tray->setToolTip(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
             // }
@@ -379,6 +410,7 @@ void DownloadWindow::onGetAppendProgress(int now, int total)
 void DownloadWindow::onAppendFailed()
 {
      ui->labstate->setText(tr("合并失败！"));
+      cleanup();
 
 }
 
@@ -393,9 +425,9 @@ void DownloadWindow::onAppendSucceed()
     diadown->show();
     needtoclose=1;
     tmsendMemory->stop();
-    connect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
-
+    disconnect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
     close();
+     cleanup();
 }
 
 void DownloadWindow::onMessageClicked()
@@ -439,8 +471,11 @@ void DownloadWindow::on_btnmin_clicked()
 
 void DownloadWindow::onsendMemory()
 {
+    long double totals=TotalBytes;
+    QString unit;
+    getSuitableUnit(totals,unit);
     if(!share->lock()){
-        share->detach();
+
         qDebug()<<"Lock share memory error.";
         return;
     }
@@ -448,7 +483,8 @@ void DownloadWindow::onsendMemory()
     QBuffer buffer;
     buffer.open(QBuffer::WriteOnly);
     QDataStream stream(&buffer);
-    stream<<savedFilename.toUtf8()<<URL.toUtf8()<<state.toUtf8();
+    qDebug()<<QStringLiteral("%1 %2").arg(totals,0,'f',2).arg(unit);
+    stream<<savedFilename<<URL<<state<<QStringLiteral("%1 %2").arg(totals,0,'f',2).arg(unit)<<strspeed;
     memcpy(to,buffer.data().data(),buffer.size());
     share->unlock();
 }

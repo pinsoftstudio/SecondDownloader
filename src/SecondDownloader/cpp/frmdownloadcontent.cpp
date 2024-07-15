@@ -7,6 +7,12 @@
 #include "QTreeWidgetItem"
 #include "QMenu"
 #include "QActionGroup"
+#include "QBuffer"
+#include "QThread"
+#include "QDataStream"
+#include "QFileInfo"
+#include "QDir"
+
 frmDownloadContent::frmDownloadContent(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmDownloadContent)
@@ -21,6 +27,20 @@ frmDownloadContent::frmDownloadContent(QWidget *parent)
      MainWindow *Parent;
     Parent=qobject_cast<MainWindow *>(parent);
     connect(Parent,SIGNAL(downloadThreadExist(DownloadWindow*)),this,SLOT(onExistSThread(DownloadWindow*)));
+    innerMemory=new QSharedMemory;
+    sdGetKey=new QSharedMemory;
+    updateShare=new QSharedMemory;
+    sdGetKey->setKey("passkey");
+    if(!sdGetKey->create(1024)){
+        sdGetKey->attach(QSharedMemory::ReadOnly);
+    }
+    tmGetNewShareName=new QTimer;
+    tmGetNewShareName->setInterval(1);
+    connect(tmGetNewShareName,&QTimer::timeout,this,&frmDownloadContent::onTMGetNewShareName);
+    tmGetNewShareName->start();
+    tmUpdateShare=new QTimer;
+    connect(tmUpdateShare,&QTimer::timeout,this,&frmDownloadContent::onUpdateShare);
+    tmUpdateShare->start(100);
 
 }
 
@@ -103,7 +123,6 @@ void frmDownloadContent::onCustomContextMenuRequested(const QPoint &pos)
     connect(actProperty,&QAction::triggered,[=]{});
 
 
-
     treeMenu->exec(QCursor::pos());
 
 
@@ -111,16 +130,178 @@ void frmDownloadContent::onCustomContextMenuRequested(const QPoint &pos)
 
 }
 
+void frmDownloadContent::onTMGetNewShareName()
+{
+    getShareName();
+}
+
+void frmDownloadContent::onUpdateShare()
+{
+    if(keyGetted.count()>0){
+        foreach (const QString aKey, keyGetted) {
+            QString urlGetted;
+            QString filePathNameGetted;
+            QString stateGetted;
+            QString sizeGetted;
+            QString finalState;
+            QString speed;
+            updateShare->setKey(aKey);
+            if(!updateShare->create(4096)){
+                updateShare->attach();
+            }
+            if(updateShare->lock()){
+                QBuffer getBuffer;
+                getBuffer.setData((char*)updateShare->constData(),updateShare->size());
+                getBuffer.open(QBuffer::ReadWrite);
+                QDataStream stream (&getBuffer);
+                stream>>filePathNameGetted>>urlGetted>>stateGetted>>sizeGetted>>speed;
+                getBuffer.close();
+                innerMemory->unlock();
+
+                if(stateGetted=="pre"){
+                    finalState=tr("准备下载");
+                }else if(stateGetted=="downloading"){
+                    finalState=tr("正在下载");
+                }else if(stateGetted=="failed"){
+                    finalState=tr("下载失败");
+                }else if(stateGetted=="succeed"){
+                    finalState=tr("下载成功");
+                }
+
+                int  count=ui->treeWidget->topLevelItemCount();
+                for(int i=0;i<count;i++){
+                    QTreeWidgetItem *aitem=ui->treeWidget->topLevelItem(i);
+                    if(aitem->
+                        data(frmDownloadContent::state,Qt::UserRole)==aKey){
+                        aitem->setText(frmDownloadContent::state,finalState);
+                        if(finalState=="下载成功" || finalState=="下载失败"){
+                            aitem->setText(frmDownloadContent::downloadSpeed,"");
+                        }
+                        aitem->setText(frmDownloadContent::downloadSpeed,speed);
+                        aitem=nullptr;
+                    }
+                }
+
+            }
+            updateShare->detach();
+        }
+    }
+
+}
+
 void frmDownloadContent::addTreeItems(QString memoryShareName)
 {
-    QSharedMemory *innerMemory=new QSharedMemory(memoryShareName);
-    innerMemory->detach();
+    qDebug()<<"Name:"<<memoryShareName;
+    QBuffer getBuffer;
+    QDataStream stream;
+    QString urlGetted="";
+    QString filePathNameGetted;
+    QString stateGetted;
+    QString sizeGetted;
+    QString finalState;
+    QString speed;
+    innerMemory->setKey(memoryShareName);
+    tryagain:
+    if(!innerMemory->create(4096)){
+            qDebug()<<"Name:"<<memoryShareName;
+            if(!innerMemory->attach()){
+            qDebug()<<"innerMemory attach error";
+            }else{
+                qDebug()<<"innerMemory attach suc";
+            }
+    }
+
+    if(!innerMemory->lock()){
+        qDebug()<<"innerMemory failed to lock!";
+        return;
+    }
+
+    getBuffer.setData((char*)innerMemory->constData(),innerMemory->size());
+    getBuffer.open(QBuffer::ReadWrite);
+    stream.setDevice(&getBuffer);
+    stream>>filePathNameGetted>>urlGetted>>stateGetted>>sizeGetted>>speed;
+    getBuffer.close();
+    innerMemory->unlock();
+    if(urlGetted==""){
+        qDebug()<<urlGetted;
+        QThread::msleep(1000);
+        innerMemory->detach();
+        goto tryagain;
+    }
+    QTreeWidgetItem *newItem=new QTreeWidgetItem(ui->treeWidget);
+    newItem->setText(frmDownloadContent::fileName,
+                     QFileInfo(QDir::toNativeSeparators(filePathNameGetted)).fileName());
+    newItem->setText(frmDownloadContent::filesize,sizeGetted);
+    newItem->setText(frmDownloadContent::downloadSpeed,speed);
+    newItem->setData(frmDownloadContent::fileName,Qt::UserRole,QVariant(urlGetted));
+    newItem->setData(frmDownloadContent::state,Qt::UserRole,QVariant(memoryShareName));
+
+    if(stateGetted=="pre"){
+        finalState=tr("准备下载");
+    }else if(stateGetted=="downloading"){
+        finalState=tr("正在下载");
+    }else if(stateGetted=="failed"){
+        finalState=tr("下载失败");
+    }else if(stateGetted=="succeed"){
+        finalState=tr("下载成功");
+    }
+    newItem->setText(frmDownloadContent::state,finalState);
+    keyGetted.append(memoryShareName);
+    ui->treeWidget->addTopLevelItem(newItem);
+
+
+
+
 
 }
 
 void frmDownloadContent::getShareName()
 {
+    QString key;
+
     // getNewShareName=new QSharedMemory("passkey");
+    if(sdGetKey->create(1024)){
+        sdGetKey->attach();
+    }
+    link:
+
+    if(!sdGetKey->lock()){
+        QThread::msleep(1000);
+        goto link;
+    }
+    QBuffer buffer;
+    buffer.setData((char*)sdGetKey->constData(),sdGetKey->size());
+    buffer.open(QBuffer::ReadWrite);
+    QDataStream stream(&buffer);
+    stream>>key;
+
+    if(key!=""){
+
+        sdGetKey->unlock();
+
+    link1:
+        if(!sdGetKey->lock()){
+            QThread::msleep(1000);
+            goto link1;
+        }
+        QString empty="";
+        char *toKey=static_cast<char*>(sdGetKey->data());
+        QBuffer keyBuffer;
+        keyBuffer.open(QBuffer::WriteOnly);
+        QDataStream keyStream(&keyBuffer);
+        keyStream<<empty;
+
+        memcpy(toKey,keyBuffer.data(),keyBuffer.size());
+        sdGetKey->unlock();
+        QString passKeystr=key;
+        key="";
+        addTreeItems(passKeystr);
+
+
+    }
+
+
+
 
 }
 
