@@ -21,6 +21,7 @@ public:
     frmDownloadContent *dwncontent;
     frmSettings *set;
     frmDonate *donate;
+    
 
 public slots:
     void on_toolMenu_clicked();

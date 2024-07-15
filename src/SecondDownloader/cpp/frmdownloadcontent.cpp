@@ -70,30 +70,42 @@ void frmDownloadContent::onCustomContextMenuRequested(const QPoint &pos)
     QMenu *treeMenu=new QMenu(ui->treeWidget);
     QAction *actOpen=new QAction(tr("打开(&O)"),ui->treeWidget);
     QAction *actOpenFolder=new QAction(tr("打开文件夹(&F)"),ui->treeWidget);
-    QAction *actReDownload=new QAction(tr("重新下载(&R)"),ui->treeWidget);
+    QAction *actReDownload=new QAction(tr("重新下载(&E)"),ui->treeWidget);
     QAction *actDonwload=new QAction(tr("下载(&D)"),ui->treeWidget);
     QAction *actDelete=new QAction(tr("删除(&R)"),ui->treeWidget);
     QAction *actProperty=new QAction(tr("属性(&P)"),ui->treeWidget);
-    QMenu *subMenu = treeMenu->addMenu(tr("双击时(&D)"));
-    QAction *actDoubleOpen=new QAction(tr("打开文件"),subMenu);
-    QAction *actDoubleFolder=new QAction(tr("打开文件夹"),subMenu);
-    QAction *actDoubleProperty=new QAction(tr("打开“属性”对话框"),subMenu);
-    QActionGroup *groupDoubleToDo=new QActionGroup(treeMenu);
-    groupDoubleToDo->addAction(actDoubleFolder);
-    groupDoubleToDo->addAction(actDoubleOpen);
-    groupDoubleToDo->addAction(actDoubleProperty);
-    subMenu->addAction(actDoubleFolder);
-    subMenu->addAction(actDoubleOpen);
-    subMenu->addAction(actDoubleProperty);
 
+    // QActionGroup *groupDoubleToDo=new QActionGroup(subMenu);
+    // groupDoubleToDo->setEnabled(1);
+    // groupDoubleToDo->addAction(actDoubleFolder);
+    // groupDoubleToDo->addAction(actDoubleOpen);
+    // groupDoubleToDo->addAction(actDoubleProperty);
+    // actDoubleFolder->setCheckable(1);
+    // actDoubleOpen->setCheckable(1);
+    // actDoubleProperty->setCheckable(1);
+    // actDoubleFolder->setChecked(1);
+    // groupDoubleToDo->setExclusionPolicy(QActionGroup::ExclusionPolicy::None);
+    // subMenu->addAction(actDoubleFolder);
+    // subMenu->addAction(actDoubleOpen);
+    // subMenu->addAction(actDoubleProperty);
     treeMenu->addAction(actOpen);
     treeMenu->addAction(actOpenFolder);
     treeMenu->addAction(actReDownload);
     treeMenu->addAction(actDonwload);
     treeMenu->addAction(actDelete);
-    treeMenu->addMenu(subMenu);
+    // treeMenu->addMenu(subMenu);
     treeMenu->addAction(actProperty);
+    connect(actOpen,&QAction::triggered,[=]{});
+    connect(actOpenFolder,&QAction::triggered,[=]{});
+    connect(actDelete,&QAction::triggered,[=]{});
+    connect(actDelete,&QAction::triggered,[=]{});
+    connect(actReDownload,&QAction::triggered,[=]{});
+    connect(actProperty,&QAction::triggered,[=]{});
+
+
+
     treeMenu->exec(QCursor::pos());
+
 
 
 
@@ -103,6 +115,12 @@ void frmDownloadContent::addTreeItems(QString memoryShareName)
 {
     QSharedMemory *innerMemory=new QSharedMemory(memoryShareName);
     innerMemory->detach();
+
+}
+
+void frmDownloadContent::getShareName()
+{
+    // getNewShareName=new QSharedMemory("passkey");
 
 }
 

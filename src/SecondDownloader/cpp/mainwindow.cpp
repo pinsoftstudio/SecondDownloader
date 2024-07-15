@@ -80,6 +80,35 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::showWithMode(int mode)
+{
+
+    switch (mode) {
+    case 0:
+        ui->stackedWidget->setCurrentIndex(0);
+        on_toolMain_clicked();
+        break;
+    case 1:
+        ui->stackedWidget->setCurrentIndex(1);
+        on_toolDownload_clicked();
+        break;
+    case 2:
+        ui->stackedWidget->setCurrentIndex(2);
+        on_toolSettings_clicked();
+        break;
+    case 3:
+        ui->stackedWidget->setCurrentIndex(3);
+        on_toolDonate_clicked();
+        break;
+
+    default:
+        break;
+
+
+    }
+    show();
+}
+
 void MainWindow::setClassToolButtonStyle()
 {
 

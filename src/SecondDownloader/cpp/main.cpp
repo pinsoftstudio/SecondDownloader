@@ -17,6 +17,7 @@
 #include <QObject>
 #include <QAction>
 // #include "header/dialogquestion.h"
+static MainWindow *w=Q_NULLPTR;
 void createMainTray(){
 
 
@@ -65,27 +66,20 @@ void createMainTray(){
     menu->addSeparator();
     menu->addAction(actExit);
     QObject::connect(actOpen,&QAction::triggered,[](){
-        MainWindow *w=new MainWindow(0);
-        w->show();
+        w->showWithMode(0);
     });
     QObject::connect(actNew,&QAction::triggered,[](){
         NewDownloadWindow *w=new NewDownloadWindow;
         w->show();
     });
     QObject::connect(actDownloadContent,&QAction::triggered,[](){
-        MainWindow *w=new MainWindow(1);
-        w->setAttribute(Qt::WA_DeleteOnClose);
-        w->show();
+        w->showWithMode(1);
     });
     QObject::connect(actSettings,&QAction::triggered,[](){
-        MainWindow *w=new MainWindow(2);
-        w->setAttribute(Qt::WA_DeleteOnClose);
-        w->show();
+         w->showWithMode(2);
     });
     QObject::connect(actDonate,&QAction::triggered,[](){
-        MainWindow *w=new MainWindow(3);
-        w->setAttribute(Qt::WA_DeleteOnClose);
-        w->show();
+         w->showWithMode(3);
     });
     QObject::connect(actAbout,&QAction::triggered,[](){
         //about
@@ -127,6 +121,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     bool MainAppIsRunning=0;
+    bool needExit=1;
     if(!isSingleInstance("SecondDownloader"))
     {
         MainAppIsRunning=1;
@@ -154,23 +149,28 @@ int main(int argc, char *argv[])
                         QString  url=ag.at(1).right(ag.at(1).count()-6);
                         DownloadMessageWindow *dw=new   DownloadMessageWindow(url,nullptr,1);
                         dw->show();
-                }else{
-                    DownloadMessageWindow *dw=new DownloadMessageWindow(a.arguments().at(1),nullptr,1);
-                    dw->show();
+                        bool needExit=0;
                 }
 
         }
 
     }else{
         if(!MainAppIsRunning){
-            createMainTray();
-            MainWindow *w=new MainWindow(0);
+
+            w=new MainWindow(0);
             w->show();
+            createMainTray();
+        }else{
+            QApplication *app1;
+            return 0;
         }
 
     }
 
-
+    if(MainAppIsRunning && needExit){
+        QApplication *app1;
+         return 0;
+    }
 
 
     return a.exec();

@@ -23,7 +23,7 @@ public:
 
     frmSettings *set;
     frmDonate *donate;
-
+    void showWithMode(int mode);
 private slots:
     void on_toolMenu_clicked();
 
