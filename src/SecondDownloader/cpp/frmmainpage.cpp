@@ -7,10 +7,13 @@
 #include "header/Style.h"
 // #include "header/dialogquestion.h"
 #include <newdownloadwindow.h>
+#include "header/mainwindow.h"
+
 frmMainPage::frmMainPage(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmMainPage)
 {
+
     ui->setupUi(this);
 
     qint64 days=getInstalledDays();
@@ -116,5 +119,50 @@ void frmMainPage::on_toolNew_clicked()
 void frmMainPage::ondownloadThreadExist(DownloadWindow *downloadwindow)
 {
     emit downloadThreadExist(downloadwindow);
+}
+
+
+
+
+
+void frmMainPage::on_toolAll_clicked()
+{
+    emit requestPage(1,0);
+}
+
+
+void frmMainPage::on_toolSuc_clicked()
+{
+    emit requestPage(1,2);
+}
+
+
+void frmMainPage::on_toolDownloading_clicked()
+{
+    emit requestPage(1,1);
+}
+
+
+void frmMainPage::on_toolFailed_clicked()
+{
+    emit requestPage(1,3);
+}
+
+
+void frmMainPage::on_toolExtention_clicked()
+{
+    //require
+}
+
+
+void frmMainPage::on_toolDonate_clicked()
+{
+    emit requestPage(2);
+}
+
+
+void frmMainPage::on_toolAbout_clicked()
+{
+
 }
 

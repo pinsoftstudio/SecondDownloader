@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "frmmainpage.h"
-
+#include <header/frmdownloadcontent.h>
 #include "frmsettings.h"
 #include "frmdonate.h"
 #include <downloadwindow.h>
@@ -19,7 +19,7 @@ public:
     explicit MainWindow( int mode,QWidget *parent = nullptr);
     ~MainWindow();
     frmMainPage *mainPage;
-
+    frmDownloadContent *dwncontent;
 
     frmSettings *set;
     frmDonate *donate;
@@ -34,7 +34,7 @@ private slots:
     void on_toolDonate_clicked();
 
     void on_toolSettings_clicked();
-
+    void onRequestPageChange(int i, int mode);
     void  ondownloadThreadExist(DownloadWindow *downloadwindow)
     {
         emit downloadThreadExist(downloadwindow);

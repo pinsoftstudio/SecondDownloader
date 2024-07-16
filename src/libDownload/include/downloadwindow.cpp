@@ -17,6 +17,7 @@
 #include <iostream>
 #include <QThread>
 #include <QMessageBox>
+#include <QMutex>
 DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalBytes,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DownloadWindow)
@@ -250,6 +251,8 @@ void DownloadWindow::closeEvent(QCloseEvent *event)
 void DownloadWindow::cleanup()
 {
     if(isMultipal){
+        connect(tmsetMainProgress,&QTimer::timeout,this,&DownloadWindow::onsetMainProgress);
+        connect(tmGetProgress,&QTimer::timeout,this,&DownloadWindow::ontmGetProgress);
         tmGetProgress->stop();
         tmsetMainProgress->stop();
 
@@ -271,7 +274,7 @@ void DownloadWindow::cleanup()
     if(passKey->isAttached()){
         passKey->detach();
     }
-
+    disconnect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
     tmsendMemory->stop();
 }
 
@@ -313,7 +316,9 @@ void DownloadWindow::ondownloadFinished()
             }
             tmGetProgress->stop();
             tmsetMainProgress->stop();
-             ui->mainProgress->setValue(0);
+            disconnect(tmsetMainProgress,&QTimer::timeout,this,&DownloadWindow::onsetMainProgress);
+            disconnect(tmGetProgress,&QTimer::timeout,this,&DownloadWindow::ontmGetProgress);
+            ui->mainProgress->setValue(0);
             ui->labstate->setText(tr("正在合并为一个文件..."));
              setWindowTitle(tr("正在合并为一个文件..."));
             appender=new fileAppender(savedFilename,this);
@@ -326,6 +331,7 @@ void DownloadWindow::ondownloadFinished()
             appender->start();
             state="succeed";
             strspeed="";
+            QThread::msleep(100);
 
         }
     }
@@ -333,10 +339,13 @@ void DownloadWindow::ondownloadFinished()
 
 void DownloadWindow::ontmGetProgress()
 {
+    QMutex m;
+    m.lock();
     if(isMultipal){
         for(int i=0;i<8;i++){
             double  now=0;
             double total=0;
+
             downloaders[i]->getDownloadProgress(now,total);
             downloaded[i]=static_cast<qint64>(now);
             progressbar[i]->setMaximum(static_cast<qint64>(total));
@@ -344,10 +353,13 @@ void DownloadWindow::ontmGetProgress()
             // downloadedBytes+=now;
         }
     }
+    m.unlock();
 }
 
 void DownloadWindow::onsetMainProgress(){
     if(isMultipal){
+        QMutex m;
+        m.lock();
         qint64 totalDownloaded=0;
         for(int i=0;i<8;i++){
             totalDownloaded+=downloaded[i];
@@ -389,12 +401,13 @@ void DownloadWindow::onsetMainProgress(){
             actProgress.setText(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
             ui->labbytes->setText(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
             state="downloading";
+
             // if(tray!=Q_NULLPTR){
             //     tray->setToolTip(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
             // }
 
 
-
+     m.unlock();
     }
 
 
@@ -403,6 +416,8 @@ void DownloadWindow::onsetMainProgress(){
 void DownloadWindow::onGetAppendProgress(int now, int total)
 {
     // ui->labstate->setText(tr("正在合并为一个文件..."));
+    state="succeed";
+    strspeed="";
     ui->mainProgress->setMaximum(total);
     ui->mainProgress->setValue(now);
 }
@@ -418,6 +433,8 @@ void DownloadWindow::onAppendFailed()
 
 void DownloadWindow::onAppendSucceed()
 {
+    state="succeed";
+    strspeed="";
     ui->labstate->setText(tr("合并成功！"));
      setWindowTitle(tr("合并成功！"));
     appender->terminate();
@@ -425,11 +442,12 @@ void DownloadWindow::onAppendSucceed()
     DialogDownloaded *diadown=new DialogDownloaded;
     diadown->setSavedLocation(savedFilename);
     diadown->show();
-    needtoclose=1;
-    tmsendMemory->stop();
-    disconnect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
-    close();
+    // tmsendMemory->stop();
+    // disconnect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
     cleanup();
+    needtoclose=1;
+    close();
+
 }
 
 void DownloadWindow::onMessageClicked()
@@ -458,7 +476,9 @@ void DownloadWindow::onActionTriggered()
 
 void DownloadWindow::on_btncancel_clicked()
 {
-
+    state="failed";
+    onsendMemory();
+    QThread::msleep(100);
     cleanup();
 
     needtoclose=1;

@@ -190,7 +190,7 @@ QTreeWidget QHeaderView::section:last{
 QTreeWidget QHeaderView::section {  
     background-color: rgb(245, 245, 245); 
     color: black; 
-    padding-left: 4px; 
+    padding-left: 8px; 
 	min-height:30px;
 	border-radius:0px;
 
@@ -198,6 +198,7 @@ QTreeWidget QHeaderView::section {
 }  
 QTreeWidget::item{  
 	min-height:30px;
+	padding-left: 0px; 
  	color: black; 
 	 border: none;
 	 border-radius:0px;

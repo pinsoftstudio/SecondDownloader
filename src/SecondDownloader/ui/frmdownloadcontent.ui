@@ -402,7 +402,7 @@ QPushButton[highlight=&quot;true&quot;]:pressed{
         </size>
        </property>
        <property name="text">
-        <string>删除(&amp;D)</string>
+        <string>删除记录(&amp;D)</string>
        </property>
       </widget>
      </item>

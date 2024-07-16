@@ -299,7 +299,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="toolNew_2">
+        <widget class="QToolButton" name="toolAll">
          <property name="minimumSize">
           <size>
            <width>111</width>
@@ -358,7 +358,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="toolNew_3">
+        <widget class="QToolButton" name="toolSuc">
          <property name="minimumSize">
           <size>
            <width>111</width>
@@ -417,7 +417,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="toolNew_4">
+        <widget class="QToolButton" name="toolDownloading">
          <property name="minimumSize">
           <size>
            <width>111</width>
@@ -499,7 +499,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="toolNew_5">
+        <widget class="QToolButton" name="toolFailed">
          <property name="minimumSize">
           <size>
            <width>111</width>
@@ -558,7 +558,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="toolNew_6">
+        <widget class="QToolButton" name="toolExtention">
          <property name="minimumSize">
           <size>
            <width>111</width>
@@ -617,7 +617,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="toolNew_7">
+        <widget class="QToolButton" name="toolDonate">
          <property name="minimumSize">
           <size>
            <width>111</width>
@@ -676,7 +676,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="toolNew_8">
+        <widget class="QToolButton" name="toolAbout">
          <property name="minimumSize">
           <size>
            <width>111</width>

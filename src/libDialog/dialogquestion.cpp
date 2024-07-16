@@ -33,6 +33,7 @@ void DialogQuestion::setText(QString &text)
      ui->label_2->setText(strText);
 }
 
+
 // void DialogQuestion::paintEvent(QPaintEvent *event)
 // {
 

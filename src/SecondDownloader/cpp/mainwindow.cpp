@@ -8,7 +8,7 @@
 #include "QCloseEvent"
 #include "QSettings"
 #include "QDebug"
-#include <header/frmdownloadcontent.h>
+
 MainWindow::MainWindow(int mode, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -60,7 +60,7 @@ MainWindow::MainWindow(int mode, QWidget *parent)
 
 void MainWindow::addWidgetTostackedWidget()
 {
-    frmDownloadContent *dwncontent;
+
     dwncontent=new frmDownloadContent(this);
     mainPage=new frmMainPage(this);
     connect(mainPage,SIGNAL(downloadThreadExist(DownloadWindow*)),this,SLOT(ondownloadThreadExist(DownloadWindow*)));
@@ -68,7 +68,10 @@ void MainWindow::addWidgetTostackedWidget()
     donate=new frmDonate(this);
 
     ui->stackedWidget->insertWidget(0,mainPage);
+    connect(mainPage,&frmMainPage::requestPage,this,&MainWindow::onRequestPageChange);
+
     ui->stackedWidget->insertWidget(1,dwncontent);
+
     ui->stackedWidget->insertWidget(2,set);
     ui->stackedWidget->insertWidget(3,donate);
 
@@ -268,6 +271,38 @@ void MainWindow::on_toolSettings_clicked()
     ui->toolSettings->setProperty("select","true");
     ui->stackedWidget->setCurrentIndex(3);
     setCommonStyle();
+}
+
+void MainWindow::onRequestPageChange(int i,int mode=0)
+{
+    switch (i) {
+    case 0:
+        on_toolMain_clicked();
+        break;
+    case 1:
+        on_toolDownload_clicked();
+        frmDownloadContent::displayMode dis;
+        if(mode==0){
+            dis=frmDownloadContent::all;
+        }else if(mode==1){
+            dis=frmDownloadContent::downloading;
+        }else if(mode==2){
+            dis=frmDownloadContent::succeed;
+        }else if(mode==3){
+            dis=frmDownloadContent::faild;
+        }
+        dwncontent->setDisplayMode(dis);
+
+        break;
+    case 2:
+        on_toolDonate_clicked();
+        break;
+    case 3:
+        on_toolSettings_clicked();
+        break;
+    default:
+        break;
+    }
 }
 
 

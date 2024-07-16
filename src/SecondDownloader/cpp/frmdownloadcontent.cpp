@@ -12,7 +12,13 @@
 #include "QDataStream"
 #include "QFileInfo"
 #include "QDir"
-
+#include "QDesktopServices"
+//#include "dialogcrtinf.h"
+#include "dialogquestion.h"
+#include "QMessageBox"
+#include "QFileIconProvider"
+#include "header/propertydialog.h"
+#include "downloadmessagewindow.h"
 frmDownloadContent::frmDownloadContent(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmDownloadContent)
@@ -21,6 +27,7 @@ frmDownloadContent::frmDownloadContent(QWidget *parent)
     ui->treeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(onCustomContextMenuRequested(QPoint)));
+    connect(ui->treeWidget,&QTreeWidget::itemChanged,this,&frmDownloadContent::refreashDatFile);
 
 
     ui->btnSelect->setProperty("highlight","true");
@@ -40,10 +47,10 @@ frmDownloadContent::frmDownloadContent(QWidget *parent)
     tmGetNewShareName->start();
     tmUpdateShare=new QTimer;
     connect(tmUpdateShare,&QTimer::timeout,this,&frmDownloadContent::onUpdateShare);
-    tmUpdateShare->start(100);
-    tmRefreashDat=new QTimer;
-    connect(tmRefreashDat,&QTimer::timeout,this,&frmDownloadContent::refreashDatFile);
-    tmRefreashDat->start(5000);
+    tmUpdateShare->start(50);
+    // tmRefreashDat=new QTimer;
+    // connect(tmRefreashDat,&QTimer::timeout,this,&frmDownloadContent::refreashDatFile);
+    // tmRefreashDat->start(5000);
     iniTree();
     setDisplayMode(frmDownloadContent::all);
 
@@ -93,11 +100,12 @@ void frmDownloadContent::onCustomContextMenuRequested(const QPoint &pos)
     if(ui->treeWidget->selectedItems().isEmpty()){
         return;
     }
+    QTreeWidgetItem *clickedItem=ui->treeWidget->currentItem();
     QMenu *treeMenu=new QMenu(ui->treeWidget);
     QAction *actOpen=new QAction(tr("打开(&O)"),ui->treeWidget);
     QAction *actOpenFolder=new QAction(tr("打开文件夹(&F)"),ui->treeWidget);
     QAction *actReDownload=new QAction(tr("重新下载(&E)"),ui->treeWidget);
-    QAction *actDonwload=new QAction(tr("下载(&D)"),ui->treeWidget);
+    QAction *actDownload=new QAction(tr("下载(&D)"),ui->treeWidget);
     QAction *actDelete=new QAction(tr("删除(&R)"),ui->treeWidget);
     QAction *actProperty=new QAction(tr("属性(&P)"),ui->treeWidget);
 
@@ -117,16 +125,84 @@ void frmDownloadContent::onCustomContextMenuRequested(const QPoint &pos)
     treeMenu->addAction(actOpen);
     treeMenu->addAction(actOpenFolder);
     treeMenu->addAction(actReDownload);
-    treeMenu->addAction(actDonwload);
+    treeMenu->addAction(actDownload);
     treeMenu->addAction(actDelete);
     // treeMenu->addMenu(subMenu);
+    bool fileExist=QFile(QDir::fromNativeSeparators
+                           (clickedItem->text(frmDownloadContent::location))).exists();
     treeMenu->addAction(actProperty);
-    connect(actOpen,&QAction::triggered,[=]{});
-    connect(actOpenFolder,&QAction::triggered,[=]{});
-    connect(actDelete,&QAction::triggered,[=]{});
-    connect(actDelete,&QAction::triggered,[=]{});
-    connect(actReDownload,&QAction::triggered,[=]{});
-    connect(actProperty,&QAction::triggered,[=]{});
+    if(fileExist){
+        actOpen->setEnabled(1);
+        actOpenFolder->setEnabled(1);
+        actReDownload->setEnabled(1);
+        actDownload->setEnabled(0);
+
+    }else{
+        actOpen->setEnabled(0);
+        actDownload->setEnabled(1);
+        actReDownload->setEnabled(0);
+        if(!QDir(QFileInfo(QDir::fromNativeSeparators
+                          (clickedItem->text(frmDownloadContent::location)))
+                     .absolutePath()).exists()){
+            actOpenFolder->setEnabled(0);
+        }
+    }
+    connect(actOpen,&QAction::triggered,[&]{
+
+        QString pathName=QDir::fromNativeSeparators(clickedItem->text(frmDownloadContent::location));
+        if(!QDesktopServices::openUrl(QUrl(pathName))){
+            QMessageBox::information(this,tr("错误"),tr("无法打开文件！"),tr("确定"));
+        }
+
+        clickedItem=nullptr;
+    });
+    connect(actOpenFolder,&QAction::triggered,[&]{
+        QString path=QFileInfo(QDir::fromNativeSeparators
+                                     (clickedItem->text(frmDownloadContent::location))).absolutePath();
+        if(QFile(path).exists()){
+            if(!QDesktopServices::openUrl(QUrl(path))){
+                QMessageBox::information(this,tr("错误"),tr("无法打开文件夹！"),tr("确定"));
+            }
+        }
+        clickedItem=nullptr;
+
+    });
+    connect(actDelete,&QAction::triggered,[&]{
+        if(fileExist){
+            DialogQuestion dialog;
+            QString title=tr("问题");
+            QString content=tr("需要原文件需要一同删除吗？");
+            dialog.setTitle(title);
+            dialog.setText(content);
+            int code=dialog.exec();
+            if(code==DialogQuestion::Accepted){
+                QFile(QDir::fromNativeSeparators
+                      (clickedItem->text(frmDownloadContent::location))).remove();
+                refreashDatFile();
+            }
+        }
+        on_btnClear_clicked();
+
+    });
+    connect(actDownload,&QAction::triggered,[=]{
+        QString url=clickedItem->data(frmDownloadContent::fileName,Qt::UserRole).toString();
+        DownloadMessageWindow *dm=new DownloadMessageWindow(url,nullptr,1);
+        dm->show();
+    });
+    connect(actReDownload,&QAction::triggered,[=]{
+        QString url=clickedItem->data(frmDownloadContent::fileName,Qt::UserRole).toString();
+        DownloadMessageWindow *dm=new DownloadMessageWindow(url,nullptr,1);
+        dm->show();
+    });
+    connect(actProperty,&QAction::triggered,[=]{
+        PropertyDialog *pd=new PropertyDialog(clickedItem->data(frmDownloadContent::fileName,Qt::UserRole).toString(),
+                                                clickedItem->text(frmDownloadContent::location),
+                                                clickedItem->text(frmDownloadContent::state),
+                                                clickedItem->text(frmDownloadContent::filesize),
+                                                this);
+        pd->show();
+
+    });
 
 
     treeMenu->exec(QCursor::pos());
@@ -172,6 +248,8 @@ void frmDownloadContent::onUpdateShare()
                 }else if(stateGetted=="failed"){
                     finalState=tr("下载失败");
                 }else if(stateGetted=="succeed"){
+                    finalState=tr("下载成功");
+                }else{
                     finalState=tr("下载成功");
                 }
 
@@ -262,6 +340,8 @@ void frmDownloadContent::addTreeItems(QString memoryShareName)
     newItem->setText(frmDownloadContent::state,finalState);
 
     keyGetted.append(memoryShareName);
+    QFileInfo fi(QDir::fromNativeSeparators(filePathNameGetted));
+    newItem->setIcon(0,QFileIconProvider().icon(fi));
     ui->treeWidget->addTopLevelItem(newItem);
 
 
@@ -438,6 +518,17 @@ void frmDownloadContent::setDisplayMode(displayMode mode)
 
 void frmDownloadContent::iniTree()
 {
+    ui->treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    connect(ui->treeWidget,&QTreeWidget::itemDoubleClicked,this,[=](QTreeWidgetItem *item, int column){
+        Q_UNUSED(column);
+        QFileInfo file(QDir::fromNativeSeparators(item->text(frmDownloadContent::location)));
+        if(file.exists()){
+            if(!QDesktopServices::openUrl(QUrl(file.absoluteFilePath()))){
+                QMessageBox::information(this,tr("错误"),tr("无法打开文件！"),tr("确定"));
+            }
+        }
+
+    });
     if(QFile("data/download.dat").exists()){
         QFile file("data/download.dat");
         QSettings set("Pinsoft","SecondDownloader");
@@ -472,8 +563,8 @@ void frmDownloadContent::iniTree()
 
 
 
-                aitem->setText(frmDownloadContent::fileName,afilename);
-                aitem->setText(frmDownloadContent::filesize,afilesize);
+                aitem->setText(frmDownloadContent::fileName,afilename.trimmed());
+                aitem->setText(frmDownloadContent::filesize,afilesize.trimmed());
                 QString finalState;
                 if(astate.trimmed()=="pre"){
                     finalState=tr("准备下载");
@@ -488,6 +579,8 @@ void frmDownloadContent::iniTree()
                 aitem->setData(frmDownloadContent::state,Qt::UserRole,QVariant(astate.trimmed()));
                 aitem->setText(frmDownloadContent::location,apathName.trimmed());
                 aitem->setData(frmDownloadContent::fileName,Qt::UserRole,aurl.trimmed());
+                QFileInfo fi(QDir::fromNativeSeparators(apathName));
+                aitem->setIcon(0,QFileIconProvider().icon(fi));
                 ui->treeWidget->addTopLevelItem(aitem);
                 aitem=nullptr;
 
@@ -522,5 +615,24 @@ void frmDownloadContent::on_btnSucceed_clicked()
 void frmDownloadContent::on_btnFailed_clicked()
 {
     setDisplayMode(frmDownloadContent::faild);
+}
+
+
+void frmDownloadContent::on_btnClear_clicked()
+{
+    QList<QTreeWidgetItem*> items=ui->treeWidget->selectedItems();
+    if(items.count()==0){
+        return;
+    }
+    foreach (QTreeWidgetItem *aitem, items) {
+        ui->treeWidget->removeItemWidget(aitem,frmDownloadContent::fileName);
+        ui->treeWidget->removeItemWidget(aitem,frmDownloadContent::filesize);
+        ui->treeWidget->removeItemWidget(aitem,frmDownloadContent::downloadSpeed);
+        ui->treeWidget->removeItemWidget(aitem,frmDownloadContent::state);
+        delete aitem;
+        aitem=nullptr;
+        refreashDatFile();
+    }
+
 }
 

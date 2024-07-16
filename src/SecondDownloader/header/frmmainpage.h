@@ -4,6 +4,7 @@
 #include <QWidget>
 #include<QCloseEvent>
 #include <newdownloadwindow.h>
+#include "main.h"
 namespace Ui {
 class frmMainPage;
 }
@@ -22,14 +23,25 @@ private:
     qint64 getInstalledDays();
     void iniControl();
     NewDownloadWindow *newDownload;
+
+
 protected:
     void closeEvent(QCloseEvent *event) override;
 signals:
     void  downloadThreadExist(DownloadWindow *downloadwindow);
+    void requestPage(int i,int mode=0);
 private slots:
     void on_pushButton_clicked(bool checked);
     void on_toolNew_clicked();
     void  ondownloadThreadExist(DownloadWindow *downloadwindow);
+
+    void on_toolAll_clicked();
+    void on_toolSuc_clicked();
+    void on_toolDownloading_clicked();
+    void on_toolFailed_clicked();
+    void on_toolExtention_clicked();
+    void on_toolDonate_clicked();
+    void on_toolAbout_clicked();
 };
 
 #endif // FRMMAINPAGE_H

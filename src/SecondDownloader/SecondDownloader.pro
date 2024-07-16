@@ -17,20 +17,24 @@ SOURCES += \
     cpp/frmsettings.cpp \
     cpp/main.cpp \
     cpp/mainwindow.cpp \
-    # cpp/dialogquestion.cpp
+ \    # cpp/dialogquestion.cpp
+    cpp/propertydialog.cpp
 
 HEADERS += \
     # header/RadiusFramelessDialog.h \
+    header/main.h \
     header/mainwindow.h \
     header/frmdonate.h \
     header/frmdownloadcontent.h \
     header/frmmainpage.h \
     header/frmsettings.h \
     header/Style.h \
-    # header/dialogquestion.h
+ \    # header/dialogquestion.h
+    header/propertydialog.h
 
 FORMS += \
     # ui/dialogquestion.ui \
+    ui/propertydialog.ui \
     ui/mainwindow.ui \
     ui/frmdonate.ui \
     ui/frmdownloadcontent.ui \
@@ -45,6 +49,11 @@ CONFIG += embed_translations
 
 SUBDIRS+=subProject/libDownload/libDownload
 CONFIG(debug,debug|release){
+   LIBS +=$$PWD/../temp/bin/debug/libDialog.lib
+}else{
+     LIBS +=$$PWD/../temp/bin/release/libDialog.lib
+}
+CONFIG(debug,debug|release){
     DESTDIR = $$PWD/../temp/bin/debug
 }else{
     DESTDIR = $$PWD/../temp/bin/release
@@ -56,6 +65,7 @@ win32:MOC_DIR = $$PWD/../temp/SecondDownloader/moc
 win32:OBJECTS_DIR =$$PWD/../temp/SecondDownloader/o
 win32:UI_DIR = $$PWD/../temp/SecondDownloader/ui
 win32:LIBS += -luxtheme
+INCLUDEPATH +=$$PWD/../libDialog
 INCLUDEPATH +=$$PWD/../libDownload/include
 CONFIG(debug,debug|release){
    LIBS +=$$PWD/../temp/bin/debug/libDownload.lib

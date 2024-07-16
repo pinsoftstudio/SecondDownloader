@@ -3,7 +3,7 @@
 #include <QLocale>
 #include <QTranslator>
 #include <QFile>
-#include "header/mainwindow.h"
+
 #include "header/Style.h"
 #include <QMessageBox>
 #include <downloadwindow.h>
@@ -16,7 +16,9 @@
 #include <QDesktopServices>
 #include <QObject>
 #include <QAction>
+#include "header/main.h"
 // #include "header/dialogquestion.h"
+#include "header/mainwindow.h"
 static MainWindow *w=Q_NULLPTR;
 void createMainTray(){
 
@@ -94,8 +96,15 @@ void createMainTray(){
         QApplication *app;
         app->exit(0);
     });
+    QObject::connect(mainTray,&QSystemTrayIcon::activated,[](QSystemTrayIcon::ActivationReason reason){
+        if(reason!=QSystemTrayIcon::Context){
+             w->show();
+        }
+
+    });
     mainTray->setContextMenu(menu);
     mainTray->show();
+
 
 
 

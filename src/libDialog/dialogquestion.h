@@ -24,6 +24,7 @@ public:
     void setTitle(QString &title);
     void setText(QString &text);
 
+
 private:
     Ui::DialogQuestion *ui;
 

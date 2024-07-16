@@ -43,6 +43,7 @@ private slots:
     void onCustomContextMenuRequested(const QPoint &pos);
     void onTMGetNewShareName();
     void onUpdateShare();
+    // void onitemchanged();
     void addTreeItems(QString memoryShareName);
     void getShareName();
     void refreashDatFile();
@@ -53,6 +54,9 @@ private slots:
     void on_btnDownloading_clicked();
     void on_btnSucceed_clicked();
     void on_btnFailed_clicked();
+    void on_btnClear_clicked();
+
+
 };
 
 #endif // FRMDOWNLOADCONTENT_H
