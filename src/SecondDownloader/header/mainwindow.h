@@ -20,7 +20,6 @@ public:
     ~MainWindow();
     frmMainPage *mainPage;
     frmDownloadContent *dwncontent;
-
     frmSettings *set;
     frmDonate *donate;
     void showWithMode(int mode);
@@ -34,14 +33,9 @@ private slots:
     void on_toolDonate_clicked();
 
     void on_toolSettings_clicked();
-    void onRequestPageChange(int i, int mode);
-    void  ondownloadThreadExist(DownloadWindow *downloadwindow)
-    {
-        emit downloadThreadExist(downloadwindow);
-    }
 
-signals:
-    void  downloadThreadExist(DownloadWindow *downloadwindow);
+    void onRequestPageChange(int i, int mode);
+
 
 private:
     Ui::MainWindow *ui;

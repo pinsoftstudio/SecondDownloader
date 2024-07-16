@@ -14,11 +14,9 @@ static size_t write_to_file(void *ptr, size_t size, size_t nmemb, QFile *file) {
 static int xferinfo_callback(void *clientp,
                              curl_off_t dltotal, curl_off_t dlnow,
                              curl_off_t ultotal, curl_off_t ulnow) {
-    // Q_UNUSED(clientp);
     Q_UNUSED(ultotal);
     Q_UNUSED(ulnow);
-
-     LibDownload *downloader=static_cast<LibDownload*>(clientp);
+    LibDownload *downloader=static_cast<LibDownload*>(clientp);
     if (dltotal > 0) {
         double percent = (double)dlnow / dltotal * 100.0;
          downloader->setCtotal(dltotal);
@@ -82,7 +80,7 @@ void LibDownload::run()
 
     }
 
-    // QString url = "https://down-tencent.huorong.cn/sysdiag-all-x64-6.0.1.0-2024.07.04.1.exe";
+
     QString range = "bytes="+StartBytes+"-"+EndBytes; // 指定下载的文件范围
 
     QFile file(location);

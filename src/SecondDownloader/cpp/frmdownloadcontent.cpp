@@ -31,26 +31,24 @@ frmDownloadContent::frmDownloadContent(QWidget *parent)
 
 
     ui->btnSelect->setProperty("highlight","true");
-     MainWindow *Parent;
-    Parent=qobject_cast<MainWindow *>(parent);
-    connect(Parent,SIGNAL(downloadThreadExist(DownloadWindow*)),this,SLOT(onExistSThread(DownloadWindow*)));
-    innerMemory=new QSharedMemory;
+
     sdGetKey=new QSharedMemory;
+    innerMemory=new QSharedMemory;
     updateShare=new QSharedMemory;
+
     sdGetKey->setKey("passkey");
     if(!sdGetKey->create(1024)){
         sdGetKey->attach(QSharedMemory::ReadOnly);
     }
+
     tmGetNewShareName=new QTimer;
-    tmGetNewShareName->setInterval(1);
+    tmGetNewShareName->setInterval(1000);
     connect(tmGetNewShareName,&QTimer::timeout,this,&frmDownloadContent::onTMGetNewShareName);
     tmGetNewShareName->start();
+
     tmUpdateShare=new QTimer;
     connect(tmUpdateShare,&QTimer::timeout,this,&frmDownloadContent::onUpdateShare);
     tmUpdateShare->start(50);
-    // tmRefreashDat=new QTimer;
-    // connect(tmRefreashDat,&QTimer::timeout,this,&frmDownloadContent::refreashDatFile);
-    // tmRefreashDat->start(5000);
     iniTree();
     setDisplayMode(frmDownloadContent::all);
 
@@ -59,27 +57,25 @@ frmDownloadContent::frmDownloadContent(QWidget *parent)
 
 frmDownloadContent::~frmDownloadContent()
 {
+    if(tmGetNewShareName->isActive()){
+        tmGetNewShareName->stop();
+        disconnect(tmGetNewShareName,&QTimer::timeout,this,&frmDownloadContent::onTMGetNewShareName);
+    }
+    if(tmUpdateShare->isActive()){
+        tmUpdateShare->stop();
+        connect(tmUpdateShare,&QTimer::timeout,this,&frmDownloadContent::onUpdateShare);
+    }
+    if(updateShare->isAttached()){
+        updateShare->detach();
+    }
+    if(innerMemory->isAttached()){
+        innerMemory->detach();
+    }
+    if(sdGetKey->isAttached()){
+        sdGetKey->detach();
+    }
+
     delete ui;
-}
-
-void frmDownloadContent::setDark(bool isDark)
-{
-    QFile *qssFile=new QFile(this);
-    if(isDark)
-        qssFile->setFileName(":/mainform/qss/dark_frmmain.qss");
-    else
-        qssFile->setFileName(":/mainform/qss/white_frmmain.qss");
-    qssFile->open(QIODevice::ReadOnly);
-    QString styleSheet=QString::fromLatin1(qssFile->readAll());
-    qssFile->close();
-    setStyleSheet(styleSheet);
-}
-
-
-void frmDownloadContent::onExistSThread(DownloadWindow* downloadwindow)
-{
-    downloaders.append(downloadwindow);
-    //下面的操作...
 }
 
 void frmDownloadContent::on_btnSelect_clicked(bool checked)
@@ -184,17 +180,17 @@ void frmDownloadContent::onCustomContextMenuRequested(const QPoint &pos)
         on_btnClear_clicked();
 
     });
-    connect(actDownload,&QAction::triggered,[=]{
+    connect(actDownload,&QAction::triggered,[&]{
         QString url=clickedItem->data(frmDownloadContent::fileName,Qt::UserRole).toString();
         DownloadMessageWindow *dm=new DownloadMessageWindow(url,nullptr,1);
         dm->show();
     });
-    connect(actReDownload,&QAction::triggered,[=]{
+    connect(actReDownload,&QAction::triggered,[&]{
         QString url=clickedItem->data(frmDownloadContent::fileName,Qt::UserRole).toString();
         DownloadMessageWindow *dm=new DownloadMessageWindow(url,nullptr,1);
         dm->show();
     });
-    connect(actProperty,&QAction::triggered,[=]{
+    connect(actProperty,&QAction::triggered,[&]{
         PropertyDialog *pd=new PropertyDialog(clickedItem->data(frmDownloadContent::fileName,Qt::UserRole).toString(),
                                                 clickedItem->text(frmDownloadContent::location),
                                                 clickedItem->text(frmDownloadContent::state),
@@ -280,7 +276,6 @@ void frmDownloadContent::onUpdateShare()
 
 void frmDownloadContent::addTreeItems(QString memoryShareName)
 {
-    qDebug()<<"Name:"<<memoryShareName;
     QBuffer getBuffer;
     QDataStream stream;
     QString urlGetted="";
@@ -292,7 +287,6 @@ void frmDownloadContent::addTreeItems(QString memoryShareName)
     innerMemory->setKey(memoryShareName);
     tryagain:
     if(!innerMemory->create(4096)){
-            qDebug()<<"Name:"<<memoryShareName;
             if(!innerMemory->attach()){
             qDebug()<<"innerMemory attach error";
             }else{
@@ -338,7 +332,6 @@ void frmDownloadContent::addTreeItems(QString memoryShareName)
         finalState=tr("下载成功");
     }
     newItem->setText(frmDownloadContent::state,finalState);
-
     keyGetted.append(memoryShareName);
     QFileInfo fi(QDir::fromNativeSeparators(filePathNameGetted));
     newItem->setIcon(0,QFileIconProvider().icon(fi));
@@ -358,26 +351,23 @@ void frmDownloadContent::getShareName()
     if(sdGetKey->create(1024)){
         sdGetKey->attach();
     }
-    link:
 
+    link:
     if(!sdGetKey->lock()){
-        QThread::msleep(1000);
         goto link;
     }
+
     QBuffer buffer;
     buffer.setData((char*)sdGetKey->constData(),sdGetKey->size());
     buffer.open(QBuffer::ReadWrite);
     QDataStream stream(&buffer);
     stream>>key;
+    sdGetKey->unlock();
 
     if(key!=""){
-
-        sdGetKey->unlock();
-
-    link1:
+        lnk:
         if(!sdGetKey->lock()){
-            QThread::msleep(1000);
-            goto link1;
+            goto lnk;
         }
         QString empty="";
         char *toKey=static_cast<char*>(sdGetKey->data());
@@ -391,8 +381,6 @@ void frmDownloadContent::getShareName()
         QString passKeystr=key;
         key="";
         addTreeItems(passKeystr);
-
-
     }
 
 
@@ -583,9 +571,6 @@ void frmDownloadContent::iniTree()
                 aitem->setIcon(0,QFileIconProvider().icon(fi));
                 ui->treeWidget->addTopLevelItem(aitem);
                 aitem=nullptr;
-
-
-            // QString filename=datastream.readBytes()
             }
             file.close();
         }

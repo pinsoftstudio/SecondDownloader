@@ -71,13 +71,7 @@ private:
     QString key;
     QString strspeed="0B/s";
 
-    // QStatusBar *statusBar;
-    // double downloadedBytes;
-
-signals:
-    void  downloadThreadExist(DownloadWindow *download);
 private slots:
-    void  ondownloadThreadExist(DownloadWindow *download);
     void ondownloadFailed();
     void ondownloadFinished();
     void ontmGetProgress();
@@ -88,9 +82,6 @@ private slots:
     void onMessageClicked();
     void onTrayActivated(QSystemTrayIcon::ActivationReason reason);
     void onActionTriggered();
-
-    // void on_btnDisplay_clicked(bool checked);
-
     void on_btncancel_clicked();
     void on_btnmin_clicked();
     void onsendMemory();

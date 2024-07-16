@@ -31,10 +31,8 @@ private:
     QPixmap getFilePixmap(QString fileLocation);
     QWidget *LastWindow;
     QTimer tmGetprogress;
-signals:
-    void  downloadThreadExist(DownloadWindow *downloadwindow);
+
 private slots:
-    void  ondownloadThreadExist(DownloadWindow *downloadwindow);
     void onresultready(qint64 filesize);
     void on_btnStart_clicked();
     void ongeterror();

@@ -21,10 +21,9 @@ public:
 private:
     Ui::NewDownloadWindow *ui;
     DownloadMessageWindow   *downloadmessagewindow;
-signals:
-    void  downloadThreadExist(DownloadWindow *downloadwindow);
+
 private slots:
-     void  ondownloadThreadExist(DownloadWindow *downloadwindow);
+
 
      void on_btnStart_clicked();
 };

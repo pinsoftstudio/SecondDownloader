@@ -116,10 +116,6 @@ void frmMainPage::on_toolNew_clicked()
     connect(newDownload,SIGNAL(downloadThreadExist(DownloadWindow*)),this,SLOT(ondownloadThreadExist(DownloadWindow*)));
 }
 
-void frmMainPage::ondownloadThreadExist(DownloadWindow *downloadwindow)
-{
-    emit downloadThreadExist(downloadwindow);
-}
 
 
 

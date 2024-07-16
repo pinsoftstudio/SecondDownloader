@@ -6,14 +6,7 @@
 #include "QThread"
 #include "cstdio"
 #include "string"
-// namespace Ui {
-// class LibDownload;
-// }
-// LIBDOWNLOAD_EXPORT static void  curlStart();
-// LIBDOWNLOAD_EXPORT static void  curlStart(){
 
-
-// }
 
 class LIBDOWNLOAD_EXPORT LibDownload:public QThread
 {

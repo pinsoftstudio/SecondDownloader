@@ -26,7 +26,7 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
     savedFilename=saveFileName;
 
     TotalBytes=totalBytes;
-    iniSharedMemory();
+    iniSharedMemory();  //初始化共享内存
 
     qDebug()<<TotalBytes;
     ui->setupUi(this);
@@ -43,12 +43,14 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
     }
     ui->laburl->setText(QStringLiteral("URL: %1").arg(URL));
 
-    // curl_global_init(CURL_GLOBAL_ALL);
+
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);
-    // downloader=new LibDownload
-    // setAttribute(Qt::WA_DeleteOnClose);
+
+    setAttribute(Qt::WA_DeleteOnClose);
     startDownload();
+
+    //开始向“下载内容”发送下载信息
     tmsendMemory=new QTimer;
     connect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
     tmsendMemory->start(50);
@@ -57,7 +59,7 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
 
 DownloadWindow::~DownloadWindow()
 {
-
+    cleanup();
     delete ui;
 
 
@@ -66,44 +68,55 @@ DownloadWindow::~DownloadWindow()
 void DownloadWindow::iniSharedMemory()
 {
     qDebug()<<"head";
+
+    //获取共享内存密钥
     key=randomPath();
     long  double totals=TotalBytes;
     QString unit;
     getSuitableUnit(totals,unit);
+
     share=new QSharedMemory(key);
     qDebug()<<"passkey:"<<key;
+
+    //连接到共享内存
     if(!share->create(4096)){
         if(share->attach()){
             qDebug()<<"share attached";
         }else{
             qDebug()<<"share attached error";
+             return;
         }
-        return;
-        qDebug()<<"Create share memory error.";
-
     }
     if(!share->lock()){
-
         qDebug()<<"Lock share memory error.";
         return;
     }
+
+    //映射内存
     char* to=static_cast<char*>(share->data());
     QBuffer buffer;
     buffer.open(QBuffer::WriteOnly);
     QDataStream stream(&buffer);
+
+    //更新状态为“准备下载”
     state="pre";
-    //QMessageBox::information(this,"",QStringLiteral("%1 %2").arg(totals,0,'f',2).arg(unit));
     stream<<savedFilename<<URL<<state<<QStringLiteral("%1 %2").arg(totals,0,'f',2).arg(unit)<<strspeed;
+
+    //拷贝内存
     memcpy(to,buffer.data().data(),buffer.size());
     share->unlock();
 
-    passKey=new QSharedMemory("passkey");
 
+
+    //初始化传输下载信息的共享内存对象
+    passKey=new QSharedMemory("passkey");
     if(!passKey->create(1024)){
         qDebug()<<"Create passKey memory error.";
         passKey->attach();
 
     }
+
+    //尝试锁上代码块
     link:
     if(!passKey->lock()){
             QThread::msleep(1000);
@@ -119,7 +132,8 @@ void DownloadWindow::iniSharedMemory()
 
     memcpy(toKey,keyBuffer.data(),keyBuffer.size());
     passKey->unlock();
-      // 共享key
+
+
 
 
 
@@ -149,7 +163,7 @@ void DownloadWindow::makeAtray()
 void DownloadWindow::startDownload()
 {
 
-
+    //创建下载临时目录
     tempPath=QStandardPaths::writableLocation(QStandardPaths::TempLocation)+"/"+randomPath()+"/";
     QDir mkpth(tempPath);
     if(!mkpth.exists()){
@@ -157,15 +171,15 @@ void DownloadWindow::startDownload()
             qDebug()<<tempPath;
         };
     }
-    tmGetProgress=new QTimer;
-    tmsetMainProgress=new QTimer;
+
     if(TotalBytes>=9){
         isMultipal=true;
+        //分配每个线程的下载字节数
         qint64 mod=TotalBytes%8;
         qint64 commonToDownload=(TotalBytes-mod)/8;
-        // qint64 lastToDownload=commonToDownload+mod;
         qint64 startBytes=-1;
 
+        //启动每个线程的下载
         for(int i=0;i<7;i++){
             tempFilePathNames.append(tempPath+randomPath()+".downloading");
             qint64 endBytes=startBytes+commonToDownload;
@@ -176,26 +190,28 @@ void DownloadWindow::startDownload()
             connect(downloaders[i],&LibDownload::finished,this,&DownloadWindow::ondownloadFinished);
             startBytes=endBytes;
             downloaders[i]->start();
-
         }
         tempFilePathNames.append(tempPath+randomPath()+".downloading");
         downloaders[7]=new LibDownload(QString::number(startBytes+1),"",
                                          QDir::toNativeSeparators(tempFilePathNames[7]),URL,this);
         connect(downloaders[7],&LibDownload::started,this,&DownloadWindow::ondownloadFailed);
         connect(downloaders[7],&LibDownload::finished,this,&DownloadWindow::ondownloadFinished);
-         downloaders[7]->start();
+        downloaders[7]->start();
 
-
-
-            // downloaders.at(7)->start();
     }else{
         isMultipal=false;
 
     }
+
+    //启动QTimer来刷新进度条
+    tmGetProgress=new QTimer;
+    tmsetMainProgress=new QTimer;
     connect(tmsetMainProgress,&QTimer::timeout,this,&DownloadWindow::onsetMainProgress);
     connect(tmGetProgress,&QTimer::timeout,this,&DownloadWindow::ontmGetProgress);
     tmGetProgress->start(50);
     tmsetMainProgress->start(250);
+
+    //改变状态为“正在下载”
     state="downloading";
     ui->labstate->setText(tr("正在下载..."));
 
@@ -207,10 +223,10 @@ QString DownloadWindow::randomPath()
 {
     QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&()_+`-=;',");
     QString randomString;
-   for(int i = 0; i < 12; ++i) {
+    for(int i = 0; i < 12; ++i){
        int index = QRandomGenerator::global()->bounded(possibleCharacters.length());
        randomString.append(possibleCharacters.at(index));
-   }
+    }
     return QApplication::applicationName()+"-"+randomString;
 
 }
@@ -238,12 +254,12 @@ void DownloadWindow::getSuitableUnit(long double &bytes, QString &unit)
 void DownloadWindow::closeEvent(QCloseEvent *event)
 {
     if(needtoclose){
+        //如果需要关闭窗口
         event->accept();
 
     }else{
         makeAtray();
          event->ignore();
-
     }
 
 }
@@ -251,11 +267,20 @@ void DownloadWindow::closeEvent(QCloseEvent *event)
 void DownloadWindow::cleanup()
 {
     if(isMultipal){
-        connect(tmsetMainProgress,&QTimer::timeout,this,&DownloadWindow::onsetMainProgress);
-        connect(tmGetProgress,&QTimer::timeout,this,&DownloadWindow::ontmGetProgress);
-        tmGetProgress->stop();
-        tmsetMainProgress->stop();
+        //彻底停止更新进度条
 
+        disconnect(tmsetMainProgress,&QTimer::timeout,this,&DownloadWindow::onsetMainProgress);
+        disconnect(tmGetProgress,&QTimer::timeout,this,&DownloadWindow::ontmGetProgress);
+        if(tmsetMainProgress->isActive()){
+            tmGetProgress->stop();
+        }
+
+        if(tmGetProgress->isActive()){
+            tmsetMainProgress->stop();
+        }
+
+
+        //如果每个线程还未完全停止，就强制结束线程
         for(int i=0;i<8;i++){
             if(downloaders[i]->isRunning()){
                 disconnect(downloaders[i],&LibDownload::started,this,&DownloadWindow::ondownloadFailed);
@@ -265,44 +290,46 @@ void DownloadWindow::cleanup()
             }
         }
     }
-    QDir dir;
-    QFileInfo fi(QDir::fromNativeSeparators(savedFilename));
-    dir.rmdir(fi.absolutePath());
+
+    //彻底停止共享内存
+    disconnect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
+    if(tmsendMemory->isActive()){
+        tmsendMemory->stop();
+    }
     if(share->isAttached()){
         share->detach();
     }
     if(passKey->isAttached()){
         passKey->detach();
     }
-    disconnect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
-    tmsendMemory->stop();
+
+
+
+    //清理临时文件夹
+    QDir dir;
+    QFileInfo fi(QDir::fromNativeSeparators(savedFilename));
+    dir.rmdir(fi.absolutePath());
+    passKey->detach();
+
 }
 
-void DownloadWindow::ondownloadThreadExist(DownloadWindow *download)
-{
 
-}
 
 void DownloadWindow::ondownloadFailed()
 {
     state="failed";
-    // cleanup();
-    // DialogCrtInf crtInf;
-    // QString title="错误";
-    // QString text="下载失败！";
-    // crtInf.setTitle(title);
-    // crtInf.setText(text);
-    // crtInf.exec();
+    //cleanup();
+
 }
 void DownloadWindow::ondownloadFinished()
 {
 
 
     if(isMultipal){
+        //统计完成了任务的进程
         finishedThreads++;
+        //如果全部完成了
         if(finishedThreads==8){
-
-
             for(int i=0;i<8;i++){
                 downloaders[i]->terminate();
                 downloaders[i]->wait();
@@ -314,14 +341,21 @@ void DownloadWindow::ondownloadFinished()
                 setWindowTitle(tr("下载完成！"));
                 actProgress.setText(tr("合并文件中..."));
             }
+
             tmGetProgress->stop();
             tmsetMainProgress->stop();
             disconnect(tmsetMainProgress,&QTimer::timeout,this,&DownloadWindow::onsetMainProgress);
             disconnect(tmGetProgress,&QTimer::timeout,this,&DownloadWindow::ontmGetProgress);
             ui->mainProgress->setValue(0);
             ui->labstate->setText(tr("正在合并为一个文件..."));
-             setWindowTitle(tr("正在合并为一个文件..."));
+            setWindowTitle(tr("正在合并为一个文件..."));
             appender=new fileAppender(savedFilename,this);
+
+            state="succeed";
+            strspeed="";
+            QThread::msleep(100);
+
+            //开始合并文件
             for(int j=0;j<8;j++){
              appender->addToFileList(tempFilePathNames[j]);
             }
@@ -329,9 +363,7 @@ void DownloadWindow::ondownloadFinished()
             connect(appender,&fileAppender::appendSucceed,this,&DownloadWindow::onAppendSucceed);
             connect(appender,SIGNAL(appendProgress(int,int)),this,SLOT(onGetAppendProgress(int,int)));
             appender->start();
-            state="succeed";
-            strspeed="";
-            QThread::msleep(100);
+
 
         }
     }
@@ -339,6 +371,7 @@ void DownloadWindow::ondownloadFinished()
 
 void DownloadWindow::ontmGetProgress()
 {
+    //保护数据
     QMutex m;
     m.lock();
     if(isMultipal){
@@ -347,10 +380,10 @@ void DownloadWindow::ontmGetProgress()
             double total=0;
 
             downloaders[i]->getDownloadProgress(now,total);
+            //统计每个进程的下载字节数
             downloaded[i]=static_cast<qint64>(now);
             progressbar[i]->setMaximum(static_cast<qint64>(total));
             progressbar[i]->setValue(downloaded[i]);
-            // downloadedBytes+=now;
         }
     }
     m.unlock();
@@ -362,6 +395,7 @@ void DownloadWindow::onsetMainProgress(){
         m.lock();
         qint64 totalDownloaded=0;
         for(int i=0;i<8;i++){
+            //计算总下载字节
             totalDownloaded+=downloaded[i];
             ui->mainProgress->setMaximum(TotalBytes);
             ui->mainProgress->setValue(totalDownloaded);
@@ -371,22 +405,21 @@ void DownloadWindow::onsetMainProgress(){
         qint64 thisDownloaded=nowDownloaded-lastDownloaded;
         QString tempspeed;
         if(thisDownloaded>0){
+            //计算下载速度
             long double speed=thisDownloaded/1024.00/1024.00*4.00;
             QString str;
+            state="downloading";
             if(speed>=1){
                 str=tr("正在下载...( %1 MB/s)");
                 tempspeed=QStringLiteral("%1 MB/s");
-                // ui->label->setText(str.arg("正在下载...").arg(speed, 0, 'f', 2));
             }else if(speed*1024>=1){
                 speed=thisDownloaded/1024.00*4.00;
                 str=tr("正在下载...( %1 KB/s)");
                 tempspeed=QStringLiteral("%1 KB/s");
-                // ui->label->setText(str.arg("正在下载...").arg(speed, 0, 'f', 2));
             }else if(speed>=1){
                 speed=thisDownloaded*4.00;
                 str=tr("正在下载...( %1 B/s)");
                 tempspeed=QStringLiteral("%1 B/s");
-                // ui->label->setText(str.arg("正在下载...").arg(speed, 0, 'f', 2));
             }
             ui->labstate->setText(str.arg(speed, 0, 'f', 2));
             strspeed=tempspeed.arg(speed, 0, 'f', 2);
@@ -400,7 +433,7 @@ void DownloadWindow::onsetMainProgress(){
             getSuitableUnit(totals,totalunit);
             actProgress.setText(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
             ui->labbytes->setText(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
-            state="downloading";
+
 
             // if(tray!=Q_NULLPTR){
             //     tray->setToolTip(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
@@ -480,7 +513,6 @@ void DownloadWindow::on_btncancel_clicked()
     onsendMemory();
     QThread::msleep(100);
     cleanup();
-
     needtoclose=1;
     close();
 }

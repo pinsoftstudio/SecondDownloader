@@ -108,11 +108,7 @@ QPixmap DownloadMessageWindow::getFilePixmap(QString fileLocation)
     return provider.icon(fi).pixmap(60,60);
 }
 
-void DownloadMessageWindow::ondownloadThreadExist(DownloadWindow *downloadwindow)
-{
-    emit downloadThreadExist(downloadwindow);
 
-}
 
 void DownloadMessageWindow::onresultready(qint64 filesize)
 {

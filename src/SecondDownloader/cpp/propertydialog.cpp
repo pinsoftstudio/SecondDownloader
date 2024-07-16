@@ -38,6 +38,7 @@ PropertyDialog::PropertyDialog(QString url, QString location, QString state,QStr
     ui->lineLocation->setReadOnly(1);
     ui->lineurl->setReadOnly(1);
     ui->btnOk->setProperty("highlight","true");
+    setAttribute(Qt::WA_DeleteOnClose);
 
 
 }

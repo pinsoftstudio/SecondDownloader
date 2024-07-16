@@ -30,11 +30,6 @@ NewDownloadWindow::~NewDownloadWindow()
     delete ui;
 }
 
-void NewDownloadWindow::ondownloadThreadExist(DownloadWindow *downloadwindow)
-{
-    emit downloadThreadExist(downloadwindow);
-}
-
 
 
 void NewDownloadWindow::on_btnStart_clicked()
