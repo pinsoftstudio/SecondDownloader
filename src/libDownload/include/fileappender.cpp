@@ -55,8 +55,15 @@ void fileAppender::run()
 
 void fileAppender::cleanup()
 {
-    QDir rmDir;
-    rmDir.rmdir(QFileInfo(tempfileList[0]).absolutePath());
+
+
+    QDir pathRemove=QFileInfo(QDir::toNativeSeparators(tempfileList[0])).absoluteDir();
+    if(pathRemove.removeRecursively()){
+        qDebug()<<"Succeed";
+    }else{
+        qDebug()<<"Failed";
+    };
+
 }
 
 

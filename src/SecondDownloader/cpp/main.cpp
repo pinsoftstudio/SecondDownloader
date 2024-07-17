@@ -162,6 +162,9 @@ int main(int argc, char *argv[])
                 }
 
         }
+         w=new MainWindow(0);
+        createMainTray();
+        bool needExit=0;
 
     }else{
         if(!MainAppIsRunning){
