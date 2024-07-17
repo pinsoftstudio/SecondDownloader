@@ -19,6 +19,7 @@
 #include "header/main.h"
 // #include "header/dialogquestion.h"
 #include "header/mainwindow.h"
+static DownloadMessageWindow *dw=Q_NULLPTR;
 static MainWindow *w=Q_NULLPTR;
 void createMainTray(){
 
@@ -152,20 +153,17 @@ int main(int argc, char *argv[])
     // ag.append("sdp://https://down-tencent.huorong.cn/sysdiag-all-x64-6.0.1.0-2024.07.04.1.exe");
 
     if(ag.size()>1){
-        if(!QUrl(ag.at(1)).scheme().isEmpty() &&ag.at(1).count()>=6){
-            QMessageBox::information(nullptr,"",ag.at(1));
-                if(ag.at(1).left(6).toLower()=="sdp://"){
-                        QString  url=ag.at(1).right(ag.at(1).count()-6);
-                        DownloadMessageWindow *dw=new   DownloadMessageWindow(url,nullptr,1);
-                        dw->show();
-                        bool needExit=0;
-                }
-
-        }
-         w=new MainWindow(0);
-        createMainTray();
+        if(!QUrl(ag.at(1)).scheme().isEmpty()){
+        QString  url=ag.at(1);
+        dw=new   DownloadMessageWindow(url,nullptr,1);
+        dw->show();
         bool needExit=0;
-
+        }
+        // if(!MainAppIsRunning){
+        //     w=new MainWindow(0);
+        //     createMainTray();
+        //     bool needExit=0;
+        // }
     }else{
         if(!MainAppIsRunning){
 
@@ -173,14 +171,14 @@ int main(int argc, char *argv[])
             w->show();
             createMainTray();
         }else{
-            QApplication *app1;
+
             return 0;
         }
 
     }
 
     if(MainAppIsRunning && needExit){
-        QApplication *app1;
+
          return 0;
     }
 
