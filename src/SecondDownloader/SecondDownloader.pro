@@ -22,7 +22,6 @@ SOURCES += \
 
 HEADERS += \
     # header/RadiusFramelessDialog.h \
-    header/main.h \
     header/mainwindow.h \
     header/frmdonate.h \
     header/frmdownloadcontent.h \

@@ -1,0 +1,11 @@
+.card{
+    border-radius: 10px;
+    height: 100x;
+    background-color: rgb(0, 157, 255);
+
+}
+.card-button{
+    display: flex;
+    flex-direction: row;   /*设置主轴方向是水平方向*/
+    align-items: center;  /*设置侧轴上，子元素的排列方式为居中对齐*/
+}

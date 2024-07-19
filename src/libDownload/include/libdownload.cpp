@@ -22,12 +22,12 @@ static int xferinfo_callback(void *clientp,
          downloader->setCtotal(dltotal);
         downloader->setCnow(dlnow);
          // downloader->setUnknown(0);
-        // qDebug() << "Downloaded" << dlnow << "of" << dltotal << "bytes (" << percent << "%)";
+        qDebug() << "Downloaded" << dlnow << "of" << dltotal << "bytes (" << percent << "%)";
     } else {
 
          downloader->setCnow(dlnow);
         // downloader->setUnknown(1);
-        // qDebug() << "Downloaded" << dlnow << "bytes (total size unknown)";
+        qDebug() << "Downloaded" << dlnow << "bytes (total size unknown)";
     }
 
     return 0; // 成功
@@ -94,9 +94,10 @@ void LibDownload::run()
     headers = curl_slist_append(headers, ("Range: " + range.toStdString()).c_str());
 
     curl_easy_setopt(curl, CURLOPT_URL, URL.toStdString().c_str());
+    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, 5);
-    curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, 1000);
-    curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 20);
+    curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, 1000L);
+    curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 20L);
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_to_file);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &file);

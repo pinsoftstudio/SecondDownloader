@@ -22,6 +22,7 @@ private:
     QString fileLocation;
     QString folderLocation;
 
+
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 private slots:

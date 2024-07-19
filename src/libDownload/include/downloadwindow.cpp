@@ -47,7 +47,7 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);
 
-    setAttribute(Qt::WA_DeleteOnClose);
+    // setAttribute(Qt::WA_DeleteOnClose);
     startDownload();
 
     //开始向“下载内容”发送下载信息

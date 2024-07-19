@@ -4,7 +4,7 @@
 #include <QWidget>
 #include<QCloseEvent>
 #include <newdownloadwindow.h>
-#include "main.h"
+
 namespace Ui {
 class frmMainPage;
 }

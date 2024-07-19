@@ -31,7 +31,7 @@ DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, b
     FileUrlInfo *urlinfo=new FileUrlInfo(URL);
     QThread *thread =new QThread;
     urlinfo->moveToThread(thread);
-    connect(urlinfo,SIGNAL(resultReady(qint64)),this,SLOT(onresultready(qint64)));
+    connect(urlinfo,SIGNAL(resultReady(qint64,QString)),this,SLOT(onresultready(qint64,QString)));
     connect(urlinfo,&FileUrlInfo::getERROR,this,&DownloadMessageWindow::ongeterror);
     QObject::connect(thread, &QThread::started, [urlinfo](){
         urlinfo->getFileSize();
@@ -110,7 +110,7 @@ QPixmap DownloadMessageWindow::getFilePixmap(QString fileLocation)
 
 
 
-void DownloadMessageWindow::onresultready(qint64 filesize)
+void DownloadMessageWindow::onresultready(qint64 filesize,QString finalUrl)
 {
     size=filesize;
     qint64 calsize;
@@ -129,6 +129,9 @@ void DownloadMessageWindow::onresultready(qint64 filesize)
     }else{
         ui->labfilesize->setText("文件大小：未知");
     }
+    URL=finalUrl;
+    ui->lineurl->setText(URL);
+    iniUi();
     ui->btnStart->setEnabled(1);
 }
 

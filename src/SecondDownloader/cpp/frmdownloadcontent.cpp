@@ -35,10 +35,16 @@ frmDownloadContent::frmDownloadContent(QWidget *parent)
     sdGetKey=new QSharedMemory;
     innerMemory=new QSharedMemory;
     updateShare=new QSharedMemory;
+    newUrlShare=new QSharedMemory;
+    newUrlShare->setKey("newUrl");
+    if(!newUrlShare->create(1024)){
+        newUrlShare->attach();
+    }
+
 
     sdGetKey->setKey("passkey");
     if(!sdGetKey->create(1024)){
-        sdGetKey->attach(QSharedMemory::ReadOnly);
+        sdGetKey->attach();
     }
 
     tmGetNewShareName=new QTimer;
@@ -211,6 +217,7 @@ void frmDownloadContent::onCustomContextMenuRequested(const QPoint &pos)
 void frmDownloadContent::onTMGetNewShareName()
 {
     getShareName();
+    detectNewDownload();
 }
 
 void frmDownloadContent::onUpdateShare()
@@ -396,8 +403,9 @@ void frmDownloadContent::refreashDatFile()
         QDataStream datastream(&dataFile);
         datastream.setByteOrder(QDataStream::LittleEndian);
         int count=ui->treeWidget->topLevelItemCount();
-        QSettings set("Pinsoft","SecondDownloader");
-        set.setValue("DownloadContent",count);
+        // QSettings set("Pinsoft","SecondDownloader");
+        // set.setValue("DownloadContent",count);
+        datastream.writeRawData((char*)&count,sizeof(int));
         for(int i=0;i<count;i++){
             QString afileName;
             QString afileSize;
@@ -519,12 +527,16 @@ void frmDownloadContent::iniTree()
     });
     if(QFile("data/download.dat").exists()){
         QFile file("data/download.dat");
-        QSettings set("Pinsoft","SecondDownloader");
-        int itemCount=set.value("DownloadContent",0).toInt();
+         QDataStream datastream(&file);
+
+        // QSettings set("Pinsoft","SecondDownloader");
+        // int itemCount=set.value("DownloadContent",0).toInt();
         if(file.open(QIODevice::ReadOnly)){
+             int itemCount=0;
+             datastream.readRawData((char*)&itemCount,sizeof(int));
             for (int i=0;i<itemCount;i++){
 
-                QDataStream datastream(&file);
+
                 datastream.setByteOrder(QDataStream::LittleEndian);
                 qsizetype size;
                 char *buf;
@@ -574,6 +586,34 @@ void frmDownloadContent::iniTree()
             }
             file.close();
         }
+    }
+
+}
+
+void frmDownloadContent::detectNewDownload()
+{
+
+    if(newUrlShare->lock()){
+
+        QBuffer buffer;
+        buffer.setData((char*)newUrlShare->constData(),newUrlShare->size());
+        buffer.open(QBuffer::ReadWrite);
+        QDataStream stream(&buffer);
+        QString newUrl;
+        stream>>newUrl;
+        if(!newUrl.isEmpty()){
+            QString empty="";
+            char *Key=static_cast<char*>(newUrlShare->data());
+            QBuffer Buffer;
+            Buffer.open(QBuffer::WriteOnly);
+            QDataStream Stream(&Buffer);
+            Stream<<empty;
+            memcpy(Key,Buffer.data(),Buffer.size());
+            DownloadMessageWindow *downloadMs=new DownloadMessageWindow(newUrl,nullptr,1);
+            downloadMs->show();
+        }
+        newUrlShare->unlock();
+
     }
 
 }

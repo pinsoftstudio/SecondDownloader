@@ -16,7 +16,7 @@
 #include <QDesktopServices>
 #include <QObject>
 #include <QAction>
-#include "header/main.h"
+#include <QBuffer>
 // #include "header/dialogquestion.h"
 #include "header/mainwindow.h"
 static DownloadMessageWindow *dw=Q_NULLPTR;
@@ -105,10 +105,9 @@ void createMainTray(){
     });
     mainTray->setContextMenu(menu);
     mainTray->show();
+}
 
-
-
-
+void sendUrlMessage(QString url){
 
 
 }
@@ -127,6 +126,19 @@ bool isSingleInstance(const char* shared_memory_name)
     }
     return result;
 }
+void installTranslator(QApplication &a)
+{
+    QTranslator translator;
+    const QStringList uiLanguages = QLocale::system().uiLanguages();
+    for (const QString &locale : uiLanguages) {
+        const QString baseName = "SecondDownloader_" + QLocale(locale).name();
+        if (translator.load(":/i18n/" + baseName)) {
+            a.installTranslator(&translator);
+            break;
+        }
+    }
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -137,50 +149,88 @@ int main(int argc, char *argv[])
         MainAppIsRunning=1;
     }
     a.setQuitOnLastWindowClosed(0);
-    QTranslator translator;
-    const QStringList uiLanguages = QLocale::system().uiLanguages();
-    for (const QString &locale : uiLanguages) {
-        const QString baseName = "SecondDownloader_" + QLocale(locale).name();
-        if (translator.load(":/i18n/" + baseName)) {
-            a.installTranslator(&translator);
-            break;
+    installTranslator(a);
+
+    QStringList arguments=a.arguments();
+    if(arguments.size()>1){
+        QString url=arguments.at(1);
+        static QSharedMemory urlShare("newUrl");
+        if(!urlShare.create(1024)){
+            if(urlShare.attach()){
+            if(urlShare.lock()){
+
+                char* to=static_cast<char*>(urlShare.data());
+                QBuffer buffer;
+                buffer.open(QBuffer::ReadWrite);
+                QDataStream stream(&buffer);
+                stream<<url;
+                memcpy(to,buffer.data().data(),buffer.size());
+                urlShare.unlock();
+                // urlShare.detach();
+            }
+            }
+            return 0;
+        }else{
+            setCommonStyle();
+            createMainTray();
+            w=new MainWindow(0);
+            w->hide();
+            if(urlShare.lock()){
+                char* to=static_cast<char*>(urlShare.data());
+                QBuffer buffer;
+                buffer.open(QBuffer::ReadWrite);
+                QDataStream stream(&buffer);
+                stream<<url;
+                memcpy(to,buffer.data().data(),buffer.size());
+                urlShare.unlock();
+            }
         }
-    }
-
-
-    setCommonStyle();
-    QStringList ag=a.arguments();
-    // ag.append("sdp://https://down-tencent.huorong.cn/sysdiag-all-x64-6.0.1.0-2024.07.04.1.exe");
-
-    if(ag.size()>1){
-        if(!QUrl(ag.at(1)).scheme().isEmpty()){
-        QString  url=ag.at(1);
-        dw=new   DownloadMessageWindow(url,nullptr,1);
-        dw->show();
-        bool needExit=0;
-        }
-        // if(!MainAppIsRunning){
-        //     w=new MainWindow(0);
-        //     createMainTray();
-        //     bool needExit=0;
-        // }
     }else{
         if(!MainAppIsRunning){
-
+            setCommonStyle();
+            createMainTray();
             w=new MainWindow(0);
             w->show();
-            createMainTray();
         }else{
-
             return 0;
         }
 
     }
 
-    if(MainAppIsRunning && needExit){
 
-         return 0;
-    }
+
+    // QStringList ag=a.arguments();
+    // // ag.append("sdp://https://down-tencent.huorong.cn/sysdiag-all-x64-6.0.1.0-2024.07.04.1.exe");
+
+    // if(ag.size()>1){
+    //     if(!QUrl(ag.at(1)).scheme().isEmpty()){
+    //     QString  url=ag.at(1);
+    //     dw=new   DownloadMessageWindow(url,nullptr,1);
+    //     dw->show();
+    //     bool needExit=0;
+    //     }
+    //     // if(!MainAppIsRunning){
+    //     //     w=new MainWindow(0);
+    //     //     createMainTray();
+    //     //     bool needExit=0;
+    //     // }
+    // }else{
+    //     if(!MainAppIsRunning){
+
+    //         w=new MainWindow(0);
+    //         w->show();
+    //         createMainTray();
+    //     }else{
+
+    //         return 0;
+    //     }
+
+    // }
+
+    // if(MainAppIsRunning && needExit){
+
+    //      return 0;
+    // }
 
 
     return a.exec();

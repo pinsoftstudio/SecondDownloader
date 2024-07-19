@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QDesktopServices>
 #include <QDir>
+
 DialogDownloaded::DialogDownloaded(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::DialogDownloaded)

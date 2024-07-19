@@ -32,7 +32,9 @@ private:
     QStringList keyGetted;
     QSharedMemory *innerMemory;
     QSharedMemory *updateShare;
+    QSharedMemory *newUrlShare;
     void iniTree();
+    void detectNewDownload();
 private slots:
 
     void on_btnSelect_clicked(bool checked);

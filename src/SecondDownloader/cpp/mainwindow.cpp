@@ -72,8 +72,8 @@ void MainWindow::addWidgetTostackedWidget()
 
     ui->stackedWidget->insertWidget(1,dwncontent);
 
-    ui->stackedWidget->insertWidget(2,set);
-    ui->stackedWidget->insertWidget(3,donate);
+    ui->stackedWidget->insertWidget(2,donate);
+    ui->stackedWidget->insertWidget(3,set);
 
 
 
