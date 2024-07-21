@@ -1,6 +1,6 @@
 #include "downloadmessagewindow.h"
 #include "ui_downloadmessagewindow.h"
-#include "QThread"
+
 #include "QUrl"
 #include "QSettings"
 #include "QStandardPaths"
@@ -29,18 +29,20 @@ DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, b
     iniUi();
 
     FileUrlInfo *urlinfo=new FileUrlInfo(URL);
-    QThread *thread =new QThread;
-    urlinfo->moveToThread(thread);
-    connect(urlinfo,SIGNAL(resultReady(qint64,QString)),this,SLOT(onresultready(qint64,QString)));
+    // QThread *thread =new QThread;
+    // urlinfo->moveToThread(thread);
+    connect(urlinfo,SIGNAL(sizeReady(qint64)),this,SLOT(onsizeready(qint64)));
+    connect(urlinfo,&FileUrlInfo::UrlReady,this,&DownloadMessageWindow::onurlready);
+    connect(urlinfo,SIGNAL(UrlReady(QString)),this,SLOT(onurlready(QString)));
     connect(urlinfo,&FileUrlInfo::getERROR,this,&DownloadMessageWindow::ongeterror);
-    QObject::connect(thread, &QThread::started, [urlinfo](){
-        urlinfo->getFileSize();
-    });
-    QObject::connect(thread, &QThread::finished, [urlinfo, thread](){
+    // QObject::connect(thread, &QThread::started, [urlinfo](){
+    //     urlinfo->getFileSize();
+    // });
+    QObject::connect(urlinfo, &FileUrlInfo::finished, [urlinfo](){
         urlinfo->deleteLater();
-        thread->deleteLater();
+
     });
-    thread->start();
+    urlinfo->start();
 
 
 
@@ -110,7 +112,7 @@ QPixmap DownloadMessageWindow::getFilePixmap(QString fileLocation)
 
 
 
-void DownloadMessageWindow::onresultready(qint64 filesize,QString finalUrl)
+void DownloadMessageWindow::onsizeready(qint64 filesize)
 {
     size=filesize;
     qint64 calsize;
@@ -129,10 +131,18 @@ void DownloadMessageWindow::onresultready(qint64 filesize,QString finalUrl)
     }else{
         ui->labfilesize->setText("文件大小：未知");
     }
+    // URL=finalUrl;
+    // ui->lineurl->setText(URL);
+
+    ui->btnStart->setEnabled(1);
+}
+
+void DownloadMessageWindow::onurlready(QString finalUrl)
+{
     URL=finalUrl;
     ui->lineurl->setText(URL);
     iniUi();
-    ui->btnStart->setEnabled(1);
+    // iniUi();
 }
 
 void DownloadMessageWindow::on_btnStart_clicked()

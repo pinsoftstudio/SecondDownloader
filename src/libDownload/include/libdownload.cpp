@@ -71,6 +71,11 @@ void LibDownload::setUnknown(bool unknown)
     unknownTotal=unknown;
 }
 
+QString LibDownload::getTrueFileName()
+{
+
+}
+
 void LibDownload::run()
 {
 
@@ -92,6 +97,14 @@ void LibDownload::run()
 
     struct curl_slist *headers = nullptr;
     headers = curl_slist_append(headers, ("Range: " + range.toStdString()).c_str());
+    headers = curl_slist_append(headers, "Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,en-GB;q=0.6");
+    headers = curl_slist_append(headers, "Sec-CH-UA: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Microsoft Edge\";v=\"102\"");
+    headers = curl_slist_append(headers, "Sec-CH-UA-Mobile: ?0");
+    headers = curl_slist_append(headers, "Sec-CH-UA-Platform: \"Windows\"");
+    headers = curl_slist_append(headers, "Sec-Fetch-Dest: empty");
+    headers = curl_slist_append(headers, "Sec-Fetch-Mode: cors");
+    headers = curl_slist_append(headers, "Sec-Fetch-Site: cross-site");
+    headers = curl_slist_append(headers, "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.30");
 
     curl_easy_setopt(curl, CURLOPT_URL, URL.toStdString().c_str());
     curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);

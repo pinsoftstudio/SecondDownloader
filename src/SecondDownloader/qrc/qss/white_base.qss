@@ -257,6 +257,12 @@ QTreeWidget::item:selected {
 
 }
 
+/*frmSettings*/
+#frmSettings QTabWidget::tab-bar{
+	border-radius: 5px;
+	min-height: 60px;
+	background-color:rgb(0,120,212) ;
+}
 
 
 

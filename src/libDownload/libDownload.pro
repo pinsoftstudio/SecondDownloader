@@ -23,6 +23,7 @@ HEADERS += \
     Style.h \
     include/dialogdownloaded.h \
     include/downloadmessagewindow.h \
+    # include/downloadmessagewindow_copy.h \
     include/downloadwindow.h \
     include/fileappender.h \
     include/libDownload_global.h \
