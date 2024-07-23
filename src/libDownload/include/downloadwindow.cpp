@@ -390,6 +390,8 @@ void DownloadWindow::ontmGetProgress()
 }
 
 void DownloadWindow::onsetMainProgress(){
+    // savedFilename=downloaders[0]->getTrueFileName();
+    qDebug()<<savedFilename;
     if(isMultipal){
         QMutex m;
         m.lock();

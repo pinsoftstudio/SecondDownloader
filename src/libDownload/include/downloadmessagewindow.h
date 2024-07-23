@@ -71,18 +71,25 @@ public:
         wait();
 
     }
+    double getSize()
+    {
+        return static_cast<double>(size);
+    }
 signals:
     void UrlReady(QString finalUrl);
     void getERROR();
     void sizeReady(qint64 fileSize);
     void nameReady(QString finalName);
+
 private:
     QString URL;
     CURL *curl;
     CURLcode res;
+    qint64 size=0;
 protected:
     void run()  Q_DECL_OVERRIDE
     {
+         double contentLength = 0.0;
         curl_global_init(CURL_GLOBAL_ALL);
         curl = curl_easy_init();
         if (!curl) {
@@ -118,14 +125,23 @@ protected:
         res=curl_easy_getinfo(curl,CURLINFO_EFFECTIVE_URL,&url);
         qDebug()<<url;
         emit UrlReady(url);
+        URL=url;
+        curl_easy_setopt(curl, CURLOPT_URL, URL.toStdString().c_str());
         res=curl_easy_perform(curl);
+        res = curl_easy_getinfo(curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &contentLength);
+        if (res != CURLE_OK) {
+            emit getERROR();
+        } else {
+            size=static_cast<qint64>(contentLength);
+        }
+
         // res=curl_easy_getinfo(curl,CURLINFO_EFFECTIVE_URL,&url);
-        CURLcode res = curl_easy_perform(curl);
+         res = curl_easy_perform(curl);
         if (res = CURLE_OK) {
             qDebug()<<url;
             emit UrlReady(url);
         }
-        URL=url;
+
 
         struct curl_slist *headers1 = nullptr;
         headers1 = curl_slist_append(headers1, "Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,en-GB;q=0.6");
@@ -204,14 +220,19 @@ static int xferinfo_callback(void *clientp,
     //     // downloader->setUnknown(1);
     //     qDebug() << "Downloaded" << dlnow << "bytes (total size unknown)";
     // }
-    if(dltotal>0){
+    // if(dltotal>0){
         FileUrlInfo *fileUrlinfo=static_cast<FileUrlInfo*>(clientp);
         double dtotal=(double)dltotal;
+        if(dtotal>fileUrlinfo->getSize()){
+            fileUrlinfo->fakeDownloadFinished(static_cast<qint64>(dtotal));
+        }else{
+            fileUrlinfo->fakeDownloadFinished(static_cast<qint64>(fileUrlinfo->getSize()));
+        }
 
-        fileUrlinfo->fakeDownloadFinished(static_cast<qint64>(dtotal));
 
 
-    }
+
+    // }
     return 0; // 成功
 }
 

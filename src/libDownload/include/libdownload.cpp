@@ -73,7 +73,7 @@ void LibDownload::setUnknown(bool unknown)
 
 QString LibDownload::getTrueFileName()
 {
-
+    return truefileName;
 }
 
 void LibDownload::run()

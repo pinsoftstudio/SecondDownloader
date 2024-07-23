@@ -41,4 +41,8 @@
         <file>res/menuico/settings.png</file>
         <file>res/menuico/update.png</file>
     </qresource>
+    <qresource prefix="/pics">
+        <file>res/drop-down.png</file>
+        <file>res/tick.png</file>
+    </qresource>
 </RCC>

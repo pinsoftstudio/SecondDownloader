@@ -22,7 +22,7 @@ DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, b
     URL=url;
     ui->setupUi(this);
     Qt::WindowFlags flags;
-    setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);
+    setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint|Qt::WindowStaysOnTopHint);
     ui->btnStart->setProperty("highlight","true");
     // ui->linelocation->setText(qurl.fileName());
 
@@ -55,6 +55,7 @@ DownloadMessageWindow::~DownloadMessageWindow()
 
 void DownloadMessageWindow::iniUi()
 {
+
     ui->lineurl->setText(URL);
     QUrl qurl(URL);
     QString fileName;

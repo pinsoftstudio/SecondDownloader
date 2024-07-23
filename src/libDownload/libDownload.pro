@@ -15,6 +15,7 @@ SOURCES += \
     include/dialogdownloaded.cpp \
     include/downloadmessagewindow.cpp \
     include/downloadwindow.cpp \
+    include/extdownload.cpp \
     include/fileappender.cpp \
     include/libdownload.cpp \
     include/newdownloadwindow.cpp
@@ -25,6 +26,7 @@ HEADERS += \
     include/downloadmessagewindow.h \
     # include/downloadmessagewindow_copy.h \
     include/downloadwindow.h \
+    include/extdownload.h \
     include/fileappender.h \
     include/libDownload_global.h \
     include/libdownload.h \
@@ -64,6 +66,7 @@ FORMS += \
     include/dialogdownloaded.ui \
     include/downloadmessagewindow.ui \
     include/downloadwindow.ui \
+    include/extdownload.ui \
     include/newdownloadwindow.ui
 
 RESOURCES += \

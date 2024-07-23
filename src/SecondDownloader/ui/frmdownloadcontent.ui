@@ -401,6 +401,9 @@ QPushButton[highlight=&quot;true&quot;]:pressed{
          <height>31</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="text">
         <string>删除记录(&amp;D)</string>
        </property>

@@ -19,6 +19,7 @@ public:
     void setCnow(double now);
     void setCtotal(double total);
     void setUnknown(bool unknown);
+    QString getTrueFileName();
 private:
     QString downloadUrl;
     // QString location;
@@ -29,9 +30,11 @@ private:
     double Ctotal=0;
     bool unknownTotal=0;
     QString location;
-   QString StartBytes;
+    QString StartBytes;
     QString EndBytes;
     QString URL;
+    QString truefileName;
+
 protected:
     void run() Q_DECL_OVERRIDE;
 signals:

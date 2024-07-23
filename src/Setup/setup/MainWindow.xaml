@@ -1,0 +1,13 @@
+﻿<Window x:Class="setup.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:setup"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="253" Width="466">
+    
+    <Grid>
+        <Frame x:Name="frame" Content="错误: 太抽象了，试着重新打开应用？" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>
