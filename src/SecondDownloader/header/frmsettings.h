@@ -15,6 +15,59 @@ class frmSettings : public QWidget
 public:
     explicit frmSettings(QWidget *parent = nullptr);
     ~frmSettings();
+private slots:
+    void on_chkRunHide_clicked(bool checked);
+
+    void on_chkRunAuto_clicked(bool checked);
+
+    void on_rdbThemeFollow_clicked(bool checked);
+
+    void on_rdbThemeWhite_clicked(bool checked);
+
+    void on_rdbThemeBlack_clicked(bool checked);
+
+    void on_rdbLanDef_clicked(bool checked);
+
+    void on_rdbLanZhSimplified_clicked(bool checked);
+
+    void on_rdbLanZhTraditional_clicked(bool checked);
+
+    void on_rdbLanEn_clicked(bool checked);
+
+    void on_rdbManageAll_clicked(bool checked);
+
+    void on_rdbManageNone_clicked(bool checked);
+
+    void on_chkProtrolHttps_clicked(bool checked);
+
+    void on_chkProtrolHttp_clicked(bool checked);
+
+    void on_chkProtrolFtp_clicked(bool checked);
+
+    void on_chkProtrolFtps_clicked(bool checked);
+
+    void on_chkProtrolOthers_clicked(bool checked);
+
+    void on_lineSaveLocation_textChanged(const QString &arg1);
+
+    void on_chkDownLoadClip_clicked(bool checked);
+
+    void on_chkFinishedScan_clicked(bool checked);
+
+    void on_chkFinishedBell_clicked(bool checked);
+
+    void on_comboFinishedBell_currentTextChanged(const QString &arg1);
+
+    void on_rdbFinishedDisplay_clicked(bool checked);
+
+    void on_rdbFinishedOpenFile_clicked(bool checked);
+
+    void on_rdbFinishedOpenFolder_clicked(bool checked);
+
+    void on_rdbFinishedNotNotice_clicked(bool checked);
+
+    void on_chkGithubProxy_clicked(bool checked);
+
 private:
     Ui::frmSettings *ui;
     void iniSettings();

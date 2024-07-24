@@ -33,8 +33,8 @@ frmSettings::~frmSettings()
 void frmSettings::iniSettings()
 {
     //自动运行
-    QSettings set("Pinsoft","Seconddownloader");
-    ui->chkRunAuto->setChecked(set.value("Common/Autorun",true).toBool());
+    QSettings set("Pinsoft","SecondDownloader");
+    ui->chkRunAuto->setChecked(set.value("Common/Autorun",1).toBool());
     if(ui->chkRunAuto->isChecked()){
         ui->chkRunAuto->setCheckable(1);
     }else{
@@ -42,15 +42,16 @@ void frmSettings::iniSettings()
     }
     ui->chkRunHide->setChecked("Common/HideAutorun");
 
-    ui->rdbThemeFollow->setChecked(set.value("Style/FollowSystem",true).toBool());
+    //主题
+    ui->rdbThemeFollow->setChecked(set.value("Style/FollowSystem",1).toBool());
     if(!ui->rdbThemeFollow->isChecked()){
-        ui->rdbThemeBlack->setChecked(set.value("Style/isDark",false).toBool());
-        ui->rdbThemeWhite->setChecked(!set.value("Style/isDark",false).toBool());
+        ui->rdbThemeBlack->setChecked(set.value("Style/isDark",0).toBool());
+        ui->rdbThemeWhite->setChecked(!set.value("Style/isDark",0).toBool());
     }
 
     //语言
-    ui->rdbLanDef->setChecked(set.value("Language/FollowSystem",true).toBool());
-    if(!set.value("Language/FollowSystem",true).toBool()){
+    ui->rdbLanDef->setChecked(set.value("Language/FollowSystem",1).toBool());
+    if(!set.value("Language/FollowSystem",1).toBool()){
 
         QString Language=set.value("Language/Type","Chinese").toString();
         if(Language=="SimplifiedChinese"){
@@ -66,32 +67,32 @@ void frmSettings::iniSettings()
             ui->rdbLanZhTraditional->setChecked(0);
             ui->rdbLanEn->setChecked(1);
         }else {
-            set.setValue("Language/FollowSystem",true);
+            set.setValue("Language/FollowSystem",1);
         }
     }
 
     //接管
-    bool manageAll=set.value("Common/Manage/ManageAll",true).toBool();
+    bool manageAll=set.value("Common/Manage/ManageAll",1).toBool();
     ui->rdbManageAll->setChecked(manageAll);
     ui->rdbManageNone->setChecked(!manageAll);
 
     //允许的协议
-    ui->chkProtrolHttp->setChecked(set.value("Download/http",true).toBool());
-    ui->chkProtrolHttps->setChecked(set.value("Download/https",true).toBool());
-    ui->chkProtrolFtp->setChecked(set.value("Download/ftp",true).toBool());
-    ui->chkProtrolFtps->setChecked(set.value("Download/ftps",true).toBool());
-    ui->chkProtrolOthers->setChecked(set.value("Downloader/Others",true).toBool());
+    ui->chkProtrolHttp->setChecked(set.value("Download/http",1).toBool());
+    ui->chkProtrolHttps->setChecked(set.value("Download/https",1).toBool());
+    ui->chkProtrolFtp->setChecked(set.value("Download/ftp",1).toBool());
+    ui->chkProtrolFtps->setChecked(set.value("Download/ftps",1).toBool());
+    ui->chkProtrolOthers->setChecked(set.value("Downloader/Others",1).toBool());
 
     //下载位置
     ui->lineSaveLocation->setText(set.value("Download/SavingLocation/location",
                                             QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)).toString());
 
     ui->chkDownLoadClip->setChecked(set.
-                                    value("Download/AutoDownloadFromClipboard",false).toBool());
+                                    value("Download/AutoDownloadFromClipboard",0).toBool());
 
     //下载完成后
-    ui->chkFinishedScan->setChecked(set.value("Download/ScanFile",true).toBool());
-    ui->chkFinishedBell->setChecked(set.value("Download/FinishBell",false).toBool());
+    ui->chkFinishedScan->setChecked(set.value("Download/ScanFile",1).toBool());
+    ui->chkFinishedBell->setChecked(set.value("Download/FinishBell",0).toBool());
     QString mediaPath="C:/Windows/Media/";
     ui->comboFinishedBell->setEnabled(1);
 
@@ -167,4 +168,169 @@ QStringList frmSettings::getAllWavs(QString location)
     return wavFiles;
 }
 
+
+
+void frmSettings::on_chkRunHide_clicked(bool checked)
+{
+    QSettings set("Pinsoft","SecondDownloader");
+    set.setValue("Common/HideAutorun",checked);
+
+}
+
+
+void frmSettings::on_chkRunAuto_clicked(bool checked)
+{
+    QSettings set("Pinsoft","SecondDownloader");
+    set.setValue("Common/Autorun",checked);
+}
+
+
+void frmSettings::on_rdbThemeFollow_clicked(bool checked)
+{
+    QSettings set("Pinsoft","SecondDownloader");
+    set.setValue("Style/FollowSystem",checked);
+}
+
+
+void frmSettings::on_rdbThemeWhite_clicked(bool checked)
+{
+    QSettings set("Pinsoft","SecondDownloader");
+    set.setValue("Style/FollowSystem",0);
+    set.setValue("Style/isDark",!checked);
+}
+
+
+void frmSettings::on_rdbThemeBlack_clicked(bool checked)
+{
+    QSettings set("Pinsoft","SecondDownloader");
+    set.setValue("Style/FollowSystem",0);
+    set.setValue("Style/isDark",checked);
+}
+
+
+void frmSettings::on_rdbLanDef_clicked(bool checked)
+{
+    QSettings set("Pinsoft","SecondDownloader");
+    set.setValue("Language/FollowSystem",1);
+}
+
+
+void frmSettings::on_rdbLanZhSimplified_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_rdbLanZhTraditional_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_rdbLanEn_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_rdbManageAll_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_rdbManageNone_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_chkProtrolHttps_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_chkProtrolHttp_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_chkProtrolFtp_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_chkProtrolFtps_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_chkProtrolOthers_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_lineSaveLocation_textChanged(const QString &arg1)
+{
+
+}
+
+
+void frmSettings::on_chkDownLoadClip_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_chkFinishedScan_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_chkFinishedBell_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_comboFinishedBell_currentTextChanged(const QString &arg1)
+{
+
+}
+
+
+void frmSettings::on_rdbFinishedDisplay_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_rdbFinishedOpenFile_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_rdbFinishedOpenFolder_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_rdbFinishedNotNotice_clicked(bool checked)
+{
+
+}
+
+
+void frmSettings::on_chkGithubProxy_clicked(bool checked)
+{
+
+}
 
