@@ -117,9 +117,7 @@
         <DropShadowEffect/>
     </Page.Effect>
     <Grid Background="White">
-        <Grid.Effect>
-            <DropShadowEffect/>
-        </Grid.Effect>
+        
 
         <Image HorizontalAlignment="Left" Height="111" VerticalAlignment="Center" Width="115" Source="/logo.png" Margin="55,0,0,40">
             <Image.OpacityMask>
