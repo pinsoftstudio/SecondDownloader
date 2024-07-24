@@ -42,7 +42,10 @@ FORMS += \
 
 
 TRANSLATIONS += \
-    SecondDownloader_zh_CN.ts
+    Translations/SecondDownloader_zh_CN.ts \
+    Translations/SecondDownload_en_US.ts \
+    Translations/SecondDownload_zh_TW.ts
+
 CONFIG += lrelease
 CONFIG += embed_translations
 
