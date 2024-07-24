@@ -17,6 +17,8 @@ public:
     ~frmSettings();
 private:
     Ui::frmSettings *ui;
+    void iniSettings();
+    QStringList getAllWavs(QString location);
 };
 
 #endif // FRMSETTINGS_H

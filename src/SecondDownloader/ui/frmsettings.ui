@@ -346,7 +346,7 @@ QCheckBox::indicator:checked:hover{
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="adbManageNone">
+                 <widget class="QRadioButton" name="rdbManageNone">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
@@ -521,6 +521,18 @@ QCheckBox::indicator:checked:hover{
                 </property>
                 <property name="text">
                  <string>http</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkProtrolFtp">
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>ftp</string>
                 </property>
                </widget>
               </item>
@@ -731,13 +743,13 @@ QPushButton:pressed{
                    <widget class="QComboBox" name="comboFinishedBell">
                     <property name="minimumSize">
                      <size>
-                      <width>161</width>
+                      <width>300</width>
                       <height>31</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>161</width>
+                      <width>300</width>
                       <height>31</height>
                      </size>
                     </property>
@@ -769,7 +781,7 @@ QPushButton:pressed{
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QRadioButton" name="rdbDisplay">
+                 <widget class="QRadioButton" name="rdbFinishedDisplay">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
@@ -793,7 +805,7 @@ QPushButton:pressed{
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="adbFinishedOpenFolder">
+                 <widget class="QRadioButton" name="rdbFinishedOpenFolder">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>

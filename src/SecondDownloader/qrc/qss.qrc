@@ -15,6 +15,7 @@
     </qresource>
     <qresource prefix="/common">
         <file>qss/white_base.qss</file>
+        <file>res/notice.wav</file>
     </qresource>
     <qresource prefix="/surface">
         <file>qss/white_MainWindow.qss</file>
