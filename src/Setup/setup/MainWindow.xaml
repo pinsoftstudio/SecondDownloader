@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:setup"
         mc:Ignorable="d"
-        Title="MainWindow" Height="253" Width="466">
+        Title="SecondDownloader" Height="253" Width="466" WindowStyle="None">
     
     <Grid>
-        <Frame x:Name="frame" Content="错误: 太抽象了，试着重新打开应用？" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="frame" Content="错误: 太抽象了，试着重新打开应用？" NavigationUIVisibility="Hidden" Navigated="frame_Navigated"/>
     </Grid>
 </Window>

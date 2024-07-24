@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 namespace setup
 {
     /// <summary>
@@ -20,11 +21,19 @@ namespace setup
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
+            MouseLeftButtonDown += (o, e) => { DragMove(); };
+            WindowStartupLocation =WindowStartupLocation.CenterScreen;
             frame.Navigate(new start());
         }
 
+        private void frame_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
+        
     }
 }
