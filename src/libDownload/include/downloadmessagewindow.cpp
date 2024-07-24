@@ -60,14 +60,10 @@ void DownloadMessageWindow::iniUi()
     QUrl qurl(URL);
     QString fileName;
     QSettings set("Pinsoft","SecondDownloader");
-    if(set.value("Download/SavingLocation/isDefault",1).toBool()==1){
-        QString qtSavingLoaction=QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-        savingLocation=QDir::toNativeSeparators(qtSavingLoaction);
-    }else{
-        savingLocation=set.value("Download/SavingLocation/location",
+     savingLocation=set.value("Download/SavingLocation/location",
                                    QDir::toNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)
                                        )).toString();
-    }
+
 
     if(!QDir(savingLocation).exists()){
         QDir dir;
@@ -185,7 +181,6 @@ void DownloadMessageWindow::on_btnChoose_clicked()
         ui->linelocation->setText(savedFileName);
     }
     QSettings set("Pinsoft","SecondDownloader");
-    set.setValue("Download/SavingLocation/isDefault",0);
     set.setValue("Download/SavingLocation/location",savingLocation);
 }
 

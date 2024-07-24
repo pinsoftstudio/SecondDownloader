@@ -56,7 +56,7 @@ private slots:
 
     void on_chkFinishedBell_clicked(bool checked);
 
-    void on_comboFinishedBell_currentTextChanged(const QString &arg1);
+    void oncomboFinishedBellcurrentTextChanged(const QString &arg1);
 
     void on_rdbFinishedDisplay_clicked(bool checked);
 
@@ -68,10 +68,13 @@ private slots:
 
     void on_chkGithubProxy_clicked(bool checked);
 
+    void on_btnSaveSelect_clicked();
+
 private:
     Ui::frmSettings *ui;
     void iniSettings();
     QStringList getAllWavs(QString location);
+    bool comboFinishBellInied=0;
 };
 
 #endif // FRMSETTINGS_H
