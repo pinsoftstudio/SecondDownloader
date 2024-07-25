@@ -16,6 +16,9 @@ public:
     explicit frmDonate(QWidget *parent = nullptr);
     ~frmDonate();
     void setDark(bool isDark);
+private slots:
+    void on_btnStar_clicked();
+
 private:
     Ui::frmDonate *ui;
     bool Dark=false;

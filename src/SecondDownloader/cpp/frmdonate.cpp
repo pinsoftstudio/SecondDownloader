@@ -2,6 +2,7 @@
 #include "ui_frmdonate.h"
 #include <QSettings>
 #include <QFile>
+#include <QDesktopServices>
 frmDonate::frmDonate(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmDonate)
@@ -26,3 +27,9 @@ void frmDonate::setDark(bool isDark)
     qssFile->close();
     setStyleSheet(styleSheet);
 }
+
+void frmDonate::on_btnStar_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/pinsoftstudio/SecondDownloader"));
+}
+

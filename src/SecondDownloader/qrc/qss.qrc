@@ -16,6 +16,7 @@
     <qresource prefix="/common">
         <file>qss/white_base.qss</file>
         <file>res/notice.wav</file>
+        <file>res/ps_png.png</file>
     </qresource>
     <qresource prefix="/surface">
         <file>qss/white_MainWindow.qss</file>
