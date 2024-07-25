@@ -10,6 +10,7 @@
 #include "QVariant"
 #include "QDebug"
 #include "QFileDialog"
+#include "QSoundEffect"
 frmSettings::frmSettings(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmSettings)
@@ -19,6 +20,8 @@ frmSettings::frmSettings(QWidget *parent)
     if(isDark()){
         ;
     }else{
+        ui->comboFinishedBell->setProperty("style","light");
+
         ui->scrollDownload->setStyleSheet("background-color:white");
         ui->scollCommon->setStyleSheet("background-color:white");
     }
@@ -362,6 +365,16 @@ void frmSettings::oncomboFinishedBellcurrentTextChanged(const QString &arg1)
 
     }
 
+    QString finalWavPath=ui->comboFinishedBell->itemData(ui->comboFinishedBell->currentIndex()).toString();
+    if(finalWavPath=="default"){
+        finalWavPath=":/common/res/notice.wav";
+    }
+    QSoundEffect *sound=new QSoundEffect(this);
+    sound->setSource(QUrl::fromLocalFile(finalWavPath));
+    sound->setVolume(1.0);
+    sound->play();
+
+
 }
 
 
@@ -416,4 +429,7 @@ void frmSettings::on_btnSaveSelect_clicked()
         ui->lineSaveLocation->setText(QDir::toNativeSeparators(savePath));
     }
 }
+
+
+
 

@@ -21,6 +21,12 @@
 #include "header/mainwindow.h"
 static DownloadMessageWindow *dw=Q_NULLPTR;
 static MainWindow *w=Q_NULLPTR;
+static QTimer detectWindowShow;
+static QSharedMemory shared;
+void detectShowReq(){
+
+
+}
 void createMainTray(){
 
 
@@ -114,7 +120,7 @@ void sendUrlMessage(QString url){
 bool isSingleInstance(const char* shared_memory_name)
 {
     bool result;
-    static QSharedMemory shared(shared_memory_name);
+    shared.setKey(shared_memory_name);
     if (shared.attach())
     {
         result=false;
@@ -190,8 +196,53 @@ int main(int argc, char *argv[])
             setCommonStyle();
             createMainTray();
             w=new MainWindow(0);
+
+            QObject::connect(&detectWindowShow,&QTimer::timeout,w,[]{
+                link:
+                    if(!shared.lock()){
+                        goto link;
+                    }
+
+                    bool needToOpen=0;
+                    QBuffer buffer;
+                    buffer.setData((char*)shared.constData(),shared.size());
+                    buffer.open(QBuffer::ReadWrite);
+                    QDataStream stream(&buffer);
+                    stream>>needToOpen;
+
+                    shared.unlock();
+                    if(needToOpen){
+                        if(w!=Q_NULLPTR){
+                            w->show();
+                        }
+                    lnk:
+                        if(!shared.lock()){
+                            goto lnk;
+                        }
+                        needToOpen=0;
+                        char *toKey=static_cast<char*>(shared.data());
+                        QBuffer keyBuffer;
+                        keyBuffer.open(QBuffer::WriteOnly);
+                        QDataStream keyStream(&keyBuffer);
+                        keyStream<<needToOpen;
+
+                        memcpy(toKey,keyBuffer.data(),keyBuffer.size());
+                        shared.unlock();
+                    }
+            });
+            detectWindowShow.start(100);
             w->show();
         }else{
+            if(shared.lock()){
+                bool open=1;
+                char* to=static_cast<char*>(shared.data());
+                QBuffer buffer;
+                buffer.open(QBuffer::ReadWrite);
+                QDataStream stream(&buffer);
+                stream<<open;
+                memcpy(to,buffer.data().data(),buffer.size());
+                shared.unlock();
+            }
             return 0;
         }
 

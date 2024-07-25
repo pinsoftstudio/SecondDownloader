@@ -14,13 +14,13 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QComboBox::drop-down{
+   <string notr="true">QComboBox::drop-down[style=&quot;light&quot;]{
 	subcontrol-origin: padding;
     subcontrol-position: top right;
     width: 20px;
 	image: url(:/pics/res/drop-down.png);
 }
-QComboBox {  
+QComboBox [style=&quot;light&quot;]{  
     border: 1px solid rgb(236,236,236); 
 	border-bottom-color: rgb(211, 211, 211);
     border-radius: 4px;  
@@ -29,18 +29,18 @@ QComboBox {
 
 }  
 
-QComboBox:hover
+QComboBox:hover[style=&quot;light&quot;]
 {
 	background-color:rgb(250, 250, 250);
  }
 
- QComboBox:pressed {  
+ QComboBox:pressed[style=&quot;light&quot;] {  
     background-color: rgb(250, 250, 250); 
 	border-bottom-color:rgb(236, 236, 236);
 	color:grey;
 }
 
-QComboBox QAbstractItemView {
+QComboBox QAbstractItemView[style=&quot;light&quot;] {
     border: 1px solid rgb(236,236,236); 
 	background-color: rgb(249,249,249);
     border-radius: 6px;
@@ -50,7 +50,7 @@ QComboBox QAbstractItemView {
 	
 }
 
-QComboBox QAbstractItemView::item {
+QComboBox QAbstractItemView::item[style=&quot;light&quot;] {
 	border-radius: 6px;
     height: 30px;  
 	color:black;
@@ -58,7 +58,7 @@ QComboBox QAbstractItemView::item {
 	background-color: rgb(249,249,249);
 
 }
-QComboBox QAbstractItemView::item:selected{
+QComboBox QAbstractItemView::item:selected[style=&quot;light&quot;]{
 	padding:3px;
 	border-top-left-radius:0px;
 	border-bottom-left-radius:0px;
@@ -66,7 +66,7 @@ QComboBox QAbstractItemView::item:selected{
 
 } 
 
-QComboBox QAbstractItemView::item:hover {
+QComboBox QAbstractItemView::item:hover[style=&quot;light&quot;] {
 	border-top-left-radius:0px;
 	border-bottom-left-radius:0px;
 	border-left:none ;
@@ -76,7 +76,7 @@ QComboBox QAbstractItemView::item:hover {
 
 	
 }
-QComboBox QAbstractItemView::item:pressed {
+QComboBox QAbstractItemView::item:pressed[style=&quot;light&quot;] {
 	border-top-left-radius:0px;
 	border-bottom-left-radius:0px;
 	border-left:none ;

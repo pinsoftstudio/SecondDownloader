@@ -70,6 +70,8 @@ private slots:
 
     void on_btnSaveSelect_clicked();
 
+
+
 private:
     Ui::frmSettings *ui;
     void iniSettings();
