@@ -19,7 +19,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using System.Resources;
 using System.Reflection;
 using System.Diagnostics;
-
+using Microsoft.Win32;
 namespace setup
 {
     /// <summary>
@@ -66,15 +66,17 @@ namespace setup
             }
             return ret;
         }
-        
-        //public void creatShortcut(string loc, string exeFileName, string uninstallExeName,string folderName) {
-        public void creatShortcut(string loc, string exeFileName,  string folderName)
-            {
+
+        public void creatShortcut(string loc, string exeFileName, string uninstallExeName, string folderName)
+        {
+            //public void creatShortcut(string loc, string exeFileName,  string folderName)
+            //{
 
              var shellType = Type.GetTypeFromProgID("WScript.Shell");
             dynamic shell = Activator.CreateInstance(shellType);
             //创建主程序桌面快捷方式
-            var shortcut = shell.CreateShortcut(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),  exeFileName+".lnk"));
+            var shortcut = shell.CreateShortcut(Path.Combine
+                (Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),  exeFileName+".lnk"));
             shortcut.TargetPath = Path.Combine(loc, exeFileName + ".exe");
             shortcut.WorkingDirectory = loc;
             shortcut.Save();
@@ -91,11 +93,31 @@ namespace setup
             shortcut.WorkingDirectory = loc;
             shortcut.Save();
 
-            ////创建卸载程序开始菜单快捷方式
-            //shortcut = shell.CreateShortcut(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), folderName + "/",uninstallExeName+ ".lnk"));
-            //shortcut.TargetPath = Path.Combine(loc, uninstallExeName + ".lnk");
-            //shortcut.WorkingDirectory = loc;
-            //shortcut.Save();
+            //创建卸载程序开始菜单快捷方式
+            shortcut = shell.CreateShortcut(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), folderName + "/", uninstallExeName + ".lnk"));
+            shortcut.TargetPath = Path.Combine(loc, uninstallExeName + ".exe");
+            shortcut.WorkingDirectory = loc;
+            shortcut.Save();
+
+        }
+        public void addRegForUnistall(string loc,string exeFileName, string uninstallExeName,
+            string publisher,string displayversion)
+        {
+
+            Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\" + exeFileName,
+                "DisplayIcon", Path.Combine(loc, exeFileName + ".exe"));
+            Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\" + exeFileName,
+                "UninstallString", Path.Combine(loc, uninstallExeName + ".exe"));
+            Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\" + exeFileName,
+                "DisplayName", exeFileName);
+            Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\" + exeFileName,
+                "Publisher", publisher);
+            Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\" + exeFileName,
+                "DisplayVersion", displayversion);
+           
+            
+
+
 
         }
         public void exfile(string loc)
@@ -138,33 +160,61 @@ namespace setup
         
         public void deleteForReInstall(string loc)
         {
-            Process[] pocesses = Process.GetProcessesByName("SecondDownloader");
-            foreach (Process process in pocesses)
-            {
-                process.Kill();
-                process.WaitForExit();
-            }
-            string[] filePaths = Directory.GetFiles(loc);
-            foreach(string filePath in filePaths)
-            {
-                
-                    File.Delete(filePath);
-            }
-            string[] directories = Directory.GetDirectories(loc);
-            foreach (string directory in directories)
-            {
-                if (directory.PadRight(directory.Length - directory.LastIndexOf("\\") - 1) != "data")
+            
+                Process[] pocesses = Process.GetProcessesByName("SecondDownloader");
+                foreach (Process process in pocesses)
                 {
-                    deleteForReInstall(directory);
+                    try {
+                    process.Kill();
+                    process.WaitForExit();
+                    }  
+                    catch {}
+                    
                 }
-               
-            }
+                
+                Process[] pocesses2 = Process.GetProcessesByName("Uninstall");
+                foreach (Process process in pocesses2)
+                {
+                    try
+                    {
+                        process.Kill();
+                        process.WaitForExit();
+                    }
+                    catch { }
+                }
+
+                Process[] pocesses3 = Process.GetProcessesByName("launcher");
+                foreach (Process process in pocesses3)
+                {
+                    try
+                    {
+                        process.Kill();
+                        process.WaitForExit();
+                    }
+                    catch { }
+                }   
+            string[] filePaths = Directory.GetFiles(loc);
+                foreach (string filePath in filePaths)
+                {
+
+                    File.Delete(filePath);
+                }
+                string[] directories = Directory.GetDirectories(loc);
+                foreach (string directory in directories)
+                {
+                    if (directory.PadRight(directory.Length - directory.LastIndexOf("\\") - 1) != "data")
+                    {
+                        deleteForReInstall(directory);
+                    }
+
+                }
+            
 
         }
         public install(string loc)
         {
             InitializeComponent();
-            loc = Path.Combine(loc, "SecondDownloader");
+            loc = Path.Combine(loc, "Pinsoft\\SecondDownloader");
             if (!Directory.Exists(loc))
             {
                 Directory.CreateDirectory(loc);
@@ -179,7 +229,8 @@ namespace setup
                 {
                     NavigationService.Navigate(new finish());
                 });
-                creatShortcut(loc, "SecondDownloader", "Pinsoft\\SecondDownloader");
+                creatShortcut(loc, "SecondDownloader",  "Uninstall","Pinsoft\\SecondDownloader");
+                addRegForUnistall(loc, "SecondDownloader", "Uninstall", "Pinsoft Studio organisation.冰软工作室", "1.0.0.0");
                 File.Delete(Path.Combine(loc, "tmp.zip"));
                 Process.Start(Path.Combine(loc, "SecondDownloader.exe"));
             });

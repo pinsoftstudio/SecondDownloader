@@ -123,6 +123,6 @@
         <Label Content="Developed by PinsoftStudio" HorizontalAlignment="Left" Margin="188,0,0,24" VerticalAlignment="Center" FontFamily="Cascadia Code"/>
         <Button Content="继续" Style="{StaticResource submitbtn}" FontFamily="Microsoft YaHei UI" FontSize="15" Margin="0,0,10,10" Width="60" Height="35" HorizontalAlignment="Right" VerticalAlignment="Bottom" ClickMode="Press" Click="Button_Click_1"/>
         <Button Content="浏览" Style="{StaticResource btn}" FontFamily="Microsoft YaHei UI" FontSize="15" Margin="0,0,78,10" Width="60" Height="35" HorizontalAlignment="Right" VerticalAlignment="Bottom" ClickMode="Press" Click="Button_Click"/>
-        <TextBox x:Name="textbox" Margin="10,0,157,9" TextWrapping="NoWrap" Text="TextBox" Height="35" VerticalAlignment="Bottom" FontSize="25"/>
+        <TextBox x:Name="textbox" Margin="10,0,157,9" TextWrapping="NoWrap" Text="TextBox" Height="23" VerticalAlignment="Bottom" FontSize="15"/>
     </Grid>
 </Page>
