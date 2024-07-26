@@ -21,6 +21,7 @@ frmMainPage::frmMainPage(QWidget *parent)
     iniControl();
 
 
+
 }
 
 frmMainPage::~frmMainPage()
@@ -77,6 +78,9 @@ void frmMainPage::iniControl()
         //其他操作...
     }
     ui->pushButton->setChecked(!stopped);
+    if(isDark()){
+        ui->pushButton->setStyleSheet("QPushButton {border: 1px solid rgb(63,63,63); border-bottom-color: rgb(58,58,58);border-radius: 4px;  background-color: rgb(55,55,55); color:white;}  QPushButton:hover{background-color:rgb(60,60,60);}QPushButton:pressed {  background-color: rgb(50, 50, 50); border-bottom-color:rgb(58, 58, 58);color:rgb(208,208,208);}");
+    }
 
 }
 

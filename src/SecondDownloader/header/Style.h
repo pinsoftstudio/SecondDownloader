@@ -13,8 +13,12 @@ static void setCommonStyle()
     QApplication *qapp;
     QSettings settings("Pinsoft","SecondDownloader");
     bool isDark=0;
-    isDark=settings.value("Style/isDark",0).toBool();
-    qDebug()<<isDark;
+    if(settings.value("Style/FollowSystem",1).toBool()){
+        QSettings sysTheme("Microsoft","Windows");
+        isDark=(!sysTheme.value("CurrentVersion/Themes/Personalize/AppsUseLightTheme").toBool());
+    }else{
+        isDark=settings.value("Style/isDark",0).toBool();
+    }
     QFile qssFile;
     if(isDark){
         qssFile.setFileName(":/common/qss/dark_base.qss");
@@ -42,6 +46,13 @@ static void changeDark(bool toDark){
 
 static  bool isDark(){
     QSettings settings("Pinsoft","SecondDownloader");
-    return settings.value("Style/isDark",0).toBool();
+    if(settings.value("Style/FollowSystem",1).toBool()){
+        QSettings sysTheme("Microsoft","Windows");
+        bool isLight=sysTheme.value("CurrentVersion/Themes/Personalize/AppsUseLightTheme").toBool();
+        return (!isLight);
+    }else{
+        return settings.value("Style/isDark",0).toBool();
+    }
+
 }
 #endif // STYLE_H

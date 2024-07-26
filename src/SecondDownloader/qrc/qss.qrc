@@ -12,11 +12,17 @@
         <file>res/started.png</file>
         <file>res/warning.png</file>
         <file>res/SecondDownloader-inner.png</file>
+        <file>res/Donate_dark.png</file>
+        <file>res/Download-Content_dark.png</file>
+        <file>res/Main-Page_dark.png</file>
+        <file>res/Menu_dark.png</file>
+        <file>res/Settings_dark.png</file>
     </qresource>
     <qresource prefix="/common">
         <file>qss/white_base.qss</file>
         <file>res/notice.wav</file>
         <file>res/ps_png.png</file>
+        <file>qss/dark_base.qss</file>
     </qresource>
     <qresource prefix="/surface">
         <file>qss/white_MainWindow.qss</file>
@@ -27,21 +33,35 @@
         <file>res/Download-Content_white.png</file>
         <file>res/Donate_white.png</file>
         <file>res/Settings_white.png</file>
+        <file>res/Donate_dark.png</file>
+        <file>res/Download-Content_dark.png</file>
+        <file>res/Main-Page_dark.png</file>
+        <file>res/Menu_dark.png</file>
+        <file>res/Settings_dark.png</file>
     </qresource>
     <qresource prefix="/frmdonate">
         <file>res/alipay.jpg</file>
         <file>res/wechatpay.png</file>
     </qresource>
     <qresource prefix="/menu">
-        <file>res/menuico/about.png</file>
-        <file>res/menuico/donate.png</file>
-        <file>res/menuico/exit.png</file>
-        <file>res/menuico/github-fill.png</file>
-        <file>res/menuico/main.png</file>
-        <file>res/menuico/manage.png</file>
-        <file>res/menuico/new.png</file>
-        <file>res/menuico/settings.png</file>
-        <file>res/menuico/update.png</file>
+        <file>res/menuico/about_dark.png</file>
+        <file>res/menuico/about_white.png</file>
+        <file>res/menuico/donate_dark.png</file>
+        <file>res/menuico/donate_white.png</file>
+        <file>res/menuico/exit_dark.png</file>
+        <file>res/menuico/exit_white.png</file>
+        <file>res/menuico/github-fill_dark.png</file>
+        <file>res/menuico/github-fill_white.png</file>
+        <file>res/menuico/main_dark.png</file>
+        <file>res/menuico/main_white.png</file>
+        <file>res/menuico/manage_dark.png</file>
+        <file>res/menuico/manage_white.png</file>
+        <file>res/menuico/new_dark.png</file>
+        <file>res/menuico/new_white.png</file>
+        <file>res/menuico/settings_dark.png</file>
+        <file>res/menuico/settings_white.png</file>
+        <file>res/menuico/update_dark.png</file>
+        <file>res/menuico/update_white.png</file>
     </qresource>
     <qresource prefix="/pics">
         <file>res/drop-down.png</file>

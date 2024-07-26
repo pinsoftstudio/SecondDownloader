@@ -3,7 +3,6 @@
 #include <QLocale>
 #include <QTranslator>
 #include <QFile>
-
 #include "header/Style.h"
 #include <QMessageBox>
 #include <downloadwindow.h>
@@ -17,6 +16,7 @@
 #include <QObject>
 #include <QAction>
 #include <QBuffer>
+#include <QDir>
 // #include "header/dialogquestion.h"
 #include "header/mainwindow.h"
 static DownloadMessageWindow *dw=Q_NULLPTR;
@@ -52,16 +52,28 @@ void createMainTray(){
     actCheckForUpdate->setText(QObject::tr("检查更新(&U)"));
     actExit->setText(QObject::tr("退出本软件(&E)"));
 
+    if(isDark()){
+        actOpen->setIcon(QIcon(":/menu/res/menuico/main_white.png"));
+        actNew->setIcon(QIcon(":/menu/res/menuico/new_white.png"));
+        actDownloadContent->setIcon(QIcon(":/menu/res/menuico/manage_white.png"));
+        actSettings->setIcon(QIcon(":/menu/res/menuico/settings_white.png"));
+        actDonate->setIcon(QIcon(":/menu/res/menuico/donate_white.png"));
+        actAbout->setIcon(QIcon(":/menu/res/menuico/about_white.png"));
+        actGithub->setIcon(QIcon(":/menu/res/menuico/github-fill_white.png"));
+        actCheckForUpdate->setIcon(QIcon(":/menu/res/menuico/update_white.png"));
+        actExit->setIcon(QIcon(":/menu/res/menuico/exit_white.png"));
+    }else{
+        actOpen->setIcon(QIcon(":/menu/res/menuico/main_dark.png"));
+        actNew->setIcon(QIcon(":/menu/res/menuico/new_dark.png"));
+        actDownloadContent->setIcon(QIcon(":/menu/res/menuico/manage_dark.png"));
+        actSettings->setIcon(QIcon(":/menu/res/menuico/settings_dark.png"));
+        actDonate->setIcon(QIcon(":/menu/res/menuico/donate_dark.png"));
+        actAbout->setIcon(QIcon(":/menu/res/menuico/about_dark.png"));
+        actGithub->setIcon(QIcon(":/menu/res/menuico/github-fill_dark.png"));
+        actCheckForUpdate->setIcon(QIcon(":/menu/res/menuico/update_dark.png"));
+        actExit->setIcon(QIcon(":/menu/res/menuico/exit_dark.png"));
+    }
 
-    actOpen->setIcon(QIcon(":/menu/res/menuico/main.png"));
-    actNew->setIcon(QIcon(":/menu/res/menuico/new.png"));
-    actDownloadContent->setIcon(QIcon(":/menu/res/menuico/manage.png"));
-    actSettings->setIcon(QIcon(":/menu/res/menuico/settings.png"));
-    actDonate->setIcon(QIcon(":/menu/res/menuico/donate.png"));
-    actAbout->setIcon(QIcon(":/menu/res/menuico/about.png"));
-    actGithub->setIcon(QIcon(":/menu/res/menuico/github-fill.png"));
-    actCheckForUpdate->setIcon(QIcon(":/menu/res/menuico/update.png"));
-    actExit->setIcon(QIcon(":/menu/res/menuico/exit.png"));
 
     menu->addAction(actOpen);
     menu->addAction(actNew);
@@ -113,10 +125,6 @@ void createMainTray(){
     mainTray->show();
 }
 
-void sendUrlMessage(QString url){
-
-
-}
 bool isSingleInstance(const char* shared_memory_name)
 {
     bool result;
@@ -148,6 +156,7 @@ void installTranslator(QApplication &a)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
     bool MainAppIsRunning=0;
     bool needExit=1;
     if(!isSingleInstance("SecondDownloader"))
@@ -156,41 +165,99 @@ int main(int argc, char *argv[])
     }
     a.setQuitOnLastWindowClosed(0);
     installTranslator(a);
+    QSettings set("Pinsoft","SecondDownloader");
+    bool autorun=set.value("Common/Autorun",1).toBool();
+    bool silent=set.value("Common/HideAutorun",1).toBool();
+    if(autorun){
+        QSettings autoset("Microsoft","Windows");
+        QString runnerPath=QApplication::applicationDirPath()+"/run.exe";
+        autoset.setValue("CurrentVersion/Run/SecondDownloader",QDir::toNativeSeparators(runnerPath));
 
+    }
     QStringList arguments=a.arguments();
     if(arguments.size()>1){
         QString url=arguments.at(1);
-        static QSharedMemory urlShare("newUrl");
-        if(!urlShare.create(1024)){
-            if(urlShare.attach()){
-            if(urlShare.lock()){
 
-                char* to=static_cast<char*>(urlShare.data());
-                QBuffer buffer;
-                buffer.open(QBuffer::ReadWrite);
-                QDataStream stream(&buffer);
-                stream<<url;
-                memcpy(to,buffer.data().data(),buffer.size());
-                urlShare.unlock();
-                // urlShare.detach();
-            }
-            }
-            return 0;
-        }else{
+        if(url=="autorun"){
             setCommonStyle();
             createMainTray();
             w=new MainWindow(0);
-            w->hide();
-            if(urlShare.lock()){
-                char* to=static_cast<char*>(urlShare.data());
-                QBuffer buffer;
-                buffer.open(QBuffer::ReadWrite);
-                QDataStream stream(&buffer);
-                stream<<url;
-                memcpy(to,buffer.data().data(),buffer.size());
-                urlShare.unlock();
+
+            QObject::connect(&detectWindowShow,&QTimer::timeout,w,[]{
+                link:
+                    if(!shared.lock()){
+                        goto link;
+                    }
+
+                    bool needToOpen=0;
+                    QBuffer buffer;
+                    buffer.setData((char*)shared.constData(),shared.size());
+                    buffer.open(QBuffer::ReadWrite);
+                    QDataStream stream(&buffer);
+                    stream>>needToOpen;
+
+                    shared.unlock();
+                    if(needToOpen){
+                        if(w!=Q_NULLPTR){
+                            w->show();
+                        }
+                    lnk:
+                        if(!shared.lock()){
+                            goto lnk;
+                        }
+                        needToOpen=0;
+                        char *toKey=static_cast<char*>(shared.data());
+                        QBuffer keyBuffer;
+                        keyBuffer.open(QBuffer::WriteOnly);
+                        QDataStream keyStream(&keyBuffer);
+                        keyStream<<needToOpen;
+
+                        memcpy(toKey,keyBuffer.data(),keyBuffer.size());
+                        shared.unlock();
+                    }
+            });
+            detectWindowShow.start(100);
+            if(silent){
+                w->hide();
+            }else{
+                w->show();
+            }
+
+        }else{
+
+            static QSharedMemory urlShare("newUrl");
+            if(!urlShare.create(1024)){
+                if(urlShare.attach()){
+                    if(urlShare.lock()){
+
+                        char* to=static_cast<char*>(urlShare.data());
+                        QBuffer buffer;
+                        buffer.open(QBuffer::ReadWrite);
+                        QDataStream stream(&buffer);
+                        stream<<url;
+                        memcpy(to,buffer.data().data(),buffer.size());
+                        urlShare.unlock();
+                        // urlShare.detach();
+                    }
+                }
+                return 0;
+            }else{
+                setCommonStyle();
+                createMainTray();
+                w=new MainWindow(0);
+                w->hide();
+                if(urlShare.lock()){
+                    char* to=static_cast<char*>(urlShare.data());
+                    QBuffer buffer;
+                    buffer.open(QBuffer::ReadWrite);
+                    QDataStream stream(&buffer);
+                    stream<<url;
+                    memcpy(to,buffer.data().data(),buffer.size());
+                    urlShare.unlock();
+                }
             }
         }
+
     }else{
         if(!MainAppIsRunning){
             setCommonStyle();
@@ -247,42 +314,5 @@ int main(int argc, char *argv[])
         }
 
     }
-
-
-
-    // QStringList ag=a.arguments();
-    // // ag.append("sdp://https://down-tencent.huorong.cn/sysdiag-all-x64-6.0.1.0-2024.07.04.1.exe");
-
-    // if(ag.size()>1){
-    //     if(!QUrl(ag.at(1)).scheme().isEmpty()){
-    //     QString  url=ag.at(1);
-    //     dw=new   DownloadMessageWindow(url,nullptr,1);
-    //     dw->show();
-    //     bool needExit=0;
-    //     }
-    //     // if(!MainAppIsRunning){
-    //     //     w=new MainWindow(0);
-    //     //     createMainTray();
-    //     //     bool needExit=0;
-    //     // }
-    // }else{
-    //     if(!MainAppIsRunning){
-
-    //         w=new MainWindow(0);
-    //         w->show();
-    //         createMainTray();
-    //     }else{
-
-    //         return 0;
-    //     }
-
-    // }
-
-    // if(MainAppIsRunning && needExit){
-
-    //      return 0;
-    // }
-
-
     return a.exec();
 }

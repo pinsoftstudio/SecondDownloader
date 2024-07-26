@@ -28,6 +28,28 @@ QComboBox [style=&quot;light&quot;]{
 	color:black;
 
 }  
+QCheckBox::indicator:unchecked[style=&quot;light&quot;]{
+	border: 1px solid grey;
+  border-radius:4px;
+  background-color:white;
+}
+QCheckBox::indicator:unchecked:hover[style=&quot;light&quot;]{
+	border: 1px solid grey;
+  border-radius:4px;
+  background-color:rgb(227,227,227);
+}
+QCheckBox::indicator:checked[style=&quot;light&quot;]{
+  border-image:url(:/pics/res/tick.png);
+  background-color: rgb(23, 143, 255);
+  /*border: 2px solid grey;*/
+  border-radius:4px;
+}
+QCheckBox::indicator:checked:hover[style=&quot;light&quot;]{
+  border-image:url(:/pics/res/tick.png);
+  background-color: rgb(0,128,227);
+  /*border: 2px solid grey;*/
+  border-radius:4px;
+}
 
 QComboBox:hover[style=&quot;light&quot;]
 {
@@ -76,6 +98,18 @@ QComboBox QAbstractItemView::item:hover[style=&quot;light&quot;] {
 
 	
 }
+
+QComboBox:disabled {  
+    border: 1px solid rgb(180,180,180); 
+	border-bottom-color: rgb(180, 180, 180);
+    border-radius: 4px;  
+    background-color:  rgb(180, 180, 180); 
+	color:black;
+
+}  
+
+
+
 QComboBox QAbstractItemView::item:pressed[style=&quot;light&quot;] {
 	border-top-left-radius:0px;
 	border-bottom-left-radius:0px;
@@ -83,35 +117,340 @@ QComboBox QAbstractItemView::item:pressed[style=&quot;light&quot;] {
 	background-color: rgb(243,243,243);
 	border-radius: 6px;
 }
-QCheckBox::indicator:unchecked{
+
+
+
+QComboBox::drop-down[style=&quot;dark&quot;]{
+	subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+	image: url(:/pics/res/drop-down.png);
+}
+QComboBox[style=&quot;dark&quot;]{  
+    border: 1px solid rgb(63,63,63); 
+	border-bottom-color: rgb(58,58,58);
+    border-radius: 4px;  
+    background-color: rgb(55,55,55); 
+	color:white;
+
+}  
+
+QComboBox:hover[style=&quot;dark&quot;]
+{
+	background-color:rgb(60,60,60);
+ }
+
+ QComboBox:pressed[style=&quot;dark&quot;] {  
+    background-color: rgb(50,50,50); 
+	border-bottom-color:rgb(58,58,58);
+	color:rgb(208,208,208);
+}
+
+QComboBox QAbstractItemView[style=&quot;dark&quot;] {
+    border: 1px solid rgb(34,34,34); 
+	background-color: rgb(44,44,44);
+    border-radius: 6px;
+    padding: 1px 2px 1px 2px; 
+    min-width: 9em;   
+	outline:none;
+    
+	
+}
+
+QComboBox QAbstractItemView::item[style=&quot;dark&quot;] {
+	border-radius: 6px;
+    height: 30px;  
+	color:white;
+	
+	background-color: rgb(44,44,44);
+
+}
+QComboBox QAbstractItemView::item:selected[style=&quot;dark&quot;]{
+	padding:3px;
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:2px solid rgb(0,103,192);
+
+} 
+
+QComboBox QAbstractItemView::item:hover[style=&quot;dark&quot;] {
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:none ;
+	background-color: rgb(56,56,56);
+	border-radius: 6px;
+
+
+	
+}
+QComboBox QAbstractItemView::item:pressed[style=&quot;dark&quot;] {
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:none ;
+	background-color: rgb(52,52,52);
+	border-radius: 6px;
+}
+
+
+QComboBox:disabled[style=&quot;dark&quot;]{  
+    border: 1px solid rgb(10,10,10); 
+	border-bottom-color: rgb(20,20,20);
+    border-radius: 4px;  
+    background-color:  rgb(40,40,40); 
+	color:white;
+
+}  
+
+QCheckBox::indicator:unchecked[style=&quot;dark&quot;]{
+  	border: 1px solid grey;
+	border-radius:4px;
+	background-color:rgb(30, 30, 30);
+}
+QCheckBox::indicator:unchecked:hover[style=&quot;dark&quot;]{
+  	border: 1px solid grey;
+	border-radius:4px;
+	background-color:rgb(50,50,50);
+}
+QCheckBox::indicator:checked[style=&quot;dark&quot;]{
+	border-image:url(:/pics/res/tick.png);
+	background-color: rgb(23, 143, 255);
+	/*border: 2px solid grey;*/
+	border-radius:4px;
+}
+QCheckBox::indicator:checked:hover[style=&quot;dark&quot;]{
+	border-image:url(:/pics/res/tick.png);
+	background-color: rgb(0,128,227);
+	/*border: 2px solid grey;*/
+	border-radius:4px;
+}
+</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="styleSheet">
+      <string notr="true">QComboBox::drop-down[style=&quot;light&quot;]{
+	subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+	image: url(:/pics/res/drop-down.png);
+}
+QComboBox [style=&quot;light&quot;]{  
+    border: 1px solid rgb(236,236,236); 
+	border-bottom-color: rgb(211, 211, 211);
+    border-radius: 4px;  
+    background-color: rgb(254, 254, 254); 
+	color:black;
+
+}  
+QCheckBox::indicator:unchecked[style=&quot;light&quot;]{
 	border: 1px solid grey;
   border-radius:4px;
   background-color:white;
 }
-QCheckBox::indicator:unchecked:hover{
+QCheckBox::indicator:unchecked:hover[style=&quot;light&quot;]{
 	border: 1px solid grey;
   border-radius:4px;
   background-color:rgb(227,227,227);
 }
-QCheckBox::indicator:checked{
+QCheckBox::indicator:checked[style=&quot;light&quot;]{
   border-image:url(:/pics/res/tick.png);
   background-color: rgb(23, 143, 255);
   /*border: 2px solid grey;*/
   border-radius:4px;
 }
-QCheckBox::indicator:checked:hover{
+QCheckBox::indicator:checked:hover[style=&quot;light&quot;]{
   border-image:url(:/pics/res/tick.png);
   background-color: rgb(0,128,227);
   /*border: 2px solid grey;*/
   border-radius:4px;
 }
+
+QComboBox:hover[style=&quot;light&quot;]
+{
+	background-color:rgb(250, 250, 250);
+ }
+
+ QComboBox:pressed[style=&quot;light&quot;] {  
+    background-color: rgb(250, 250, 250); 
+	border-bottom-color:rgb(236, 236, 236);
+	color:grey;
+}
+
+QComboBox QAbstractItemView[style=&quot;light&quot;] {
+    border: 1px solid rgb(236,236,236); 
+	background-color: rgb(249,249,249);
+    border-radius: 6px;
+    padding: 1px 2px 1px 2px; 
+    min-width: 9em;   
+	outline:none;
+	
+}
+
+QComboBox QAbstractItemView::item[style=&quot;light&quot;] {
+	border-radius: 6px;
+    height: 30px;  
+	color:black;
+	
+	background-color: rgb(249,249,249);
+
+}
+QComboBox QAbstractItemView::item:selected[style=&quot;light&quot;]{
+	padding:3px;
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:2px solid rgb(0,103,192);
+
+} 
+
+QComboBox QAbstractItemView::item:hover[style=&quot;light&quot;] {
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:none ;
+	background-color: rgb(240,240,240);
+	border-radius: 6px;
+
+
+	
+}
+
+QComboBox:disabled {  
+    border: 1px solid rgb(180,180,180); 
+	border-bottom-color: rgb(180, 180, 180);
+    border-radius: 4px;  
+    background-color:  rgb(180, 180, 180); 
+	color:black;
+
+}  
+
+
+
+QComboBox QAbstractItemView::item:pressed[style=&quot;light&quot;] {
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:none ;
+	background-color: rgb(243,243,243);
+	border-radius: 6px;
+}
+
+
+
+QComboBox::drop-down[style=&quot;dark&quot;]{
+	subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+	image: url(:/pics/res/drop-down.png);
+}
+QComboBox[style=&quot;dark&quot;]{  
+    border: 1px solid rgb(63,63,63); 
+	border-bottom-color: rgb(58,58,58);
+    border-radius: 4px;  
+    background-color: rgb(55,55,55); 
+	color:white;
+
+}  
+
+QComboBox:hover[style=&quot;dark&quot;]
+{
+	background-color:rgb(60,60,60);
+ }
+
+ QComboBox:pressed[style=&quot;dark&quot;] {  
+    background-color: rgb(50,50,50); 
+	border-bottom-color:rgb(58,58,58);
+	color:rgb(208,208,208);
+}
+
+QComboBox QAbstractItemView[style=&quot;dark&quot;] {
+    border: 1px solid rgb(34,34,34); 
+	background-color: rgb(44,44,44);
+    border-radius: 6px;
+    padding: 1px 2px 1px 2px; 
+    min-width: 9em;   
+	outline:none;
+    
+	
+}
+
+QComboBox QAbstractItemView::item[style=&quot;dark&quot;] {
+	border-radius: 6px;
+    height: 30px;  
+	color:white;
+	
+	background-color: rgb(44,44,44);
+
+}
+QComboBox QAbstractItemView::item:selected[style=&quot;dark&quot;]{
+	padding:3px;
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:2px solid rgb(0,103,192);
+
+} 
+
+QComboBox QAbstractItemView::item:hover[style=&quot;dark&quot;] {
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:none ;
+	background-color: rgb(56,56,56);
+	border-radius: 6px;
+
+
+	
+}
+QComboBox QAbstractItemView::item:pressed[style=&quot;dark&quot;] {
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left:none ;
+	background-color: rgb(52,52,52);
+	border-radius: 6px;
+}
+
+
+QComboBox:disabled[style=&quot;dark&quot;]{  
+    border: 1px solid rgb(10,10,10); 
+	border-bottom-color: rgb(20,20,20);
+    border-radius: 4px;  
+    background-color:  rgb(40,40,40); 
+	color:white;
+
+}  
+
+QCheckBox::indicator:unchecked[style=&quot;dark&quot;]{
+  	border: 1px solid grey;
+	border-radius:4px;
+	background-color:rgb(30, 30, 30);
+}
+QCheckBox::indicator:unchecked:hover[style=&quot;dark&quot;]{
+  	border: 1px solid grey;
+	border-radius:4px;
+	background-color:rgb(50,50,50);
+}
+QCheckBox::indicator:checked[style=&quot;dark&quot;]{
+	border-image:url(:/pics/res/tick.png);
+	background-color: rgb(23, 143, 255);
+	/*border: 2px solid grey;*/
+	border-radius:4px;
+}
+QCheckBox::indicator:checked:hover[style=&quot;dark&quot;]{
+	border-image:url(:/pics/res/tick.png);
+	background-color: rgb(0,128,227);
+	/*border: 2px solid grey;*/
+	border-radius:4px;
+}
 </string>
-  </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="styleSheet">
-      <string notr="true"/>
      </property>
      <property name="tabPosition">
       <enum>QTabWidget::North</enum>
@@ -120,7 +459,7 @@ QCheckBox::indicator:checked:hover{
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -149,8 +488,8 @@ QCheckBox::indicator:checked:hover{
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>900</width>
-            <height>867</height>
+            <width>914</width>
+            <height>881</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -176,6 +515,9 @@ QCheckBox::indicator:checked:hover{
                    <font>
                     <pointsize>11</pointsize>
                    </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>启动时自动隐藏到托盘</string>
@@ -451,8 +793,8 @@ QCheckBox::indicator:checked:hover{
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>912</width>
-            <height>867</height>
+            <width>926</width>
+            <height>881</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -476,6 +818,21 @@ QCheckBox::indicator:checked:hover{
               <bool>false</bool>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>7</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>7</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
               <item>
                <widget class="QCheckBox" name="chkProtrolHttps">
                 <property name="font">
@@ -484,28 +841,7 @@ QCheckBox::indicator:checked:hover{
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QCheckBox::indicator:unchecked{
-  	border: 1px solid grey;
-	border-radius:4px;
-	background-color:white;
-}
-QCheckBox::indicator:unchecked:hover{
-  	border: 1px solid grey;
-	border-radius:4px;
-	background-color:rgb(227,227,227);
-}
-QCheckBox::indicator:checked{
-	border-image:url(:/pics/res/tick.png);
-	background-color: rgb(23, 143, 255);
-	/*border: 2px solid grey;*/
-	border-radius:4px;
-}
-QCheckBox::indicator:checked:hover{
-	border-image:url(:/pics/res/tick.png);
-	background-color: rgb(0,128,227);
-	/*border: 2px solid grey;*/
-	border-radius:4px;
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>https</string>
@@ -598,6 +934,51 @@ QCheckBox::indicator:checked:hover{
                     <width>16777215</width>
                     <height>31</height>
                    </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit[style=&quot;dark&quot;] {  
+    border: 1px solid rgb(48,48,48); 
+	border-bottom-color: rgb(154,154, 154);
+    border-radius: 5px;  
+    background-color: rgb(45, 45, 45); 
+	color:white;
+
+}  
+
+
+QLineEdit:hover[style=&quot;dark&quot;] 
+{
+	background-color:rgb(50,50,50);
+ }
+
+QLineEdit:focus[style=&quot;dark&quot;] {
+	border-bottom-width: 2px;
+	background-color: rgb(31,31,31);
+	border-bottom-color: rgb(76,194,255);
+
+}
+
+
+QLineEdit[style=&quot;light&quot;] {  
+    border: 1px solid rgb(229,229,229); 
+	border-bottom-color: rgb(134,134, 134);
+    border-radius: 5px;  
+    background-color: rgb(251, 251, 251); 
+	color:black;
+
+}  
+
+QLineEdit:hover[style=&quot;light&quot;]
+{
+	background-color:rgb(246,246,246);
+ }
+
+QLineEdit:focus[style=&quot;light&quot;]{
+	border-bottom-width: 2px;
+	background-color: rgb(255, 255, 255);
+	border-bottom-color: rgb(0, 103, 192);
+
+}</string>
                   </property>
                  </widget>
                 </item>

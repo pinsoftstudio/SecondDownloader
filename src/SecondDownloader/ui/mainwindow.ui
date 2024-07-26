@@ -251,8 +251,8 @@ QProgressBar::chunk {
         </property>
         <property name="iconSize">
          <size>
-          <width>55</width>
-          <height>55</height>
+          <width>30</width>
+          <height>30</height>
          </size>
         </property>
         <property name="checkable">
@@ -299,8 +299,8 @@ QProgressBar::chunk {
         </property>
         <property name="iconSize">
          <size>
-          <width>55</width>
-          <height>55</height>
+          <width>30</width>
+          <height>30</height>
          </size>
         </property>
         <property name="checkable">
@@ -347,8 +347,8 @@ QProgressBar::chunk {
         </property>
         <property name="iconSize">
          <size>
-          <width>55</width>
-          <height>55</height>
+          <width>30</width>
+          <height>30</height>
          </size>
         </property>
         <property name="checkable">
@@ -395,8 +395,8 @@ QProgressBar::chunk {
         </property>
         <property name="iconSize">
          <size>
-          <width>55</width>
-          <height>55</height>
+          <width>30</width>
+          <height>30</height>
          </size>
         </property>
         <property name="checkable">

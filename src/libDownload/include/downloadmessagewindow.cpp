@@ -43,7 +43,13 @@ DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, b
 
     });
     urlinfo->start();
-
+    if(isDark()){
+        setStyleSheet("#DownloadMessageWindow{"
+                      "background-color:rgb(30,30,30)}");
+    }else{
+        setStyleSheet("#DownloadMessageWindow{"
+                      "background-color:rgb(240,240,240)}");
+    }
 
 
 }

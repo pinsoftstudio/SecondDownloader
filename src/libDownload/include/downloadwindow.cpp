@@ -54,6 +54,14 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
     tmsendMemory=new QTimer;
     connect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
     tmsendMemory->start(50);
+    if(isDark()){
+        setStyleSheet("#DownloadWindow{"
+                      "background-color:rgb(30,30,30)}");
+    }else {
+        setStyleSheet("#DownloadWindow{"
+                      "background-color:white");
+    }
+
 
 }
 

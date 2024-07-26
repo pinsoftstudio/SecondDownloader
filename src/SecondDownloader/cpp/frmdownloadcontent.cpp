@@ -31,7 +31,10 @@ frmDownloadContent::frmDownloadContent(QWidget *parent)
 
 
     ui->btnSelect->setProperty("highlight","true");
+    if(isDark()){
+        this->setStyleSheet("QPushButton {border: 1px solid rgb(63,63,63); border-bottom-color: rgb(58,58,58);border-radius: 4px;  background-color: rgb(55,55,55); color:white;}  QPushButton:hover{background-color:rgb(60,60,60);}QPushButton:pressed {  background-color: rgb(50, 50, 50); border-bottom-color:rgb(58, 58, 58);color:rgb(208,208,208);}");
 
+    }
     sdGetKey=new QSharedMemory;
     innerMemory=new QSharedMemory;
     updateShare=new QSharedMemory;

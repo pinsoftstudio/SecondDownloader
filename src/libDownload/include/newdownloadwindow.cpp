@@ -21,6 +21,12 @@ NewDownloadWindow::NewDownloadWindow(QWidget *parent): QWidget(parent)
         ui->lineurl->selectAll();
     }
     setAttribute(Qt::WA_DeleteOnClose);
+    if(isDark()){
+        this->setStyleSheet("#NewDownloadWindow{background-color:rgb(40,40,40)}");
+
+    }else{
+        this->setStyleSheet("#NewDownloadWindow{background-color:rgb(240,240,240)}");
+    }
 
 
 }

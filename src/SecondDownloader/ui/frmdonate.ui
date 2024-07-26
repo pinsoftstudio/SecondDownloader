@@ -71,6 +71,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="font">

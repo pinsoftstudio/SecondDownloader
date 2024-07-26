@@ -83,6 +83,15 @@ namespace setup
 
         public void deleteRegAndPlugins() {
 
+            using (RegistryKey Runkey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+            {
+                if (Runkey != null)
+                {
+                    // 删除注册表项
+                    Registry.CurrentUser.DeleteValue("SecondDownloader", false);
+                }
+            }
+            
             
             using (RegistryKey SecondDownloaderkey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Pinsoft\\SecondDownloader", true))
             {

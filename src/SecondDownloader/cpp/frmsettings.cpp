@@ -11,6 +11,7 @@
 #include "QDebug"
 #include "QFileDialog"
 #include "QSoundEffect"
+#include "dialogcrtinf.h"
 frmSettings::frmSettings(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmSettings)
@@ -19,11 +20,41 @@ frmSettings::frmSettings(QWidget *parent)
     //……
     if(isDark()){
         ;
+        ui->comboFinishedBell->setProperty("style","dark");
+        ui->chhkUpdate->setProperty("style","dark");
+        ui->chkDownLoadClip->setProperty("style","dark");
+        ui->chkFinishedScan->setProperty("style","dark");
+        ui->chkGithubProxy->setProperty("style","dark");
+        ui->chkProtrolFtp->setProperty("style","dark");
+        ui->chkProtrolFtps->setProperty("style","dark");
+        ui->chkProtrolHttp->setProperty("style","dark");
+        ui->chkProtrolHttps->setProperty("style","dark");
+        ui->chkProtrolOthers->setProperty("style","dark");
+        ui->chkRunAuto->setProperty("style","dark");
+        ui->chkRunHide->setProperty("style","dark");
+        ui->chkFinishedBell->setProperty("style","dark");
+        ui->lineSaveLocation->setProperty("style","dark");
+
+
     }else{
         ui->comboFinishedBell->setProperty("style","light");
-
+        ui->chhkUpdate->setProperty("style","light");
+        ui->chkDownLoadClip->setProperty("style","light");
+        ui->chkFinishedScan->setProperty("style","light");
+        ui->chkGithubProxy->setProperty("style","light");
+        ui->chkProtrolFtp->setProperty("style","light");
+        ui->chkProtrolFtps->setProperty("style","light");
+        ui->chkProtrolHttp->setProperty("style","light");
+        ui->chkProtrolHttps->setProperty("style","light");
+        ui->chkProtrolOthers->setProperty("style","light");
+        ui->chkRunAuto->setProperty("style","light");
+        ui->chkRunHide->setProperty("style","light");
+        ui->chkFinishedBell->setProperty("style","light");
+        ui->lineSaveLocation->setProperty("style","light");
         ui->scrollDownload->setStyleSheet("background-color:white");
         ui->scollCommon->setStyleSheet("background-color:white");
+
+        setStyleSheet("QTabBar::tab{background-color: white;}");
     }
     iniSettings();
 
@@ -40,11 +71,11 @@ void frmSettings::iniSettings()
     QSettings set("Pinsoft","SecondDownloader");
     ui->chkRunAuto->setChecked(set.value("Common/Autorun",1).toBool());
     if(ui->chkRunAuto->isChecked()){
-        ui->chkRunAuto->setCheckable(1);
+        ui->chkRunHide->setCheckable(1);
     }else{
-        ui->chkRunAuto->setCheckable(0);
+        ui->chkRunHide->setCheckable(0);
     }
-    ui->chkRunHide->setChecked("Common/HideAutorun");
+    ui->chkRunHide->setChecked(set.value("Common/HideAutorun",1).toBool());
 
     //主题
     ui->rdbThemeFollow->setChecked(set.value("Style/FollowSystem",1).toBool());
@@ -215,24 +246,48 @@ void frmSettings::on_chkRunAuto_clicked(bool checked)
 
 void frmSettings::on_rdbThemeFollow_clicked(bool checked)
 {
+    DialogCrtInf dia;
+    QString title=tr("提示");
+    QString content=tr("新主题将在重启后生效！");
+    dia.setTitle(title);
+    dia.setText(content);
+    dia.exec();
     QSettings set("Pinsoft","SecondDownloader");
     set.setValue("Style/FollowSystem",checked);
+
+
 }
 
 
 void frmSettings::on_rdbThemeWhite_clicked(bool checked)
 {
+    DialogCrtInf dia;
+    QString title=tr("提示");
+    QString content=tr("新主题将在重启后生效！");
+    dia.setTitle(title);
+    dia.setText(content);
+    dia.exec();
     QSettings set("Pinsoft","SecondDownloader");
     set.setValue("Style/FollowSystem",0);
     set.setValue("Style/isDark",!checked);
+
+
 }
 
 
 void frmSettings::on_rdbThemeBlack_clicked(bool checked)
 {
+    DialogCrtInf dia;
+    QString title=tr("提示");
+    QString content=tr("新主题将在重启后生效！");
+    dia.setTitle(title);
+    dia.setText(content);
+    dia.exec();
     QSettings set("Pinsoft","SecondDownloader");
     set.setValue("Style/FollowSystem",0);
     set.setValue("Style/isDark",checked);
+
+
 }
 
 

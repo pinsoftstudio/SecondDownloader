@@ -33,7 +33,7 @@ namespace setup
             string currentAssemblyPath = Assembly.GetExecutingAssembly().Location; 
             string loc = System.IO.Path.GetDirectoryName(currentAssemblyPath);
             //MessageBox.Show( "cmd.exe /c timeout /t 3 & rmdir /s /q \"" + loc + "\" &pause", loc);
-            Process process = Process.Start("cmd.exe", " /c timeout /t 3 & rmdir /s /q \"" + loc+ "\"");
+            Process process = Process.Start("cmd.exe", " /c timeout /t 1 >nul & rmdir /s /q \"" + loc+ "\"");
             Application.Current.MainWindow.Close();
         }
     }
