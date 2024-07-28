@@ -18,11 +18,17 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow( int mode,QWidget *parent = nullptr);
     ~MainWindow();
+
+    void showWithMode(int mode);
+private:
     frmMainPage *mainPage;
     frmDownloadContent *dwncontent;
     frmSettings *set;
     frmDonate *donate;
-    void showWithMode(int mode);
+    QTimer *tmGetClipUrl;
+    QTimer *tmNeedLaunchGetUrl;
+    QStringList LastUrlList;
+    void addToLastUrlList();
 private slots:
     void on_toolMenu_clicked();
 
@@ -36,12 +42,14 @@ private slots:
 
     void onRequestPageChange(int i, int mode);
 
+    void onGetClipUrl();
 
 private:
     Ui::MainWindow *ui;
     bool isDownloading();
     void setClassToolButtonStyle();
     void addWidgetTostackedWidget();
+    bool needToIngore(QString );
 };
 
 #endif // MAINWINDOW_H

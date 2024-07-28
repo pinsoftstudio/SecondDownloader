@@ -17,12 +17,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr,int mode=0);
     ~MainWindow();
+private:
     frmMainPage *mainPage;
     frmDownloadContent *dwncontent;
     frmSettings *set;
     frmDonate *donate;
-    
-
+    QTimer *tmGetClipUrl;
 public slots:
     void on_toolMenu_clicked();
 
@@ -34,6 +34,7 @@ public slots:
 
     void on_toolSettings_clicked();
 
+    void onTmGetClipUrl();
 
 
 

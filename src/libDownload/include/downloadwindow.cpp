@@ -18,6 +18,7 @@
 #include <QThread>
 #include <QMessageBox>
 #include <QMutex>
+#include "analyserresult.h"
 DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalBytes,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DownloadWindow)
@@ -57,9 +58,23 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
     if(isDark()){
         setStyleSheet("#DownloadWindow{"
                       "background-color:rgb(30,30,30)}");
+        ui->labbytes->setStyleSheet(
+                      "background-color:rgb(30,30,30)}");
+        ui->label->setStyleSheet(
+            "background-color:rgb(30,30,30)}");
+        ui->labstate->setStyleSheet(
+            "background-color:rgb(30,30,30)}");
+        ui->laburl->setStyleSheet(
+            "background-color:rgb(30,30,30)}");
     }else {
         setStyleSheet("#DownloadWindow{"
                       "background-color:white");
+        ui->label->setStyleSheet(
+            "background-color:white}");
+        ui->labstate->setStyleSheet(
+            "background-color:white}");
+        ui->laburl->setStyleSheet(
+            "background-color:white}");
     }
 
 
@@ -489,6 +504,21 @@ void DownloadWindow::onAppendSucceed()
     // disconnect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
     cleanup();
     needtoclose=1;
+    QSettings set("Pinsoft","SecondDownloader");
+    if(set.value("Download/ScanFile",1).toBool()){
+        QFileInfo fi(QDir::fromNativeSeparators(savedFilename));
+        if((fi.size() <= (1024*1024*32)) && (fi.suffix().toLower()=="exe" ||
+                                            fi.suffix().toLower()=="apk" ||
+                                            fi.suffix().toLower()=="dmp" ||
+                                            fi.suffix().toLower()=="app" ||
+                                            fi.suffix().toLower()=="ipa" ||
+                                            fi.suffix().toLower()=="run")){
+            AnalyserResult *ar=new AnalyserResult(QDir::fromNativeSeparators(savedFilename));
+            ar->show();
+        }
+
+
+    }
     close();
 
 }

@@ -47,7 +47,8 @@ namespace setup
             {
 
                 if (filePath!= Assembly.GetExecutingAssembly().Location) {
-                    File.Delete(filePath);
+                    try { File.Delete(filePath); }
+                    catch { }
                     finishedFileNum++;
 
                 }
@@ -98,14 +99,14 @@ namespace setup
                 if (SecondDownloaderkey != null)
                 {
                     // 删除注册表项
-                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Pinsoft\\SecondDownloader");
+                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Pinsoft\\SecondDownloader", false);
                 }
             }
             using (RegistryKey ChromePluginkey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Google\\Chrome\\NativeMessagingHosts\\com.pinsoft.sder", true))
             {
                 if(ChromePluginkey != null)
                 {
-                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Google\\Chrome\\NativeMessagingHosts\\com.pinsoft.sder");
+                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Google\\Chrome\\NativeMessagingHosts\\com.pinsoft.sder",false);
 
                 }
             }
@@ -113,7 +114,7 @@ namespace setup
             {
                 if (EdgePluginkey != null)
                 {
-                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Microsoft\\Edge\\NativeMessagingHosts\\com.pinsoft.sder");
+                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Microsoft\\Edge\\NativeMessagingHosts\\com.pinsoft.sder",false);
 
                 }
             }
@@ -121,7 +122,7 @@ namespace setup
             {
                 if (MozillaPluginkey != null)
                 {
-                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Mozilla\\NativeMessagingHosts\\com.pinsoft.sder");
+                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Mozilla\\NativeMessagingHosts\\com.pinsoft.sder", false);
 
                 }
             }
@@ -131,7 +132,7 @@ namespace setup
             {
                 if (UninstallPluginkey != null)
                 {
-                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\SecondDownloader");
+                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\SecondDownloader", false);
                 }
             }
 

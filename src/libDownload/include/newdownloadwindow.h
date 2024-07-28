@@ -2,6 +2,7 @@
 #define NEWDOWNLOADWINDOW_H
 
 #include <QWidget>
+#include <QStringList>
 // #include <include/downloadmessagewindow.h>
 #include "downloadmessagewindow.h"
 #include "libDownload_global.h"
@@ -21,6 +22,7 @@ public:
 private:
     Ui::NewDownloadWindow *ui;
     DownloadMessageWindow   *downloadmessagewindow;
+    QStringList getNoUseScheme();
 
 private slots:
 

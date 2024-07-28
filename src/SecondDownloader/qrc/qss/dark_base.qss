@@ -6,12 +6,14 @@ QDialog{
     background-color:rgb(30, 30, 30);
 }
 QMenu {
+
     background-color: rgb(40, 40, 40); 
     border-radius: 5px;
     color: white;
 }
 
 QMenu::item {
+    margin-left: 10px;
     background-color: rgb(40, 40, 40); 
     border-radius: 5px;
     min-height: 20px;
@@ -231,16 +233,7 @@ QTreeWidget::header:pressed {
     background-color: rgb(50,50,50);
 }  
 
-QTreeWidget QHeaderView::section:last{
-	border-top-right-radius: 6px;
- 
-	border-bottom-right-radius: 6px;
-}
- QTreeWidget QHeaderView::section:first{
-	border-top-left-radius: 6px;
- 
-	border-bottom-left-radius: 6px;
-}
+
 QTreeWidget QHeaderView::section {  
     background-color: rgb(120,120,120); 
     color: white; 
@@ -341,6 +334,24 @@ QGroupBox{
 
 #frmSettings QTabWidget #frmSetscrollArea{
 	background-color: rgb(30, 30, 30);;
+}
+
+/*frmSettings*/
+#frmSettings QTabWidget::tab-bar{
+	border-radius: 5px;
+	min-height: 60px;
+	background-color:rgb(0,120,212) ;
+}
+
+QGroupBox{
+	background-color: rgb(30,30,30);
+	border-radius: 4px;
+	border: 1px solid rgb(35,35,35);
+	/* border-color:rgb(246,246,246) ; */
+}
+
+#frmSettings QTabWidget #frmSetscrollArea{
+	background-color: rgb(30, 30, 30);
 }
 QTableWidget{
 	background-color: rgb(50,50,50);;
@@ -486,7 +497,7 @@ QTabWidget{
     background-color: rgb(30,30,30);
 }
 QTabWidget::tab-bar{
-    background-color: white;
+    background-color: rgb(35,35,35);
 }
 #DownloadWindow QFrame{
     background-color:rgb(35,35,35);

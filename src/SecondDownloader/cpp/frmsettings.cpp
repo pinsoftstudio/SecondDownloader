@@ -34,8 +34,10 @@ frmSettings::frmSettings(QWidget *parent)
         ui->chkRunHide->setProperty("style","dark");
         ui->chkFinishedBell->setProperty("style","dark");
         ui->lineSaveLocation->setProperty("style","dark");
-
-
+        setStyleSheet("QTabBar::tab{background-color: rgb(35,35,35);}");
+        ui->scrollDownload->setStyleSheet("background-color:rgb(30,30,30)");
+        ui->scollCommon->setStyleSheet("background-color:rgb(30,30,30)");
+        ui->comboFinishedBell->setStyleSheet("QComboBox QAbstractItemView::item{border-radius: 6px; height: 30px;  color:white;background-color: rgb(44,44,44);}");
     }else{
         ui->comboFinishedBell->setProperty("style","light");
         ui->chhkUpdate->setProperty("style","light");
@@ -44,6 +46,7 @@ frmSettings::frmSettings(QWidget *parent)
         ui->chkGithubProxy->setProperty("style","light");
         ui->chkProtrolFtp->setProperty("style","light");
         ui->chkProtrolFtps->setProperty("style","light");
+
         ui->chkProtrolHttp->setProperty("style","light");
         ui->chkProtrolHttps->setProperty("style","light");
         ui->chkProtrolOthers->setProperty("style","light");
@@ -53,7 +56,7 @@ frmSettings::frmSettings(QWidget *parent)
         ui->lineSaveLocation->setProperty("style","light");
         ui->scrollDownload->setStyleSheet("background-color:white");
         ui->scollCommon->setStyleSheet("background-color:white");
-
+        ui->comboFinishedBell->setStyleSheet("QComboBox QAbstractItemView::item{border-radius: 6px; height: 30px;  color:white;background-color: rgb(240,240,240);}");
         setStyleSheet("QTabBar::tab{background-color: white;}");
     }
     iniSettings();

@@ -8,7 +8,11 @@
 #include "QCloseEvent"
 #include "QSettings"
 #include "QDebug"
-
+#include "QTimer"
+#include "QClipboard"
+#include "QRegularExpression"
+#include "downloadmessagewindow.h"
+#include "QSettings"
 MainWindow::MainWindow(int mode, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -40,6 +44,27 @@ MainWindow::MainWindow(int mode, QWidget *parent)
 
 
     }
+    addToLastUrlList();
+    tmNeedLaunchGetUrl=new QTimer;
+    tmGetClipUrl=new QTimer;
+    connect(tmGetClipUrl,&QTimer::timeout,this,&MainWindow::onGetClipUrl);
+    connect(tmNeedLaunchGetUrl,&QTimer::timeout,this,[&]{
+        QSettings set("Pinsoft","SecondDownloader");
+        if(set.value("Download/AutoDownloadFromClipboard",0).toBool()){
+            if(!tmGetClipUrl->isActive()){
+                tmGetClipUrl->start(1000);
+            }
+
+        }else{
+            if(tmGetClipUrl->isActive()){
+                tmGetClipUrl->stop();
+            }
+
+        }
+    });
+    tmNeedLaunchGetUrl->start(1000);
+
+
 
 
     // ui->toolDownload->setProperty("select","false");
@@ -110,6 +135,20 @@ void MainWindow::showWithMode(int mode)
 
     }
     show();
+}
+
+void MainWindow::addToLastUrlList()
+{
+    QSettings set("Pinsoft","SecondDownloader");
+    QString urls=set.value("Common/LastUrlString","").toString();
+    QRegularExpression exp("(.*?)\n");
+    QRegularExpressionMatchIterator expInt=exp.globalMatch(urls);
+    while(expInt.hasNext()){
+        QRegularExpressionMatch match=expInt.next();
+        QString preUrlstr=match.captured(0);
+        LastUrlList.append(preUrlstr);
+    }
+
 }
 
 void MainWindow::setClassToolButtonStyle()
@@ -273,6 +312,7 @@ void MainWindow::on_toolSettings_clicked()
     setCommonStyle();
 }
 
+
 void MainWindow::onRequestPageChange(int i,int mode=0)
 {
     switch (i) {
@@ -303,6 +343,98 @@ void MainWindow::onRequestPageChange(int i,int mode=0)
     default:
         break;
     }
+}
+
+void MainWindow::onGetClipUrl()
+{
+    QSettings set("Pinsoft","SecondDownloader");
+    QStringList noList;
+    if(!set.value("Download/http",1).toBool()){
+        noList.append("http");
+    }
+    if(!set.value("Download/https",1).toBool()){
+        noList.append("https");
+    }
+    if(!set.value("Download/ftp",1).toBool()){
+        noList.append("ftp");
+    }
+    if(!set.value("Download/ftps",1).toBool()){
+        noList.append("ftps");
+    }
+    if(!set.value("Download/others",1).toBool()){
+        noList.append("others");
+    }
+    QString clipString=QApplication::clipboard()->text()+"\n";
+    QRegularExpression exp("(.*?)\n");
+    QRegularExpressionMatchIterator expInt=exp.globalMatch(clipString);
+    QStringList usableUrl;
+
+    while(expInt.hasNext()){
+        QString preurl;
+        QRegularExpressionMatch match=expInt.next();
+        QString preUrlstr=match.captured(0);
+        QUrl preUrl(preUrlstr);
+        QString preUrlStrScheme=preUrl.scheme().toLower();
+        bool containsNoOthers=0;
+        bool containedNoUrl=1;
+        if(noList.count()==0){
+            containedNoUrl=0;
+            containsNoOthers=0;
+        }
+        foreach (QString aScheme, noList) {
+            if(aScheme=="others"){
+                containsNoOthers=1;
+            }
+            if(aScheme!=preUrlStrScheme){
+                containedNoUrl=0;
+            }else{
+                containedNoUrl=1;
+            }
+
+        }
+        if(((containsNoOthers) &&(!containedNoUrl) &&
+             (preUrlStrScheme=="https" || preUrlStrScheme=="http" || preUrlStrScheme=="ftps" ||preUrlStrScheme=="ftp"))
+            || ((!containsNoOthers) && (!containedNoUrl) &&(!preUrlStrScheme.isEmpty()))){
+            usableUrl.append(preUrlstr);
+        }
+
+
+    }
+    QStringList preLastUrl;
+    bool detectedOne=0;
+    int urlCount=LastUrlList.count();
+    int i=0;
+    foreach(QString aUrlStr,usableUrl){
+        i=0;
+        bool isTwice=0;
+        foreach (QString aLastUrlStr, LastUrlList) {
+            i++;
+            if(aUrlStr==aLastUrlStr){
+                isTwice=1;
+                break;
+            }
+        }
+        if(!isTwice && i==urlCount){
+            DownloadMessageWindow *dw=new DownloadMessageWindow(aUrlStr.trimmed(),nullptr,1);
+            dw->show();
+            preLastUrl.append(aUrlStr);
+            detectedOne=1;
+        }
+    }
+    if(detectedOne){
+        LastUrlList.clear();
+        LastUrlList=preLastUrl;
+        QSettings set("Pinsoft","SecondDownloader");
+        QString finalUrlSet;
+        foreach(QString aToReg,LastUrlList){
+            finalUrlSet+=aToReg+"\n";
+        }
+        set.setValue("Common/LastUrlString",finalUrlSet);
+    }
+
+
+
+
 }
 
 

@@ -12,16 +12,18 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    include/analyserresult.cpp \
     include/dialogdownloaded.cpp \
     include/downloadmessagewindow.cpp \
     include/downloadwindow.cpp \
     include/extdownload.cpp \
     include/fileappender.cpp \
     include/libdownload.cpp \
-    include/newdownloadwindow.cpp
-
+    include/newdownloadwindow.cpp   \
+    include/analyser.cpp
 HEADERS += \
     Style.h \
+    include/analyserresult.h \
     include/dialogdownloaded.h \
     include/downloadmessagewindow.h \
     # include/downloadmessagewindow_copy.h \
@@ -30,7 +32,8 @@ HEADERS += \
     include/fileappender.h \
     include/libDownload_global.h \
     include/libdownload.h \
-    include/newdownloadwindow.h
+    include/newdownloadwindow.h   \
+    include/analyser.h
 TARGET
 
 # Default rules for deployment.
@@ -63,6 +66,7 @@ CONFIG(debug,debug|release){
      LIBS +=$$PWD/../temp/bin/release/libDialog.lib
 }
 FORMS += \
+    include/analyserresult.ui \
     include/dialogdownloaded.ui \
     include/downloadmessagewindow.ui \
     include/downloadwindow.ui \
