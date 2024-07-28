@@ -1,4 +1,4 @@
-QT += widgets gui
+QT += widgets gui multimedia
 
 LIBS += -lshell32
 # QMAKE_LFLAGS += /MANIFESTUAC:\"level=\'requireAdministrator\' uiAccess=\'false\'\"

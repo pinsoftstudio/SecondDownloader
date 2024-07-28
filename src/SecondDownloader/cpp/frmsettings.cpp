@@ -416,10 +416,14 @@ void frmSettings::oncomboFinishedBellcurrentTextChanged(const QString &arg1)
             QFileInfo fi(wavPath);
             ui->comboFinishedBell->setItemData(ui->comboFinishedBell->currentIndex()
                                                ,QVariant(fi.absoluteFilePath()));
-            set.setValue("Download/BellPath",QVariant(wavPath));
+            set.setValue("Download/BellPath",wavPath);
         }else{
             ui->comboFinishedBell->setCurrentText("bell.wav");
         }
+
+    }else{
+        QVariant wavPath=ui->comboFinishedBell->currentData();
+        set.setValue("Download/BellPath",wavPath);
 
     }
 

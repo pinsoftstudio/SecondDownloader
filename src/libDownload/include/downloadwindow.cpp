@@ -19,6 +19,9 @@
 #include <QMessageBox>
 #include <QMutex>
 #include "analyserresult.h"
+#include "QSoundEffect"
+#include "QDesktopServices"
+
 DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalBytes,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DownloadWindow)
@@ -491,20 +494,38 @@ void DownloadWindow::onAppendFailed()
 
 void DownloadWindow::onAppendSucceed()
 {
+    QSettings set("Pinsoft","SecondDownloader");
     state="succeed";
     strspeed="";
     ui->labstate->setText(tr("合并成功！"));
      setWindowTitle(tr("合并成功！"));
     appender->terminate();
     appender->wait();
-    DialogDownloaded *diadown=new DialogDownloaded;
-    diadown->setSavedLocation(savedFilename);
-    diadown->show();
+
+    QString finishedToDo=set.value("Download/FinishedToDo","ShowDialog").toString();
+    if(finishedToDo=="ShowDialog"){
+        DialogDownloaded *diadown=new DialogDownloaded;
+        diadown->setSavedLocation(savedFilename);
+        diadown->show();
+    }else if(finishedToDo=="OpenFile"){
+        QDesktopServices::openUrl(QUrl(QDir::fromNativeSeparators(savedFilename)));
+    }else if(finishedToDo=="OpenFolder"){
+        QFileInfo fileinfo(QDir::fromNativeSeparators(savedFilename));
+        QString savedFolder=fileinfo.absolutePath();
+        QDesktopServices::openUrl(QUrl(savedFolder));
+    }else if(finishedToDo=="NotNotice"){
+        ;
+    }else{
+
+        set.setValue("Download/FinishedToDo","ShowDialog");
+    }
+
+
     // tmsendMemory->stop();
     // disconnect(tmsendMemory,&QTimer::timeout,this,&DownloadWindow::onsendMemory);
     cleanup();
     needtoclose=1;
-    QSettings set("Pinsoft","SecondDownloader");
+
     if(set.value("Download/ScanFile",1).toBool()){
         QFileInfo fi(QDir::fromNativeSeparators(savedFilename));
         if((fi.size() <= (1024*1024*32)) && (fi.suffix().toLower()=="exe" ||
@@ -516,6 +537,15 @@ void DownloadWindow::onAppendSucceed()
             AnalyserResult *ar=new AnalyserResult(QDir::fromNativeSeparators(savedFilename));
             ar->show();
         }
+
+        if(set.value("Download/FinishBell",0).toBool()){
+            QString soundSource=set.value("Download/BellPath","").toString();
+            QSoundEffect *sound=new QSoundEffect(this);
+            sound->setSource(QUrl::fromLocalFile(soundSource));
+            sound->setVolume(1.0);
+            sound->play();
+        }
+
 
 
     }
@@ -565,6 +595,7 @@ void DownloadWindow::on_btnmin_clicked()
 
 void DownloadWindow::onsendMemory()
 {
+    try{
     long double totals=TotalBytes;
     QString unit;
     getSuitableUnit(totals,unit);
@@ -580,6 +611,11 @@ void DownloadWindow::onsendMemory()
     qDebug()<<QStringLiteral("%1 %2").arg(totals,0,'f',2).arg(unit);
     stream<<savedFilename<<URL<<state<<QStringLiteral("%1 %2").arg(totals,0,'f',2).arg(unit)<<strspeed;
     memcpy(to,buffer.data().data(),buffer.size());
-    share->unlock();
+
+        share->unlock();
+    }
+    catch(...){
+        ;
+    }
 }
 

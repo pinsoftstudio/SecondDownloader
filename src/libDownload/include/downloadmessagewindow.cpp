@@ -10,6 +10,7 @@
 #include "QFileInfo"
 #include <Style.h>
 #include <QFileDialog>
+#include <QRegularExpression>
 DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, bool passedNull, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DownloadMessageWindow)
@@ -20,6 +21,16 @@ DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, b
 
     }
     URL=url;
+    QRegularExpression rex;
+    rex.setPattern("github");
+    QRegularExpressionMatchIterator rexint=rex.
+        globalMatch(url.trimmed());
+    if(rexint.hasNext()){
+        URL="https://mirror.ghproxy.com/"+url;
+    }
+
+
+
     ui->setupUi(this);
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint|Qt::WindowStaysOnTopHint);
