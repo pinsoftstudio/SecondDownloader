@@ -3,6 +3,26 @@
 #include "cstdio"
 #include "QString"
 #include "QDebug"
+#include "QRegularExpression"
+static size_t header_callback(void *contents, size_t size, size_t nmemb, void *userp) {
+    fwrite(contents, size, nmemb, stdout);
+    LibDownload *downloader=static_cast<LibDownload*>(userp);
+
+
+    QRegularExpression exp("filename=[\"']?([^\"'\r\n]+)\1?[\r\n]?");
+    QString headContent=QString::fromUtf8(static_cast<char*>(contents));
+    qDebug()<<headContent;
+    QRegularExpressionMatchIterator it=exp.globalMatch(headContent);
+    while(it.hasNext()){
+        QRegularExpressionMatch match=it.next();
+        QString filename=match.captured(1);
+        downloader->setFileName(filename);
+    }
+
+
+
+    return size * nmemb;
+}
 static size_t write_to_file(void *ptr, size_t size, size_t nmemb, QFile *file) {
     size_t total_size = size * nmemb;
     if (file->write(static_cast<char*>(ptr), total_size) != total_size) {
@@ -22,23 +42,24 @@ static int xferinfo_callback(void *clientp,
          downloader->setCtotal(dltotal);
         downloader->setCnow(dlnow);
          // downloader->setUnknown(0);
-        qDebug() << "Downloaded" << dlnow << "of" << dltotal << "bytes (" << percent << "%)";
+        // qDebug() << "Downloaded" << dlnow << "of" << dltotal << "bytes (" << percent << "%)";
     } else {
 
          downloader->setCnow(dlnow);
         // downloader->setUnknown(1);
-        qDebug() << "Downloaded" << dlnow << "bytes (total size unknown)";
+        // qDebug() << "Downloaded" << dlnow << "bytes (total size unknown)";
     }
 
     return 0; // 成功
 }
-LibDownload::LibDownload(QString startBytes,QString endBytes,QString savingLocation,QString &downloadURL,QObject *parent = nullptr) : QThread(parent) {
+LibDownload::LibDownload(QString startBytes, QString endBytes, QString savingLocation, QString &downloadURL, bool getFileName, QObject *parent = nullptr) : QThread(parent) {
 
     curl_global_init(CURL_GLOBAL_ALL);
     StartBytes=startBytes;
     EndBytes=endBytes;
     location=savingLocation;
     URL=downloadURL;
+    getName=getFileName;
     qDebug()<<"CBegin";
 }
 
@@ -66,6 +87,11 @@ void LibDownload::setCtotal(double total)
     Ctotal=total;
 }
 
+void LibDownload::setFileName(QString fileName)
+{
+    truefileName=fileName;
+}
+
 void LibDownload::setUnknown(bool unknown)
 {
     unknownTotal=unknown;
@@ -73,6 +99,7 @@ void LibDownload::setUnknown(bool unknown)
 
 QString LibDownload::getTrueFileName()
 {
+
     return truefileName;
 }
 
@@ -116,7 +143,13 @@ void LibDownload::run()
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &file);
     curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, xferinfo_callback);
     curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L); // 确保启用进度报告
-   curl_easy_setopt(curl, CURLOPT_XFERINFODATA, this);
+    curl_easy_setopt(curl, CURLOPT_XFERINFODATA, this);
+    curl_easy_setopt(curl,CURLOPT_HEADEROPT,1L);
+    if(getName){
+        curl_easy_setopt(curl, CURLOPT_HEADERDATA, this);
+        curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_callback);
+    }
+
 
 
     CURLcode res = curl_easy_perform(curl);

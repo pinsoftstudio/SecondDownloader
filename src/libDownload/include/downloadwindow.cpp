@@ -210,8 +210,14 @@ void DownloadWindow::startDownload()
             tempFilePathNames.append(tempPath+randomPath()+".downloading");
             qint64 endBytes=startBytes+commonToDownload;
             qDebug()<<"CNBegin";
-            downloaders[i]=new LibDownload(QString::number(startBytes+1),QString::number(endBytes),
-                                             QDir::toNativeSeparators(tempFilePathNames[i]),URL,this);
+            if(i==0){
+                downloaders[i]=new LibDownload(QString::number(startBytes+1),QString::number(endBytes),
+                                                 QDir::toNativeSeparators(tempFilePathNames[i]),URL,1,this);
+            }else{
+                downloaders[i]=new LibDownload(QString::number(startBytes+1),QString::number(endBytes),
+                                                 QDir::toNativeSeparators(tempFilePathNames[i]),URL,0,this);
+            }
+
             connect(downloaders[i],&LibDownload::started,this,&DownloadWindow::ondownloadFailed);
             connect(downloaders[i],&LibDownload::finished,this,&DownloadWindow::ondownloadFinished);
             startBytes=endBytes;
@@ -219,7 +225,7 @@ void DownloadWindow::startDownload()
         }
         tempFilePathNames.append(tempPath+randomPath()+".downloading");
         downloaders[7]=new LibDownload(QString::number(startBytes+1),"",
-                                         QDir::toNativeSeparators(tempFilePathNames[7]),URL,this);
+                                         QDir::toNativeSeparators(tempFilePathNames[7]),URL,0,this);
         connect(downloaders[7],&LibDownload::started,this,&DownloadWindow::ondownloadFailed);
         connect(downloaders[7],&LibDownload::finished,this,&DownloadWindow::ondownloadFinished);
         downloaders[7]->start();
@@ -416,7 +422,11 @@ void DownloadWindow::ontmGetProgress()
 }
 
 void DownloadWindow::onsetMainProgress(){
-    // savedFilename=downloaders[0]->getTrueFileName();
+
+    QString temp=downloaders[0]->getTrueFileName();
+    if(temp!=""){
+        savedFilename=temp;
+    }
     qDebug()<<savedFilename;
     if(isMultipal){
         QMutex m;

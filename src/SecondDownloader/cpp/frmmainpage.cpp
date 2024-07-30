@@ -152,6 +152,7 @@ void frmMainPage::on_toolFailed_clicked()
 void frmMainPage::on_toolExtention_clicked()
 {
     //require
+
 }
 
 
@@ -163,6 +164,8 @@ void frmMainPage::on_toolDonate_clicked()
 
 void frmMainPage::on_toolAbout_clicked()
 {
-
+    DialogAbout *about=new DialogAbout;
+    about->exec();
+    delete about;
 }
 

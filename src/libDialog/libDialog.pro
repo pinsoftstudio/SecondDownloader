@@ -10,11 +10,13 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    dialogabout.cpp \
     libdialog.cpp   \
     dialogquestion.cpp  \
     dialogcrtinf.cpp
 
 HEADERS += \
+    dialogabout.h \
     libDialog_global.h \
     libdialog.h \
     RadiusFramelessDialog.h \
@@ -22,6 +24,7 @@ HEADERS += \
     dialogquestion.h    \
     dialogcrtinf.h
 FORMS   +=\
+    dialogabout.ui \
     dialogquestion.ui   \
     dialogcrtinf.ui
 
@@ -45,3 +48,6 @@ win32:MOC_DIR = $$PWD/../temp/libDialog/moc
 win32:OBJECTS_DIR = $$PWD/../temp/libDialog/o
 win32:UI_DIR = $$PWD/../temp/libDialog/ui
 win32:LIBS += -luxtheme
+
+RESOURCES += \
+    res.qrc

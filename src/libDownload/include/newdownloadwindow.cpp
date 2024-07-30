@@ -13,13 +13,13 @@ NewDownloadWindow::NewDownloadWindow(QWidget *parent): QWidget(parent)
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint);
     ui->btnStart->setProperty("highlight","true");
-    const QClipboard *clip=QApplication::clipboard();
+    const QClipboard *clip=QApplication::clipboard();   //获取文本框对象
     const QMimeData *mime=clip->mimeData();
-    QUrl url(mime->text());
+    QUrl url(mime->text()); //用文本框内容构造url对象
 
-    if(!url.scheme().isEmpty()){
-        ui->lineurl->setText(mime->text());
-        ui->lineurl->selectAll();
+    if(!url.scheme().isEmpty() && url.scheme().toLower()+"://"!=url.toString().toLower()){        //如果剪贴板协议头不为空
+        ui->lineurl->setText(mime->text());     //粘贴剪贴板文本到文本框中
+        ui->lineurl->selectAll();   //全选文本框
     }
     setAttribute(Qt::WA_DeleteOnClose);
     if(isDark()){
@@ -65,9 +65,18 @@ void NewDownloadWindow::on_btnStart_clicked()
 {
     QString strurl=ui->lineurl->text();
     QUrl url(strurl);
-
+    QString urlScheme=url.scheme().toLower().trimmed();
+    if(urlScheme.isEmpty() || urlScheme+"://"==strurl.trimmed()){
+        DialogCrtInf criticalBox;
+        QString title="错误";
+        QString text="下载地址不合法!";
+        criticalBox.setTitle(title);
+        criticalBox.setText(text);
+        criticalBox.exec();
+        return;
+    }
     QStringList list=getNoUseScheme();
-    QString urlScheme=url.scheme().toLower();
+
     bool containsOthers=0;
     foreach (QString aScheme, list) {
         if(aScheme=="others"){
@@ -76,7 +85,7 @@ void NewDownloadWindow::on_btnStart_clicked()
         if(aScheme==urlScheme){
             DialogCrtInf criticalBox;
             QString title="错误";
-            QString text="下载地址不合法或协议被禁用！";
+            QString text="下载协议被禁用！";
             criticalBox.setTitle(title);
             criticalBox.setText(text);
             criticalBox.exec();

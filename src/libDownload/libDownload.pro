@@ -75,3 +75,5 @@ FORMS += \
 
 RESOURCES += \
     res/res.qrc
+
+TRANSLATIONS +=

@@ -4,7 +4,7 @@
 #include <QWidget>
 #include<QCloseEvent>
 #include <newdownloadwindow.h>
-
+#include <dialogabout.h>
 namespace Ui {
 class frmMainPage;
 }
