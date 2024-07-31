@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
@@ -6,27 +6,27 @@
     <message>
         <location filename="../ui/mainwindow.ui" line="20"/>
         <source>SecondDownloader</source>
-        <translation type="unfinished"></translation>
+        <translation>SecondDownloader</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="250"/>
         <source>  主页</source>
-        <translation type="unfinished"></translation>
+        <translation>  主页</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="298"/>
         <source>  下载内容</source>
-        <translation type="unfinished"></translation>
+        <translation>  下载内容</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="346"/>
         <source>  赞助</source>
-        <translation type="unfinished"></translation>
+        <translation>  赞助</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="394"/>
         <source>  设置</source>
-        <translation type="unfinished"></translation>
+        <translation>  设置</translation>
     </message>
 </context>
 <context>
@@ -34,77 +34,77 @@
     <message>
         <location filename="../ui/propertydialog.ui" line="14"/>
         <source>文件属性</source>
-        <translation type="unfinished"></translation>
+        <translation>文件属性</translation>
     </message>
     <message>
         <location filename="../ui/propertydialog.ui" line="89"/>
         <source>文件大小</source>
-        <translation type="unfinished"></translation>
+        <translation>文件大小</translation>
     </message>
     <message>
         <location filename="../ui/propertydialog.ui" line="119"/>
         <source>文件类型</source>
-        <translation type="unfinished"></translation>
+        <translation>文件类型</translation>
     </message>
     <message>
         <location filename="../ui/propertydialog.ui" line="149"/>
         <source>文件状态</source>
-        <translation type="unfinished"></translation>
+        <translation>文件状态</translation>
     </message>
     <message>
         <location filename="../ui/propertydialog.ui" line="173"/>
         <source>保存位置</source>
-        <translation type="unfinished"></translation>
+        <translation>保存位置</translation>
     </message>
     <message>
         <location filename="../ui/propertydialog.ui" line="197"/>
         <source>下载地址</source>
-        <translation type="unfinished"></translation>
+        <translation>下载地址</translation>
     </message>
     <message>
         <location filename="../ui/propertydialog.ui" line="327"/>
         <source>打开文件夹(&amp;O)</source>
-        <translation type="unfinished"></translation>
+        <translation>打开文件夹(&amp;O)</translation>
     </message>
     <message>
         <location filename="../ui/propertydialog.ui" line="380"/>
         <source>复制(&amp;C)</source>
-        <translation type="unfinished"></translation>
+        <translation>复制(&amp;C)</translation>
     </message>
     <message>
         <location filename="../ui/propertydialog.ui" line="442"/>
         <source>确定(&amp;O)</source>
-        <translation type="unfinished"></translation>
+        <translation>确定(&amp;O)</translation>
     </message>
     <message>
         <location filename="../cpp/propertydialog.cpp" line="24"/>
         <source>文件不存在</source>
-        <translation type="unfinished"></translation>
+        <translation>文件不存在</translation>
     </message>
     <message>
         <location filename="../cpp/propertydialog.cpp" line="54"/>
         <source>错误</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../cpp/propertydialog.cpp" line="54"/>
         <source>打开文件夹失败！</source>
-        <translation type="unfinished"></translation>
+        <translation>打开文件夹失败！</translation>
     </message>
     <message>
         <location filename="../cpp/propertydialog.cpp" line="54"/>
         <source>确定</source>
-        <translation type="unfinished"></translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../cpp/propertydialog.cpp" line="65"/>
         <source>提示</source>
-        <translation type="unfinished"></translation>
+        <translation>提示</translation>
     </message>
     <message>
         <location filename="../cpp/propertydialog.cpp" line="66"/>
         <source>已复制到剪贴板！</source>
-        <translation type="unfinished"></translation>
+        <translation>已复制到剪贴板！</translation>
     </message>
 </context>
 <context>
@@ -112,47 +112,47 @@
     <message>
         <location filename="../cpp/main.cpp" line="45"/>
         <source>打开主界面(&amp;O)</source>
-        <translation type="unfinished"></translation>
+        <translation>打开主界面(&amp;O)</translation>
     </message>
     <message>
         <location filename="../cpp/main.cpp" line="46"/>
         <source>新建下载任务(&amp;N)</source>
-        <translation type="unfinished"></translation>
+        <translation>新建下载任务(&amp;N)</translation>
     </message>
     <message>
         <location filename="../cpp/main.cpp" line="47"/>
         <source>管理下载任务(&amp;M)</source>
-        <translation type="unfinished"></translation>
+        <translation>管理下载任务(&amp;M)</translation>
     </message>
     <message>
         <location filename="../cpp/main.cpp" line="48"/>
         <source>打开设置(&amp;S)</source>
-        <translation type="unfinished"></translation>
+        <translation>打开设置(&amp;S)</translation>
     </message>
     <message>
         <location filename="../cpp/main.cpp" line="49"/>
         <source>捐赠(&amp;D)</source>
-        <translation type="unfinished"></translation>
+        <translation>捐赠(&amp;D)</translation>
     </message>
     <message>
         <location filename="../cpp/main.cpp" line="50"/>
         <source>关于SecondDownloader(&amp;A)</source>
-        <translation type="unfinished"></translation>
+        <translation>关于SecondDownloader(&amp;A)</translation>
     </message>
     <message>
         <location filename="../cpp/main.cpp" line="51"/>
         <source>在Github上的仓库(&amp;R)</source>
-        <translation type="unfinished"></translation>
+        <translation>在Github上的仓库(&amp;R)</translation>
     </message>
     <message>
         <location filename="../cpp/main.cpp" line="52"/>
         <source>检查更新(&amp;U)</source>
-        <translation type="unfinished"></translation>
+        <translation>检查更新(&amp;U)</translation>
     </message>
     <message>
         <location filename="../cpp/main.cpp" line="53"/>
         <source>退出本软件(&amp;E)</source>
-        <translation type="unfinished"></translation>
+        <translation>退出本软件(&amp;E)</translation>
     </message>
 </context>
 <context>
@@ -160,47 +160,47 @@
     <message>
         <location filename="../ui/frmdonate.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>主页</translation>
     </message>
     <message>
         <location filename="../ui/frmdonate.ui" line="42"/>
         <source>捐赠</source>
-        <translation type="unfinished"></translation>
+        <translation>捐赠</translation>
     </message>
     <message>
         <location filename="../ui/frmdonate.ui" line="66"/>
         <source>您的捐赠是我们的动力，我们会越做越好~！</source>
-        <translation type="unfinished"></translation>
+        <translation>您的捐赠是我们的动力，我们会越做越好~！</translation>
     </message>
     <message>
         <location filename="../ui/frmdonate.ui" line="85"/>
         <source>方式一：点亮你的小星星⭐⭐⭐</source>
-        <translation type="unfinished"></translation>
+        <translation>方式一：点亮你的小星星⭐⭐⭐</translation>
     </message>
     <message>
         <location filename="../ui/frmdonate.ui" line="142"/>
         <source>如果你有github账号，请点击下方按钮给我们一个小小的 star ⭐⭐⭐</source>
-        <translation type="unfinished"></translation>
+        <translation>如果你有github账号，请点击下方按钮给我们一个小小的 star ⭐⭐⭐</translation>
     </message>
     <message>
         <location filename="../ui/frmdonate.ui" line="290"/>
         <source>去点亮Star⭐⭐⭐</source>
-        <translation type="unfinished"></translation>
+        <translation>去点亮Star⭐⭐⭐</translation>
     </message>
     <message>
         <location filename="../ui/frmdonate.ui" line="323"/>
         <source>方式二：未成年人劝退</source>
-        <translation type="unfinished"></translation>
+        <translation>方式二：未成年人劝退</translation>
     </message>
     <message>
         <location filename="../ui/frmdonate.ui" line="331"/>
         <source>微信支付</source>
-        <translation type="unfinished"></translation>
+        <translation>微信支付</translation>
     </message>
     <message>
         <location filename="../ui/frmdonate.ui" line="405"/>
         <source>支付宝支付</source>
-        <translation type="unfinished"></translation>
+        <translation>支付宝支付</translation>
     </message>
 </context>
 <context>
@@ -208,17 +208,17 @@
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>主页</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="75"/>
         <source>全部</source>
-        <translation type="unfinished"></translation>
+        <translation>全部</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="135"/>
         <source>下载中</source>
-        <translation type="unfinished"></translation>
+        <translation>下载中</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="195"/>
@@ -227,7 +227,7 @@
         <location filename="../cpp/frmdownloadcontent.cpp" line="342"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="579"/>
         <source>下载成功</source>
-        <translation type="unfinished"></translation>
+        <translation>下载成功</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="255"/>
@@ -235,121 +235,121 @@
         <location filename="../cpp/frmdownloadcontent.cpp" line="340"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="577"/>
         <source>下载失败</source>
-        <translation type="unfinished"></translation>
+        <translation>下载失败</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="287"/>
         <source>文件名</source>
-        <translation type="unfinished"></translation>
+        <translation>文件名</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="292"/>
         <source>大小</source>
-        <translation type="unfinished"></translation>
+        <translation>大小</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="297"/>
         <source>下载速度</source>
-        <translation type="unfinished"></translation>
+        <translation>下载速度</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="302"/>
         <source>状态</source>
-        <translation type="unfinished"></translation>
+        <translation>状态</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="307"/>
         <source>保存位置</source>
-        <translation type="unfinished"></translation>
+        <translation>保存位置</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="367"/>
         <source>全选(&amp;S)</source>
-        <translation type="unfinished"></translation>
+        <translation>全选(&amp;S)</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="408"/>
         <source>删除记录(&amp;D)</source>
-        <translation type="unfinished"></translation>
+        <translation>删除记录(&amp;D)</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="110"/>
         <source>打开(&amp;O)</source>
-        <translation type="unfinished"></translation>
+        <translation>打开(&amp;O)</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="111"/>
         <source>打开文件夹(&amp;F)</source>
-        <translation type="unfinished"></translation>
+        <translation>打开文件夹(&amp;F)</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="112"/>
         <source>重新下载(&amp;E)</source>
-        <translation type="unfinished"></translation>
+        <translation>重新下载(&amp;E)</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="113"/>
         <source>下载(&amp;D)</source>
-        <translation type="unfinished"></translation>
+        <translation>下载(&amp;D)</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="114"/>
         <source>删除(&amp;R)</source>
-        <translation type="unfinished"></translation>
+        <translation>删除(&amp;R)</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="115"/>
         <source>属性(&amp;P)</source>
-        <translation type="unfinished"></translation>
+        <translation>属性(&amp;P)</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="159"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="169"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="526"/>
         <source>错误</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="159"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="526"/>
         <source>无法打开文件！</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开文件！</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="159"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="169"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="526"/>
         <source>确定</source>
-        <translation type="unfinished"></translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="169"/>
         <source>无法打开文件夹！</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开文件夹！</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="178"/>
         <source>问题</source>
-        <translation type="unfinished"></translation>
+        <translation>询问</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="179"/>
         <source>需要原文件需要一同删除吗？</source>
-        <translation type="unfinished"></translation>
+        <translation>需要将原文件一同删除吗？</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="251"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="336"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="573"/>
         <source>准备下载</source>
-        <translation type="unfinished"></translation>
+        <translation>准备下载</translation>
     </message>
     <message>
         <location filename="../cpp/frmdownloadcontent.cpp" line="253"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="338"/>
         <location filename="../cpp/frmdownloadcontent.cpp" line="575"/>
         <source>正在下载</source>
-        <translation type="unfinished"></translation>
+        <translation>正在下载</translation>
     </message>
 </context>
 <context>
@@ -357,67 +357,67 @@
     <message>
         <location filename="../ui/frmmainpage.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>主页</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="88"/>
         <source>已接管下载任务XXX天</source>
-        <translation type="unfinished"></translation>
+        <translation>已接管下载任务XXX天</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="162"/>
         <source>SecondDownloader 正在接管您电脑的下载任务</source>
-        <translation type="unfinished"></translation>
+        <translation>SecondDownloader 正在接管您电脑的下载任务</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="197"/>
         <source>暂停接管</source>
-        <translation type="unfinished"></translation>
+        <translation>暂停接管</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="268"/>
         <source>新建下载任务</source>
-        <translation type="unfinished"></translation>
+        <translation>新建下载任务</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="327"/>
         <source>所有下载内容</source>
-        <translation type="unfinished"></translation>
+        <translation>所有下载内容</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="386"/>
         <source>下载完成的内容</source>
-        <translation type="unfinished"></translation>
+        <translation>下载完成的内容</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="445"/>
         <source>正在下载的内容</source>
-        <translation type="unfinished"></translation>
+        <translation>正在下载的内容</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="527"/>
         <source>下载失败的内容</source>
-        <translation type="unfinished"></translation>
+        <translation>下载失败的内容</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="586"/>
         <source>浏览器拓展</source>
-        <translation type="unfinished"></translation>
+        <translation>浏览器拓展</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="645"/>
         <source>捐赠</source>
-        <translation type="unfinished"></translation>
+        <translation>捐赠</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="704"/>
         <source>关于</source>
-        <translation type="unfinished"></translation>
+        <translation>关于</translation>
     </message>
     <message>
         <location filename="../cpp/frmmainpage.cpp" line="20"/>
         <source>已接管下载任务 %1 天</source>
-        <translation type="unfinished"></translation>
+        <translation>已接管下载任务 %1 天</translation>
     </message>
 </context>
 <context>
@@ -425,208 +425,208 @@
     <message>
         <location filename="../ui/frmsettings.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>主页</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="466"/>
         <source>通用</source>
-        <translation type="unfinished"></translation>
+        <translation>通用</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="504"/>
         <source>启动</source>
-        <translation type="unfinished"></translation>
+        <translation>启动</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="523"/>
         <source>启动时自动隐藏到托盘</source>
-        <translation type="unfinished"></translation>
+        <translation>启动时自动隐藏到托盘</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="535"/>
         <source>开机自启动</source>
-        <translation type="unfinished"></translation>
+        <translation>开机自启动</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="552"/>
         <source>主题</source>
-        <translation type="unfinished"></translation>
+        <translation>主题</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="566"/>
         <source>跟随系统</source>
-        <translation type="unfinished"></translation>
+        <translation>跟随系统</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="578"/>
         <source>浅色主题</source>
-        <translation type="unfinished"></translation>
+        <translation>浅色主题</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="590"/>
         <source>深色主题</source>
-        <translation type="unfinished"></translation>
+        <translation>深色主题</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="605"/>
         <source>语言</source>
-        <translation type="unfinished"></translation>
+        <translation>语言</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="619"/>
         <source>系统默认</source>
-        <translation type="unfinished"></translation>
+        <translation>系统默认</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="670"/>
         <source>接管的浏览器</source>
-        <translation type="unfinished"></translation>
+        <translation>接管的浏览器</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="686"/>
         <source>全部接管</source>
-        <translation type="unfinished"></translation>
+        <translation>全部接管</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="698"/>
         <source>全部不接管</source>
-        <translation type="unfinished"></translation>
+        <translation>全部不接管</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="715"/>
         <source>自动升级</source>
-        <translation type="unfinished"></translation>
+        <translation>自动升级</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="756"/>
         <source>开启</source>
-        <translation type="unfinished"></translation>
+        <translation>开启</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="774"/>
         <source>下载</source>
-        <translation type="unfinished"></translation>
+        <translation>下载</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="815"/>
         <source>使用支持的协议</source>
-        <translation type="unfinished"></translation>
+        <translation>使用支持的协议</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="847"/>
         <source>https</source>
-        <translation type="unfinished"></translation>
+        <translation>https</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="859"/>
         <source>http</source>
-        <translation type="unfinished"></translation>
+        <translation>http</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="871"/>
         <source>ftp</source>
-        <translation type="unfinished"></translation>
+        <translation>ftp</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="883"/>
         <source>ftps</source>
-        <translation type="unfinished"></translation>
+        <translation>ftps</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="895"/>
         <source>其他</source>
-        <translation type="unfinished"></translation>
+        <translation>其他</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="916"/>
         <source>默认文件保存位置</source>
-        <translation type="unfinished"></translation>
+        <translation>默认文件保存位置</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1022"/>
         <source>选择...(&amp;C)</source>
-        <translation type="unfinished"></translation>
+        <translation>选择…(&amp;C)</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1045"/>
         <source>自动下载</source>
-        <translation type="unfinished"></translation>
+        <translation>自动下载</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1059"/>
         <source>检测到剪贴板的下载链接自动下载</source>
-        <translation type="unfinished"></translation>
+        <translation>检测到剪贴板的下载链接自动下载</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1080"/>
         <source>下载完成后</source>
-        <translation type="unfinished"></translation>
+        <translation>下载完成后</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1102"/>
         <source>使用VirusTotal检测可执行文件的风险性（一分钟最多四次）</source>
-        <translation type="unfinished"></translation>
+        <translation>使用VirusTotal检测可执行文件的风险性（一分钟最多四次）</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1114"/>
         <source>播放提示音</source>
-        <translation type="unfinished"></translation>
+        <translation>播放提示音</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1175"/>
         <source>显示对话框</source>
-        <translation type="unfinished"></translation>
+        <translation>显示对话框</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1187"/>
         <source>自动打开文件</source>
-        <translation type="unfinished"></translation>
+        <translation>自动打开文件</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1199"/>
         <source>自动打开文件所在文件夹</source>
-        <translation type="unfinished"></translation>
+        <translation>自动打开文件所在文件夹</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1211"/>
         <source>别打扰我</source>
-        <translation type="unfinished"></translation>
+        <translation>别打扰我</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1234"/>
         <source>Github文件下载</source>
-        <translation type="unfinished"></translation>
+        <translation>Github文件下载</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1248"/>
         <source>使用网站代理</source>
-        <translation type="unfinished"></translation>
+        <translation>使用网站代理</translation>
     </message>
     <message>
         <location filename="../cpp/frmsettings.cpp" line="146"/>
         <location filename="../cpp/frmsettings.cpp" line="157"/>
         <location filename="../cpp/frmsettings.cpp" line="412"/>
         <source>自定义</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <location filename="../cpp/frmsettings.cpp" line="253"/>
         <location filename="../cpp/frmsettings.cpp" line="268"/>
         <location filename="../cpp/frmsettings.cpp" line="284"/>
         <source>提示</source>
-        <translation type="unfinished"></translation>
+        <translation>提示</translation>
     </message>
     <message>
         <location filename="../cpp/frmsettings.cpp" line="254"/>
         <location filename="../cpp/frmsettings.cpp" line="269"/>
         <location filename="../cpp/frmsettings.cpp" line="285"/>
         <source>新主题将在重启后生效！</source>
-        <translation type="unfinished"></translation>
+        <translation>新主题将在重启后生效！</translation>
     </message>
     <message>
         <location filename="../cpp/frmsettings.cpp" line="414"/>
         <source>Wav文件(*.wav)</source>
-        <translation type="unfinished"></translation>
+        <translation>Wav文件(*.wav)</translation>
     </message>
 </context>
 </TS>
