@@ -28,6 +28,10 @@ FORMS   +=\
     dialogquestion.ui   \
     dialogcrtinf.ui
 
+TRANSLATIONS += \
+    Translations/LibDialog_zh_TW.ts \
+    Translations/LibDialog_zh_CN.ts   \
+    Translations/LibDialog_en_US.ts
 # Default rules for deployment.
 unix {
     target.path = /usr/lib
@@ -51,3 +55,5 @@ win32:LIBS += -luxtheme
 
 RESOURCES += \
     res.qrc
+
+TRANSLATIONS +=

@@ -76,4 +76,7 @@ FORMS += \
 RESOURCES += \
     res/res.qrc
 
-TRANSLATIONS +=
+TRANSLATIONS += \
+    Translations/LibDownload_zh_TW.ts \
+    Translations/LibDownload_zh_CN.ts   \
+    Translations/LibDownload_en_US.ts

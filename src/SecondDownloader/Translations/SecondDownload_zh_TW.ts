@@ -2,6 +2,20 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_TW">
 <context>
+    <name>AnalyserResult</name>
+    <message>
+        <source>确定</source>
+        <translation type="obsolete">確定</translation>
+    </message>
+</context>
+<context>
+    <name>DialogDownloaded</name>
+    <message>
+        <source>确定</source>
+        <translation type="obsolete">確定</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../ui/mainwindow.ui" line="20"/>
@@ -407,7 +421,7 @@
     <message>
         <location filename="../ui/frmmainpage.ui" line="645"/>
         <source>捐赠</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">捐贈</translation>
     </message>
     <message>
         <location filename="../ui/frmmainpage.ui" line="704"/>
@@ -422,6 +436,32 @@
 </context>
 <context>
     <name>frmSettings</name>
+    <message>
+        <location filename="../cpp/frmsettings.cpp" line="146"/>
+        <location filename="../cpp/frmsettings.cpp" line="157"/>
+        <location filename="../cpp/frmsettings.cpp" line="412"/>
+        <source>自定义</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../cpp/frmsettings.cpp" line="253"/>
+        <location filename="../cpp/frmsettings.cpp" line="268"/>
+        <location filename="../cpp/frmsettings.cpp" line="284"/>
+        <source>提示</source>
+        <translation type="unfinished">提示</translation>
+    </message>
+    <message>
+        <location filename="../cpp/frmsettings.cpp" line="254"/>
+        <location filename="../cpp/frmsettings.cpp" line="269"/>
+        <location filename="../cpp/frmsettings.cpp" line="285"/>
+        <source>新主题将在重启后生效！</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../cpp/frmsettings.cpp" line="414"/>
+        <source>Wav文件(*.wav)</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="14"/>
         <source>Form</source>
@@ -600,32 +640,6 @@
     <message>
         <location filename="../ui/frmsettings.ui" line="1248"/>
         <source>使用网站代理</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cpp/frmsettings.cpp" line="146"/>
-        <location filename="../cpp/frmsettings.cpp" line="157"/>
-        <location filename="../cpp/frmsettings.cpp" line="412"/>
-        <source>自定义</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cpp/frmsettings.cpp" line="253"/>
-        <location filename="../cpp/frmsettings.cpp" line="268"/>
-        <location filename="../cpp/frmsettings.cpp" line="284"/>
-        <source>提示</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cpp/frmsettings.cpp" line="254"/>
-        <location filename="../cpp/frmsettings.cpp" line="269"/>
-        <location filename="../cpp/frmsettings.cpp" line="285"/>
-        <source>新主题将在重启后生效！</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../cpp/frmsettings.cpp" line="414"/>
-        <source>Wav文件(*.wav)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
