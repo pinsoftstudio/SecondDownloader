@@ -633,7 +633,7 @@
         <location filename="../cpp/frmsettings.cpp" line="335"/>
         <location filename="../cpp/frmsettings.cpp" line="349"/>
         <source>新语言将在重启后生效！</source>
-        <translation type="unfinished"></translation>
+        <translation>The new language will come into effect after restarting the software!</translation>
     </message>
     <message>
         <location filename="../cpp/frmsettings.cpp" line="442"/>
