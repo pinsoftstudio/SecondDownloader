@@ -85,6 +85,7 @@ private slots:
     void on_btncancel_clicked();
     void on_btnmin_clicked();
     void onsendMemory();
+    void onOnlyOne();
 };
 
 #endif // DOWNLOADWINDOW_H

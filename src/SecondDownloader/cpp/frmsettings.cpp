@@ -12,6 +12,7 @@
 #include "QFileDialog"
 #include "QSoundEffect"
 #include "dialogcrtinf.h"
+#include "QTranslator"
 frmSettings::frmSettings(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmSettings)
@@ -96,7 +97,7 @@ void frmSettings::iniSettings()
             ui->rdbLanZhSimplified->setChecked(1);
             ui->rdbLanZhTraditional->setChecked(0);
             ui->rdbLanEn->setChecked(0);
-        }else if(Language=="TraditonalChinese"){
+        }else if(Language=="TraditionalChinese"){
             ui->rdbLanZhSimplified->setChecked(0);
             ui->rdbLanZhTraditional->setChecked(1);
             ui->rdbLanEn->setChecked(0);
@@ -298,6 +299,15 @@ void frmSettings::on_rdbLanDef_clicked(bool checked)
 {
     QSettings set("Pinsoft","SecondDownloader");
     set.setValue("Language/FollowSystem",1);
+    DialogCrtInf dia;
+    QString title=tr("提示");
+    QString content=tr("新语言将在重启后生效！");
+    dia.setTitle(title);
+    dia.setText(content);
+    dia.exec();
+
+
+
 }
 
 
@@ -306,6 +316,12 @@ void frmSettings::on_rdbLanZhSimplified_clicked(bool checked)
     QSettings set("Pinsoft","SecondDownloader");
     set.setValue("Language/Type","SimplifiedChinese");
     set.setValue("Language/FollowSystem",0);
+    DialogCrtInf dia;
+    QString title=tr("提示");
+    QString content=tr("新语言将在重启后生效！");
+    dia.setTitle(title);
+    dia.setText(content);
+    dia.exec();
 }
 
 
@@ -314,6 +330,12 @@ void frmSettings::on_rdbLanZhTraditional_clicked(bool checked)
     QSettings set("Pinsoft","SecondDownloader");
     set.setValue("Language/Type","TraditionalChinese");
     set.setValue("Language/FollowSystem",0);
+    DialogCrtInf dia;
+    QString title=tr("提示");
+    QString content=tr("新语言将在重启后生效！");
+    dia.setTitle(title);
+    dia.setText(content);
+    dia.exec();
 }
 
 
@@ -322,6 +344,12 @@ void frmSettings::on_rdbLanEn_clicked(bool checked)
     QSettings set("Pinsoft","SecondDownloader");
     set.setValue("Language/Type","English");
     set.setValue("Language/FollowSystem",0);
+    DialogCrtInf dia;
+    QString title=tr("提示");
+    QString content=tr("新语言将在重启后生效！");
+    dia.setTitle(title);
+    dia.setText(content);
+    dia.exec();
 }
 
 

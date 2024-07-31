@@ -21,6 +21,7 @@ public:
     void setFileName(QString fileName);
     void setUnknown(bool unknown);
     QString getTrueFileName();
+    void emitOnlyOne();
 private:
     QString downloadUrl;
     // QString location;
@@ -39,6 +40,7 @@ private:
 protected:
     void run() Q_DECL_OVERRIDE;
 signals:
+    void onlyOne();
     void downloadFinished();
     void downloadFailed();
 };

@@ -19,6 +19,11 @@ static size_t header_callback(void *contents, size_t size, size_t nmemb, void *u
         downloader->setFileName(filename);
     }
 
+    exp.setPattern("200 OK");
+    it=exp.globalMatch(headContent);
+    if(it.hasNext()){
+        downloader->emitOnlyOne();
+    }
 
 
     return size * nmemb;
@@ -101,6 +106,11 @@ QString LibDownload::getTrueFileName()
 {
 
     return truefileName;
+}
+
+void LibDownload::emitOnlyOne()
+{
+    emit onlyOne();
 }
 
 void LibDownload::run()

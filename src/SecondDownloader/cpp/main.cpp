@@ -17,12 +17,16 @@
 #include <QAction>
 #include <QBuffer>
 #include <QDir>
+#include <QLocale>
 // #include "header/dialogquestion.h"
 #include "header/mainwindow.h"
 static DownloadMessageWindow *dw=Q_NULLPTR;
 static MainWindow *w=Q_NULLPTR;
 static QTimer detectWindowShow;
 static QSharedMemory shared;
+QTranslator *tran=NULL;
+QTranslator *tran1=NULL;
+QTranslator *tran2=NULL;
 void detectShowReq(){
 
 
@@ -142,15 +146,60 @@ bool isSingleInstance(const char* shared_memory_name)
 }
 void installTranslator(QApplication &a)
 {
-    QTranslator translator;
-    const QStringList uiLanguages = QLocale::system().uiLanguages();
-    for (const QString &locale : uiLanguages) {
-        const QString baseName = "SecondDownloader_" + QLocale(locale).name();
-        if (translator.load(":/i18n/" + baseName)) {
-            a.installTranslator(&translator);
+    tran=new QTranslator;
+    tran1=new QTranslator;
+    tran2=new QTranslator;
+    QSettings set("Pinsoft","SecondDownloader");
+    QString Language;
+    if(!set.value("Language/FollowSystem",1).toBool()){
+        Language=set.value("Language/Type","SimplifiedChinese").toString();
+        if(Language=="SimplifiedChinese"){
+            tran->load("translations/SecondDownload_zh_CN.qm");
+            tran1->load("translations/LibDownload_zh_CN.qm");
+            tran2->load("translations/LibDialog_zh_CN.qm");
+
+        }else if(Language=="TraditionalChinese"){
+            tran->load("translations/SecondDownload_zh_TW.qm");
+            tran1->load("translations/LibDownload_zh_TW.qm");
+            tran2->load("translations/LibDialog_zh_TW.qm");
+
+        }else if(Language=="English"){
+            tran->load("translations/SecondDownload_en_US.qm");
+            tran1->load("translations/LibDownload_en_US.qm");
+            tran2->load("translations/LibDialog_en_US.qm");
+
+        }else {
+
+        }
+    }else{
+        QLocale lc;
+        switch (lc.language()){
+        case QLocale::Chinese:{
+            tran->load("translations/SecondDownload_zh_CN.qm");
+            tran1->load("translations/LibDownload_zh_CN.qm");
+            tran2->load("translations/LibDialog_zh_CN.qm");
             break;
         }
+        case QLocale::English:{
+            tran->load("translations/SecondDownload_en_US.qm");
+            tran1->load("translations/LibDownload_en_US.qm");
+            tran2->load("translations/LibDialog_en_US.qm");
+            break;
+        }
+        default:{
+            tran->load("translations/SecondDownloader_en_US.qm");
+            tran1->load("translations/LibDownload_en_US.qm");
+            tran2->load("translations/LibDialog_en_US.qm");
+            break;
+        }
+
+        }
     }
+    a.installTranslator(tran);
+    a.installTranslator(tran1);
+    a.installTranslator(tran2);
+
+
 }
 
 int main(int argc, char *argv[])

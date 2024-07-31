@@ -213,6 +213,7 @@ void DownloadWindow::startDownload()
             if(i==0){
                 downloaders[i]=new LibDownload(QString::number(startBytes+1),QString::number(endBytes),
                                                  QDir::toNativeSeparators(tempFilePathNames[i]),URL,1,this);
+                connect(downloaders[0],&LibDownload::onlyOne,this,&DownloadWindow::onOnlyOne);
             }else{
                 downloaders[i]=new LibDownload(QString::number(startBytes+1),QString::number(endBytes),
                                                  QDir::toNativeSeparators(tempFilePathNames[i]),URL,0,this);
@@ -707,5 +708,22 @@ void DownloadWindow::onsendMemory()
     catch(...){
         ;
     }
+}
+
+void DownloadWindow::onOnlyOne()
+{
+    if(isMultipal){
+        for(int i=1;i<8;i++){
+            if(downloaders[i]->isRunning()){
+                downloaders[i]->terminate();
+                downloaders[i]->wait();
+                ui->frame->hide();
+
+            }
+
+        }
+        isMultipal=0;
+    }
+
 }
 

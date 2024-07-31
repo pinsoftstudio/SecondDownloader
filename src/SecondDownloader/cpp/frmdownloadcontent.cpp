@@ -545,24 +545,24 @@ void frmDownloadContent::iniTree()
                 char *buf;
                 datastream.readRawData((char*)&size,sizeof(qsizetype));
                 datastream.readBytes(buf,size);
-                QString afilename=QString::fromLocal8Bit(buf,size);
+                QString afilename=QString::fromUtf8(buf,size);
 
                 datastream.readRawData((char*)&size,sizeof(qsizetype));
                 datastream.readBytes(buf,size);
-                QString afilesize=QString::fromLocal8Bit(buf,size);
+                QString afilesize=QString::fromUtf8(buf,size);
 
                 datastream.readRawData((char*)&size,sizeof(qsizetype));
                 datastream.readBytes(buf,size);
-                QString aurl=QString::fromLocal8Bit(buf,size);
+                QString aurl=QString::fromUtf8(buf,size);
 
                 datastream.readRawData((char*)&size,sizeof(qsizetype));
                 datastream.readBytes(buf,size);
-                QString apathName=QString::fromLocal8Bit(buf,size);
+                QString apathName=QString::fromUtf8(buf,size);
                 QTreeWidgetItem *aitem=new  QTreeWidgetItem(ui->treeWidget);
 
                 datastream.readRawData((char*)&size,sizeof(qsizetype));
                 datastream.readBytes(buf,size);
-                QString astate=QString::fromLocal8Bit(buf,size);
+                QString astate=QString::fromUtf8(buf,size);
 
 
 
