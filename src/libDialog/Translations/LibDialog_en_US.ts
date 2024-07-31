@@ -6,27 +6,27 @@
     <message>
         <location filename="../dialogabout.ui" line="14"/>
         <source>关于“SecondDownloader”</source>
-        <translation type="unfinished"></translation>
+        <translation>About “SecondDownloader&quot;</translation>
     </message>
     <message>
         <location filename="../dialogabout.ui" line="99"/>
         <source>SecondDownloader V1.0.0.0</source>
-        <translation type="unfinished"></translation>
+        <translation>SecondDownloader V1.0.0.0</translation>
     </message>
     <message>
         <location filename="../dialogabout.ui" line="119"/>
         <source>Developed by Pinsoft Studio</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../dialogabout.ui" line="153"/>
         <source>Github(&amp;G)</source>
-        <translation type="unfinished"></translation>
+        <translation>Github(&amp;G)</translation>
     </message>
     <message>
         <location filename="../dialogabout.ui" line="179"/>
         <source>确定(&amp;O)</source>
-        <translation type="unfinished"></translation>
+        <translation>OK(&amp;O)</translation>
     </message>
 </context>
 <context>
@@ -34,27 +34,27 @@
     <message>
         <location filename="../dialogcrtinf.ui" line="19"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../dialogcrtinf.ui" line="51"/>
         <source>确定</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../dialogcrtinf.ui" line="81"/>
         <source>取消</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../dialogcrtinf.ui" line="111"/>
         <source>记事本</source>
-        <translation type="unfinished"></translation>
+        <translation>Notepad</translation>
     </message>
     <message>
         <location filename="../dialogcrtinf.ui" line="129"/>
         <source>文件已经打开。</source>
-        <translation type="unfinished"></translation>
+        <translation>File has already opened.</translation>
     </message>
 </context>
 <context>
@@ -62,27 +62,27 @@
     <message>
         <location filename="../dialogquestion.ui" line="19"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Question</translation>
     </message>
     <message>
         <location filename="../dialogquestion.ui" line="51"/>
         <source>是</source>
-        <translation type="unfinished"></translation>
+        <translation>Yes</translation>
     </message>
     <message>
         <location filename="../dialogquestion.ui" line="81"/>
         <source>否</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../dialogquestion.ui" line="111"/>
         <source>记事本</source>
-        <translation type="unfinished"></translation>
+        <translation>Notepad</translation>
     </message>
     <message>
         <location filename="../dialogquestion.ui" line="129"/>
         <source>是否要将更改保存到“未命名.txt”？</source>
-        <translation type="unfinished"></translation>
+        <translation>Do you want to save the changes made in &quot;Untitled.txt&quot;?</translation>
     </message>
 </context>
 </TS>

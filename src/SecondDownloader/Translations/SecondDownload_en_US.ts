@@ -110,47 +110,47 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../cpp/main.cpp" line="45"/>
+        <location filename="../cpp/main.cpp" line="49"/>
         <source>打开主界面(&amp;O)</source>
         <translation>Home(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="46"/>
+        <location filename="../cpp/main.cpp" line="50"/>
         <source>新建下载任务(&amp;N)</source>
         <translation>New Download Task(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="47"/>
+        <location filename="../cpp/main.cpp" line="51"/>
         <source>管理下载任务(&amp;M)</source>
         <translation>Manage Download Task(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="48"/>
+        <location filename="../cpp/main.cpp" line="52"/>
         <source>打开设置(&amp;S)</source>
         <translation>Settings(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="49"/>
+        <location filename="../cpp/main.cpp" line="53"/>
         <source>捐赠(&amp;D)</source>
         <translation>Sponsor(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="50"/>
+        <location filename="../cpp/main.cpp" line="54"/>
         <source>关于SecondDownloader(&amp;A)</source>
         <translation>About SecondDownloader(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="51"/>
+        <location filename="../cpp/main.cpp" line="55"/>
         <source>在Github上的仓库(&amp;R)</source>
         <translation>Github Respository(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="52"/>
+        <location filename="../cpp/main.cpp" line="56"/>
         <source>检查更新(&amp;U)</source>
         <translation>Update(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="53"/>
+        <location filename="../cpp/main.cpp" line="57"/>
         <source>退出本软件(&amp;E)</source>
         <translation>Exit(&amp;E)</translation>
     </message>
@@ -603,28 +603,40 @@
         <translation>Use a web proxy</translation>
     </message>
     <message>
-        <location filename="../cpp/frmsettings.cpp" line="146"/>
-        <location filename="../cpp/frmsettings.cpp" line="157"/>
-        <location filename="../cpp/frmsettings.cpp" line="412"/>
+        <location filename="../cpp/frmsettings.cpp" line="147"/>
+        <location filename="../cpp/frmsettings.cpp" line="158"/>
+        <location filename="../cpp/frmsettings.cpp" line="440"/>
         <source>自定义</source>
         <translation>Customize</translation>
-    </message>
-    <message>
-        <location filename="../cpp/frmsettings.cpp" line="253"/>
-        <location filename="../cpp/frmsettings.cpp" line="268"/>
-        <location filename="../cpp/frmsettings.cpp" line="284"/>
-        <source>提示</source>
-        <translation>Information</translation>
     </message>
     <message>
         <location filename="../cpp/frmsettings.cpp" line="254"/>
         <location filename="../cpp/frmsettings.cpp" line="269"/>
         <location filename="../cpp/frmsettings.cpp" line="285"/>
+        <location filename="../cpp/frmsettings.cpp" line="303"/>
+        <location filename="../cpp/frmsettings.cpp" line="320"/>
+        <location filename="../cpp/frmsettings.cpp" line="334"/>
+        <location filename="../cpp/frmsettings.cpp" line="348"/>
+        <source>提示</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <location filename="../cpp/frmsettings.cpp" line="255"/>
+        <location filename="../cpp/frmsettings.cpp" line="270"/>
+        <location filename="../cpp/frmsettings.cpp" line="286"/>
         <source>新主题将在重启后生效！</source>
         <translation>The new theme will come into effect after restarting the software!</translation>
     </message>
     <message>
-        <location filename="../cpp/frmsettings.cpp" line="414"/>
+        <location filename="../cpp/frmsettings.cpp" line="304"/>
+        <location filename="../cpp/frmsettings.cpp" line="321"/>
+        <location filename="../cpp/frmsettings.cpp" line="335"/>
+        <location filename="../cpp/frmsettings.cpp" line="349"/>
+        <source>新语言将在重启后生效！</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../cpp/frmsettings.cpp" line="442"/>
         <source>Wav文件(*.wav)</source>
         <translation>Wav FIles(*.wav)</translation>
     </message>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_TW">
 <context>
@@ -124,47 +124,47 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../cpp/main.cpp" line="45"/>
+        <location filename="../cpp/main.cpp" line="49"/>
         <source>打开主界面(&amp;O)</source>
         <translation>打開主界面(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="46"/>
+        <location filename="../cpp/main.cpp" line="50"/>
         <source>新建下载任务(&amp;N)</source>
         <translation>新建下載任務(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="47"/>
+        <location filename="../cpp/main.cpp" line="51"/>
         <source>管理下载任务(&amp;M)</source>
         <translation>管理下載任務(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="48"/>
+        <location filename="../cpp/main.cpp" line="52"/>
         <source>打开设置(&amp;S)</source>
         <translation>打開設置(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="49"/>
+        <location filename="../cpp/main.cpp" line="53"/>
         <source>捐赠(&amp;D)</source>
         <translation>捐贈(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="50"/>
+        <location filename="../cpp/main.cpp" line="54"/>
         <source>关于SecondDownloader(&amp;A)</source>
         <translation>關於SecondDownloader(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="51"/>
+        <location filename="../cpp/main.cpp" line="55"/>
         <source>在Github上的仓库(&amp;R)</source>
         <translation>在Github上的倉庫(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="52"/>
+        <location filename="../cpp/main.cpp" line="56"/>
         <source>检查更新(&amp;U)</source>
         <translation>檢查更新(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="53"/>
+        <location filename="../cpp/main.cpp" line="57"/>
         <source>退出本软件(&amp;E)</source>
         <translation>退出本軟件(&amp;E)</translation>
     </message>
@@ -184,7 +184,7 @@
     <message>
         <location filename="../ui/frmdonate.ui" line="66"/>
         <source>您的捐赠是我们的动力，我们会越做越好~！</source>
-        <translation>您的捐贈是我們的動力，我們會越做越~！</translation>
+        <translation>您的捐贈是我們的動力，我們會越做越好~！</translation>
     </message>
     <message>
         <location filename="../ui/frmdonate.ui" line="85"/>
@@ -437,28 +437,40 @@
 <context>
     <name>frmSettings</name>
     <message>
-        <location filename="../cpp/frmsettings.cpp" line="146"/>
-        <location filename="../cpp/frmsettings.cpp" line="157"/>
-        <location filename="../cpp/frmsettings.cpp" line="412"/>
+        <location filename="../cpp/frmsettings.cpp" line="147"/>
+        <location filename="../cpp/frmsettings.cpp" line="158"/>
+        <location filename="../cpp/frmsettings.cpp" line="440"/>
         <source>自定义</source>
         <translation>自定義</translation>
-    </message>
-    <message>
-        <location filename="../cpp/frmsettings.cpp" line="253"/>
-        <location filename="../cpp/frmsettings.cpp" line="268"/>
-        <location filename="../cpp/frmsettings.cpp" line="284"/>
-        <source>提示</source>
-        <translation>提示</translation>
     </message>
     <message>
         <location filename="../cpp/frmsettings.cpp" line="254"/>
         <location filename="../cpp/frmsettings.cpp" line="269"/>
         <location filename="../cpp/frmsettings.cpp" line="285"/>
+        <location filename="../cpp/frmsettings.cpp" line="303"/>
+        <location filename="../cpp/frmsettings.cpp" line="320"/>
+        <location filename="../cpp/frmsettings.cpp" line="334"/>
+        <location filename="../cpp/frmsettings.cpp" line="348"/>
+        <source>提示</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <location filename="../cpp/frmsettings.cpp" line="255"/>
+        <location filename="../cpp/frmsettings.cpp" line="270"/>
+        <location filename="../cpp/frmsettings.cpp" line="286"/>
         <source>新主题将在重启后生效！</source>
         <translation>新主題將在重啓後生效！</translation>
     </message>
     <message>
-        <location filename="../cpp/frmsettings.cpp" line="414"/>
+        <location filename="../cpp/frmsettings.cpp" line="304"/>
+        <location filename="../cpp/frmsettings.cpp" line="321"/>
+        <location filename="../cpp/frmsettings.cpp" line="335"/>
+        <location filename="../cpp/frmsettings.cpp" line="349"/>
+        <source>新语言将在重启后生效！</source>
+        <translation>新語言將在重啓後生效！</translation>
+    </message>
+    <message>
+        <location filename="../cpp/frmsettings.cpp" line="442"/>
         <source>Wav文件(*.wav)</source>
         <translation>Wav文件(*.wav)</translation>
     </message>
@@ -630,7 +642,7 @@
     <message>
         <location filename="../ui/frmsettings.ui" line="1211"/>
         <source>别打扰我</source>
-        <translation>無操作</translation>
+        <translation>別打擾我</translation>
     </message>
     <message>
         <location filename="../ui/frmsettings.ui" line="1234"/>

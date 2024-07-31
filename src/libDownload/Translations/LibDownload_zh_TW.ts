@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_TW">
 <context>
@@ -181,72 +181,72 @@
         <translation>點擊我或托盤查看下載進度。</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="254"/>
+        <location filename="../include/downloadwindow.cpp" line="255"/>
         <source>正在下载...</source>
         <translation>正在下載…</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="376"/>
-        <location filename="../include/downloadwindow.cpp" line="410"/>
+        <location filename="../include/downloadwindow.cpp" line="377"/>
+        <location filename="../include/downloadwindow.cpp" line="411"/>
         <source>下载状态：全部下载完成！</source>
         <translation>下載狀態：全部下載完成！</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="378"/>
         <location filename="../include/downloadwindow.cpp" line="379"/>
-        <location filename="../include/downloadwindow.cpp" line="412"/>
+        <location filename="../include/downloadwindow.cpp" line="380"/>
         <location filename="../include/downloadwindow.cpp" line="413"/>
+        <location filename="../include/downloadwindow.cpp" line="414"/>
         <source>下载完成！</source>
         <translation>下載完成！</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="380"/>
-        <location filename="../include/downloadwindow.cpp" line="414"/>
+        <location filename="../include/downloadwindow.cpp" line="381"/>
+        <location filename="../include/downloadwindow.cpp" line="415"/>
         <source>合并文件中...</source>
         <translation>合并文件中…</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="388"/>
         <location filename="../include/downloadwindow.cpp" line="389"/>
-        <location filename="../include/downloadwindow.cpp" line="420"/>
+        <location filename="../include/downloadwindow.cpp" line="390"/>
         <location filename="../include/downloadwindow.cpp" line="421"/>
+        <location filename="../include/downloadwindow.cpp" line="422"/>
         <source>正在合并为一个文件...</source>
         <translation>正在合并為一個文件…</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="494"/>
-        <location filename="../include/downloadwindow.cpp" line="537"/>
+        <location filename="../include/downloadwindow.cpp" line="495"/>
+        <location filename="../include/downloadwindow.cpp" line="538"/>
         <source>正在下载...( %1 MB/s)</source>
         <translation>正在下載...( %1 MB/s)</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="498"/>
-        <location filename="../include/downloadwindow.cpp" line="541"/>
+        <location filename="../include/downloadwindow.cpp" line="499"/>
+        <location filename="../include/downloadwindow.cpp" line="542"/>
         <source>正在下载...( %1 KB/s)</source>
         <translation>正在下載...( %1 KB/s)</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="502"/>
-        <location filename="../include/downloadwindow.cpp" line="545"/>
+        <location filename="../include/downloadwindow.cpp" line="503"/>
+        <location filename="../include/downloadwindow.cpp" line="546"/>
         <source>正在下载...( %1 B/s)</source>
         <translation>正在下載...( %1 B/s)</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="515"/>
         <location filename="../include/downloadwindow.cpp" line="516"/>
-        <location filename="../include/downloadwindow.cpp" line="558"/>
+        <location filename="../include/downloadwindow.cpp" line="517"/>
         <location filename="../include/downloadwindow.cpp" line="559"/>
+        <location filename="../include/downloadwindow.cpp" line="560"/>
         <source>下载状态：%1 %2/%3 %4</source>
         <translation>下載狀態：%1 %2/%3 %4</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="580"/>
+        <location filename="../include/downloadwindow.cpp" line="581"/>
         <source>合并失败！</source>
         <translation>合并失敗！</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="590"/>
         <location filename="../include/downloadwindow.cpp" line="591"/>
+        <location filename="../include/downloadwindow.cpp" line="592"/>
         <source>合并成功！</source>
         <translation>合并成功！</translation>
     </message>
