@@ -9,6 +9,7 @@ fileAppender::fileAppender(QString savinglocation,QObject *parent)
     savingLocation=savinglocation;
     if(parent!=nullptr) setParent(parent);
 
+
 }
 
 void fileAppender::addToFileList(QString filePathName)
@@ -18,6 +19,7 @@ void fileAppender::addToFileList(QString filePathName)
 
 void fileAppender::run()
 {
+
     int totalFiles=tempfileList.count();
     int now=0;
     qint64 bufferSize=4096;

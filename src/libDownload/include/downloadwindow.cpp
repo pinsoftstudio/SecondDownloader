@@ -232,7 +232,13 @@ void DownloadWindow::startDownload()
 
     }else{
         isMultipal=false;
-
+        tempFilePathNames.append(tempPath+randomPath()+".downloading");
+        downloaders[0]=new LibDownload("0","",
+                                         QDir::toNativeSeparators(tempFilePathNames[0]),URL,1,this);
+        connect(downloaders[0],&LibDownload::started,this,&DownloadWindow::ondownloadFailed);
+        connect(downloaders[0],&LibDownload::finished,this,&DownloadWindow::ondownloadFinished);
+        downloaders[0]->start();
+        ui->frame->hide();
     }
 
     //启动QTimer来刷新进度条
@@ -356,7 +362,7 @@ void DownloadWindow::ondownloadFailed()
 void DownloadWindow::ondownloadFinished()
 {
 
-
+    QThread::msleep(100);
     if(isMultipal){
         //统计完成了任务的进程
         finishedThreads++;
@@ -398,6 +404,35 @@ void DownloadWindow::ondownloadFinished()
 
 
         }
+    }else{
+        downloaders[0]->terminate();
+        downloaders[0]->wait();
+        ui->labbytes->setText(tr("下载状态：全部下载完成！"));
+
+        ui->labstate->setText(tr("下载完成！"));
+        setWindowTitle(tr("下载完成！"));
+        actProgress.setText(tr("合并文件中..."));
+        tmGetProgress->stop();
+        tmsetMainProgress->stop();
+        disconnect(tmsetMainProgress,&QTimer::timeout,this,&DownloadWindow::onsetMainProgress);
+        disconnect(tmGetProgress,&QTimer::timeout,this,&DownloadWindow::ontmGetProgress);
+        ui->mainProgress->setValue(0);
+        ui->labstate->setText(tr("正在合并为一个文件..."));
+        setWindowTitle(tr("正在合并为一个文件..."));
+        appender=new fileAppender(savedFilename,this);
+
+        state="succeed";
+
+
+
+        strspeed="";
+        QThread::msleep(100);
+        appender->addToFileList(tempFilePathNames[0]);
+        connect(appender,&fileAppender::appendFailed,this,&DownloadWindow::onAppendFailed);
+        connect(appender,&fileAppender::appendSucceed,this,&DownloadWindow::onAppendSucceed);
+        connect(appender,SIGNAL(appendProgress(int,int)),this,SLOT(onGetAppendProgress(int,int)));
+        appender->start();
+
     }
 }
 
@@ -417,6 +452,14 @@ void DownloadWindow::ontmGetProgress()
             progressbar[i]->setMaximum(static_cast<qint64>(total));
             progressbar[i]->setValue(downloaded[i]);
         }
+    }else{
+        double  now=0;
+        double total=0;
+        downloaders[0]->getDownloadProgress(now,total);
+        //统计下载字节数
+        downloaded[0]=static_cast<qint64>(now);
+        ui->mainProgress->setMaximum(static_cast<qint64>(total));
+        ui->mainProgress->setValue(downloaded[0]);
     }
     m.unlock();
 }
@@ -479,6 +522,43 @@ void DownloadWindow::onsetMainProgress(){
 
 
      m.unlock();
+    }else{
+        qint64 totalDownloaded=0;
+        totalDownloaded=downloaded[0];
+        nowDownloaded=totalDownloaded;
+        qint64 thisDownloaded=nowDownloaded-lastDownloaded;
+        QString tempspeed;
+        if(thisDownloaded>0){
+            //计算下载速度
+            long double speed=thisDownloaded/1024.00/1024.00*4.00;
+            QString str;
+            state="downloading";
+            if(speed>=1){
+                str=tr("正在下载...( %1 MB/s)");
+                tempspeed=QStringLiteral("%1 MB/s");
+            }else if(speed*1024>=1){
+                speed=thisDownloaded/1024.00*4.00;
+                str=tr("正在下载...( %1 KB/s)");
+                tempspeed=QStringLiteral("%1 KB/s");
+            }else if(speed>=1){
+                speed=thisDownloaded*4.00;
+                str=tr("正在下载...( %1 B/s)");
+                tempspeed=QStringLiteral("%1 B/s");
+            }
+            ui->labstate->setText(str.arg(speed, 0, 'f', 2));
+            strspeed=tempspeed.arg(speed, 0, 'f', 2);
+        }
+        lastDownloaded=nowDownloaded;
+        long double downloaded=nowDownloaded;
+        long double totals=TotalBytes;
+        QString totalunit="";
+        QString downloadedunit="";
+        getSuitableUnit(downloaded,downloadedunit);
+        getSuitableUnit(totals,totalunit);
+        actProgress.setText(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
+        ui->labbytes->setText(tr("下载状态：%1 %2/%3 %4").arg(downloaded,0, 'f', 2).arg(downloadedunit).arg(totals,0, 'f', 2).arg(totalunit));
+
+
     }
 
 

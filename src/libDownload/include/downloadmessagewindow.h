@@ -136,6 +136,7 @@ protected:
         }
 
         // res=curl_easy_getinfo(curl,CURLINFO_EFFECTIVE_URL,&url);
+
          res = curl_easy_perform(curl);
         if (res = CURLE_OK) {
             qDebug()<<url;
@@ -223,11 +224,12 @@ static int xferinfo_callback(void *clientp,
     // if(dltotal>0){
         FileUrlInfo *fileUrlinfo=static_cast<FileUrlInfo*>(clientp);
         double dtotal=(double)dltotal;
-        if(dtotal>fileUrlinfo->getSize()){
+        if(dtotal>=fileUrlinfo->getSize()){
             fileUrlinfo->fakeDownloadFinished(static_cast<qint64>(dtotal));
-        }else{
-            fileUrlinfo->fakeDownloadFinished(static_cast<qint64>(fileUrlinfo->getSize()));
         }
+        // }else{
+        //     fileUrlinfo->fakeDownloadFinished(static_cast<qint64>(fileUrlinfo->getSize()));
+        // }
 
 
 

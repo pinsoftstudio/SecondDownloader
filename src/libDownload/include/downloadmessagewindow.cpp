@@ -21,15 +21,23 @@ DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, b
 
     }
     URL=url;
-    QRegularExpression rex;
-    rex.setPattern("github");
-    QRegularExpressionMatchIterator rexint=rex.
-        globalMatch(url.trimmed());
-    if(rexint.hasNext()){
-        URL="https://mirror.ghproxy.com/"+url;
+    QSettings set("Pinsoft","SecondDownloader");
+    bool useGithubProxy=set.value("Download/EnableGithubProxy",1).toBool();
+    if(useGithubProxy){
+        QRegularExpression exp("https://mirror.ghproxy.com/");
+        QRegularExpressionMatchIterator it=exp.globalMatch(url);
+        useGithubProxy=(!it.hasNext());
     }
+    if(useGithubProxy){
+        QRegularExpression rex;
+        rex.setPattern("github");
+        QRegularExpressionMatchIterator rexint=rex.
+                                                 globalMatch(url.trimmed());
+        if(rexint.hasNext()){
 
-
+            URL="https://mirror.ghproxy.com/"+url;
+        }
+    }
 
     ui->setupUi(this);
     Qt::WindowFlags flags;
@@ -168,7 +176,6 @@ void DownloadMessageWindow::on_btnStart_clicked()
     close();
     if(!passedNULL){
         LastWindow->close();
-
     }
 
 
@@ -177,6 +184,7 @@ void DownloadMessageWindow::on_btnStart_clicked()
 void DownloadMessageWindow::ongeterror()
 {
     ui->labfilesize->setText("文件大小： 未知");
+    size=0;
     ui->btnStart->setEnabled(1);
 }
 

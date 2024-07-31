@@ -9,7 +9,7 @@ class fileAppender : public QThread
 {
     Q_OBJECT
 public:
-    explicit fileAppender(QString savinglocation,QObject *parent = nullptr);
+    explicit fileAppender(QString savinglocation, QObject *parent = nullptr);
     void addToFileList(QString filePathName);
 
 private:
@@ -17,6 +17,7 @@ private:
     QString savingLocation;
     void run()  Q_DECL_OVERRIDE;
     void cleanup();
+    bool multipal=1;
 signals:
     void appendFailed();
     void appendSucceed();
