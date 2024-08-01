@@ -113,6 +113,7 @@ protected:
         curl_easy_setopt(curl, CURLOPT_URL, URL.toStdString().c_str());
         curl_easy_setopt(curl, CURLOPT_NOBODY, 1L); // 发送 HEAD 请求
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L); // 跟随重定向
+        curl_easy_setopt(curl,CURLOPT_SSL_OPTIONS,CURLSSLOPT_NO_REVOKE);
 
         // 执行 HEAD 请求
         res = curl_easy_perform(curl);
@@ -163,6 +164,7 @@ protected:
         curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, xferinfo_callback);
         curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L); // 确保启用进度报告
         curl_easy_setopt(curl, CURLOPT_XFERINFODATA, this);
+        curl_easy_setopt(curl,CURLOPT_SSL_OPTIONS,CURLSSLOPT_NO_REVOKE);
         curl_easy_perform(curl);
         // curl_slist_free_all(headers);
         curl_slist_free_all(headers1);

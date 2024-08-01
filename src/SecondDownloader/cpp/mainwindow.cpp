@@ -5,6 +5,7 @@
 #include <header/frmdownloadcontent.h>
 #include <header/frmsettings.h>
 #include <header/frmdonate.h>
+#include <header/frmfeedback.h>
 #include "QCloseEvent"
 #include "QSettings"
 #include "QDebug"
@@ -37,6 +38,10 @@ MainWindow::MainWindow(int mode, QWidget *parent)
     case 3:
         ui->stackedWidget->setCurrentIndex(3);
         on_toolDonate_clicked();
+        break;
+    case 4:
+        ui->stackedWidget->setCurrentIndex(4);
+        on_toolFeedback_clicked();
         break;
 
     default:
@@ -78,6 +83,7 @@ MainWindow::MainWindow(int mode, QWidget *parent)
     connect(ui->toolDownload,&QToolButton::clicked,this,&MainWindow::on_toolDownload_clicked);
     connect(ui->toolDonate,&QToolButton::clicked,this,&MainWindow::on_toolDonate_clicked);
     connect(ui->toolSettings,&QToolButton::clicked,this,&MainWindow::on_toolSettings_clicked);
+    connect(ui->toolFeedback,&QToolButton::clicked,this,&MainWindow::on_toolFeedback_clicked);
 
 
 
@@ -91,7 +97,7 @@ void MainWindow::addWidgetTostackedWidget()
     connect(mainPage,SIGNAL(downloadThreadExist(DownloadWindow*)),this,SLOT(ondownloadThreadExist(DownloadWindow*)));
     set=new frmSettings(this);
     donate=new frmDonate(this);
-
+    feedback=new frmFeedback(this);
     ui->stackedWidget->insertWidget(0,mainPage);
     connect(mainPage,&frmMainPage::requestPage,this,&MainWindow::onRequestPageChange);
 
@@ -99,6 +105,7 @@ void MainWindow::addWidgetTostackedWidget()
 
     ui->stackedWidget->insertWidget(2,donate);
     ui->stackedWidget->insertWidget(3,set);
+    ui->stackedWidget->insertWidget(4,feedback);
 
 
 
@@ -127,6 +134,10 @@ void MainWindow::showWithMode(int mode)
     case 3:
         ui->stackedWidget->setCurrentIndex(3);
         on_toolDonate_clicked();
+        break;
+    case 4:
+        ui->stackedWidget->setCurrentIndex(4);
+        on_toolFeedback_clicked();
         break;
 
     default:
@@ -160,12 +171,13 @@ void MainWindow::setClassToolButtonStyle()
         ui->toolDonate->setIcon(QIcon(":/MainWindow/res/Donate_dark.png"));
         ui->toolSettings->setIcon(QIcon(":/MainWindow/res/Settings_dark.png"));
          ui->toolMenu->setIcon(QIcon(":/MainWindow/res/Menu_dark.png"));
+        ui->toolFeedback->setIcon(QIcon(":/MainWindow/res/feedback_dark.png"));
     }else{
         ui->toolMain->setIcon(QIcon(":/MainWindow/res/Main-Page_white.png"));
         ui->toolDownload->setIcon(QIcon(":/MainWindow/res/Download-Content_white.png"));
         ui->toolDonate->setIcon(QIcon(":/MainWindow/res/Donate_white.png"));
         ui->toolSettings->setIcon(QIcon(":/MainWindow/res/Settings_white.png"));
-
+        ui->toolFeedback->setIcon(QIcon(":/MainWindow/res/feedback_white.png"));
         ui->toolMenu->setIcon(QIcon(":/MainWindow/res/Menu_white.png"));
     }
 
@@ -176,6 +188,7 @@ void MainWindow::setClassToolButtonStyle()
         ui->toolDownload->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolDonate->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolSettings->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->toolFeedback->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolMain->setMinimumWidth(201);
         ui->toolMain->setFixedWidth(201);
 
@@ -188,11 +201,15 @@ void MainWindow::setClassToolButtonStyle()
         ui->toolSettings->setMinimumWidth(201);
         ui->toolSettings->setFixedWidth(201);
 
+        ui->toolFeedback->setMinimumWidth(201);
+        ui->toolFeedback->setFixedWidth(201);
+
     }else{
         ui->toolMain->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolDownload->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolDonate->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolSettings->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        ui->toolFeedback->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolMain->setMinimumWidth(35);
         ui->toolMain->setFixedWidth(35);
 
@@ -204,6 +221,9 @@ void MainWindow::setClassToolButtonStyle()
 
         ui->toolSettings->setMinimumWidth(35);
         ui->toolSettings->setFixedWidth(35);
+
+        ui->toolFeedback->setMinimumWidth(35);
+        ui->toolFeedback->setFixedWidth(35);
 
     }
     ui->toolMenu->setChecked(!maxed);
@@ -225,6 +245,7 @@ void MainWindow::on_toolMenu_clicked()
         ui->toolDownload->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolDonate->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolSettings->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        ui->toolFeedback->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolMain->setMinimumWidth(35);
         ui->toolMain->setFixedWidth(35);
 
@@ -237,12 +258,17 @@ void MainWindow::on_toolMenu_clicked()
         ui->toolSettings->setMinimumWidth(35);
         ui->toolSettings->setFixedWidth(35);
 
+        ui->toolFeedback->setMinimumWidth(35);
+        ui->toolFeedback->setFixedWidth(35);
+
+
 
     }else{
         ui->toolMain->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolDownload->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolDonate->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolSettings->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->toolFeedback->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolMain->setMinimumWidth(201);
         ui->toolMain->setFixedWidth(201);
 
@@ -254,6 +280,10 @@ void MainWindow::on_toolMenu_clicked()
 
         ui->toolSettings->setMinimumWidth(201);
         ui->toolSettings->setFixedWidth(201);
+
+        ui->toolFeedback->setMinimumWidth(201);
+        ui->toolFeedback->setFixedWidth(201);
+
 
     }
 
@@ -270,6 +300,7 @@ void MainWindow::on_toolMain_clicked()
     ui->toolDownload->setProperty("select","false");
     ui->toolDonate->setProperty("select","false");
     ui->toolSettings->setProperty("select","false");
+    ui->toolFeedback->setProperty("select","false");
     ui->stackedWidget->setCurrentIndex(0);
     setCommonStyle();
 
@@ -284,6 +315,7 @@ void MainWindow::on_toolDownload_clicked()
     ui->toolDownload->setProperty("select","true");
     ui->toolDonate->setProperty("select","false");
     ui->toolSettings->setProperty("select","false");
+    ui->toolFeedback->setProperty("select","false");
     ui->stackedWidget->setCurrentIndex(1);
     setCommonStyle();
 }
@@ -296,6 +328,7 @@ void MainWindow::on_toolDonate_clicked()
     ui->toolDownload->setProperty("select","false");
     ui->toolDonate->setProperty("select","true");
     ui->toolSettings->setProperty("select","false");
+    ui->toolFeedback->setProperty("select","false");
     ui->stackedWidget->setCurrentIndex(2);
     setCommonStyle();
 }
@@ -308,6 +341,7 @@ void MainWindow::on_toolSettings_clicked()
     ui->toolDownload->setProperty("select","false");
     ui->toolDonate->setProperty("select","false");
     ui->toolSettings->setProperty("select","true");
+    ui->toolFeedback->setProperty("select","false");
     ui->stackedWidget->setCurrentIndex(3);
     setCommonStyle();
 }
@@ -340,6 +374,8 @@ void MainWindow::onRequestPageChange(int i,int mode=0)
     case 3:
         on_toolSettings_clicked();
         break;
+    case 4:
+        on_toolFeedback_clicked();
     default:
         break;
     }
@@ -438,4 +474,17 @@ void MainWindow::onGetClipUrl()
 }
 
 
+
+
+void MainWindow::on_toolFeedback_clicked()
+{
+    ui->toolMain->setProperty("select","false");
+
+    ui->toolDownload->setProperty("select","false");
+    ui->toolDonate->setProperty("select","false");
+    ui->toolSettings->setProperty("select","false");
+    ui->toolFeedback->setProperty("select","true");
+    ui->stackedWidget->setCurrentIndex(4);
+    setCommonStyle();
+}
 

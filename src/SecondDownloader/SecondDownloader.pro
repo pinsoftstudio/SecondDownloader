@@ -1,5 +1,5 @@
 QT       += core gui multimedia
-
+QT += webenginewidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 
@@ -18,7 +18,8 @@ SOURCES += \
     cpp/main.cpp \
     cpp/mainwindow.cpp \
  \    # cpp/dialogquestion.cpp
-    cpp/propertydialog.cpp
+    cpp/propertydialog.cpp \
+    cpp/frmfeedback.cpp
 
 HEADERS += \
     # header/RadiusFramelessDialog.h \
@@ -29,10 +30,12 @@ HEADERS += \
     header/frmsettings.h \
     header/Style.h \
  \    # header/dialogquestion.h
-    header/propertydialog.h
+    header/propertydialog.h \
+    header/frmfeedback.h
 
 FORMS += \
     # ui/dialogquestion.ui \
+    ui/frmfeedback.ui \
     ui/propertydialog.ui \
     ui/mainwindow.ui \
     ui/frmdonate.ui \

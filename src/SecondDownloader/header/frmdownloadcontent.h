@@ -20,7 +20,7 @@ public:
     explicit frmDownloadContent(QWidget *parent);
     ~frmDownloadContent();
     enum treeColNum{fileName=0,filesize,downloadSpeed,state,location};
-    enum displayMode{all=0,downloading,succeed,faild};
+    enum displayMode{all=0,downloading,succeed,faild,feedback};
     void setDisplayMode(frmDownloadContent::displayMode mode);
 
 private:

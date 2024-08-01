@@ -4,6 +4,7 @@
 #include "QString"
 #include "QDebug"
 #include "QRegularExpression"
+#include "QByteArray"
 static size_t header_callback(void *contents, size_t size, size_t nmemb, void *userp) {
     fwrite(contents, size, nmemb, stdout);
     LibDownload *downloader=static_cast<LibDownload*>(userp);
@@ -16,6 +17,12 @@ static size_t header_callback(void *contents, size_t size, size_t nmemb, void *u
     while(it.hasNext()){
         QRegularExpressionMatch match=it.next();
         QString filename=match.captured(1);
+        if(filename.contains('%')){
+            QByteArray encodedString=filename.toUtf8();
+            QByteArray decodedBytes=QByteArray::fromPercentEncoding(encodedString);
+            filename= QString::fromUtf8(decodedBytes);
+
+        }
         downloader->setFileName(filename);
     }
 
@@ -155,6 +162,7 @@ void LibDownload::run()
     curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L); // 确保启用进度报告
     curl_easy_setopt(curl, CURLOPT_XFERINFODATA, this);
     curl_easy_setopt(curl,CURLOPT_HEADEROPT,1L);
+    curl_easy_setopt(curl,CURLOPT_SSL_OPTIONS,CURLSSLOPT_NO_REVOKE);
     if(getName){
         curl_easy_setopt(curl, CURLOPT_HEADERDATA, this);
         curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_callback);

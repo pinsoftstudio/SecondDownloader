@@ -6,6 +6,7 @@
 #include "header/frmdownloadcontent.h"
 #include "header/frmsettings.h"
 #include "header/frmdonate.h"
+#include "header/frmfeedback.h"
 namespace Ui {
 class MainWindow;
 }
@@ -22,6 +23,7 @@ private:
     frmDownloadContent *dwncontent;
     frmSettings *set;
     frmDonate *donate;
+    frmFeedback *feedback;
     QTimer *tmGetClipUrl;
 public slots:
     void on_toolMenu_clicked();

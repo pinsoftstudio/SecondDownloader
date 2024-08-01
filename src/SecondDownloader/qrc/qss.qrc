@@ -38,6 +38,8 @@
         <file>res/Main-Page_dark.png</file>
         <file>res/Menu_dark.png</file>
         <file>res/Settings_dark.png</file>
+        <file>res/feedback_dark.png</file>
+        <file>res/feedback_white.png</file>
     </qresource>
     <qresource prefix="/frmdonate">
         <file>res/alipay.jpg</file>

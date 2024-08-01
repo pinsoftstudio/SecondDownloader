@@ -6,6 +6,7 @@
 #include <header/frmdownloadcontent.h>
 #include "frmsettings.h"
 #include "frmdonate.h"
+#include "frmfeedback.h"
 #include <downloadwindow.h>
 namespace Ui {
 class MainWindow;
@@ -25,6 +26,7 @@ private:
     frmDownloadContent *dwncontent;
     frmSettings *set;
     frmDonate *donate;
+    frmFeedback *feedback;
     QTimer *tmGetClipUrl;
     QTimer *tmNeedLaunchGetUrl;
     QStringList LastUrlList;
@@ -43,6 +45,8 @@ private slots:
     void onRequestPageChange(int i, int mode);
 
     void onGetClipUrl();
+
+    void on_toolFeedback_clicked();
 
 private:
     Ui::MainWindow *ui;
