@@ -1,5 +1,38 @@
 ﻿  
-<img src="imgs/ico.png" height="64" align="left" /><h1 style="display:inline-block;" >SecondDownloader</h1>
+<p align="center">
+    <img src="imgs/ico.png" width="100" height="100">
+</p>
+<h1 align="center">SecondDownloader</h1>
+<p align="center" class="shields">
+  
+  <a href="https://github.com/pinsoftstudio/seconddownloader/stargazers" style="text-decoration:none">
+    <img src="https://img.shields.io/github/stars/pinsoftstudio/seconddownloader?style=round-square" alt="GitHub stars"/>
+  </a>
+  <a href="https://github.com/pinsoftstudio/SecondDownloader/graphs/commit-activity" style="text-decoration:none">
+    <img src="https://img.shields.io/github/last-commit/pinsoftstudio/seconddownloader" alt="Last Commit"/>
+  </a>
+  <a href="https://github.com/pinsoftstudio/SecondDownloader/pulls" style="text-decoration:none">
+    <img src="https://img.shields.io/badge/PRs-welcome-red
+.svg" alt="GitHub Prs"/>
+  </a>
+  
+  <a href="#" style="text-decoration:none">
+    <img src="https://img.shields.io/badge/Language-C++/CSharp-blue
+.svg" alt="Language"/>
+
+<a href="#" style="text-decoration:none">
+    <img src="https://img.shields.io/badge/Frame-Qt/WPF-purple
+.svg" alt="Frame"/>
+  </a>
+  
+  </a>
+  <a href="https://github.com/pinsoftstudio/SecondDownloader/blob/master/LICENSE.txt" style="text-decoration:none">
+    <img src="https://img.shields.io/github/license/pinsoftstudio/seconddownloader?style=round-square" alt="GitHub License"/>
+  </a>
+  <a href="#" style="text-decoration:none">
+    <img src="https://img.shields.io/github/repo-size/pinsoftstudio/seconddownloader" alt="Repo Size"/>
+  </a>
+</p>
 
 
 > 一个强大的文件多线程下载器，支持 Windows 10/11、Linux 操作系统.
@@ -22,7 +55,7 @@
 - 多线程下载模块
 - 下载内容里的所有功能
 - 多语言界面
-- 
+ 
 **现在正在“浏览器插件”的开发位置**
 
 

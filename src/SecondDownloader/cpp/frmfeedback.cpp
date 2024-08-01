@@ -1,6 +1,6 @@
 #include "header/frmfeedback.h"
 #include "ui_frmfeedback.h"
-
+#include "QDesktopServices"
 frmFeedback::frmFeedback(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmFeedback)
@@ -18,3 +18,9 @@ frmFeedback::~frmFeedback()
 {
     delete ui;
 }
+
+void frmFeedback::on_btnStar_2_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/pinsoftstudio/SecondDownloader/issues/new"));
+}
+

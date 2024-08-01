@@ -2,49 +2,85 @@
   
 function updateIcon(isEnabled) {  
   let iconPath = {  
-    16: 'path/to/icons/icon_on_16.png',  // 16x16 图标  
-    48: 'path/to/icons/icon_on_48.png'   // 48x48 图标  
+    "16": "icons/icon16.png", 
+    "36": "icons/icon36.png", 
+    "48": "icons/icon48.png",  
+    "128": "icons/icon128.png" 
   };  
   
-  // 如果插件被禁用，则使用另一套图标  
+
   if (!isEnabled) {  
+    console.log("hereIconDis");
     iconPath = {  
-      16: 'path/to/icons/icon_off_16.png',  
-      48: 'path/to/icons/icon_off_48.png'  
+      "16": "icons/disabled_16.png", 
+      "36": "icons/disabled_36.png", 
+      "48": "icons/disabled_48.png",  
+      "128": "icons/disabled_128.png"  
     };  
-  }  
+    chrome.notifications.create('update_notification', {
+      type: 'basic',
+      iconUrl: 'icons/disabled.png', // 您扩展的图标
+      title: 'SecondDownloader 拓展',
+      message: 'SecondDownloader 拓展已经停止接管您的浏览器。点我以继续，否则以后可能无法收到通知。'
+    }, function(notificationId) {});
+  }else{
+    chrome.notifications.create('update_notification', {
+      type: 'basic',
+      iconUrl: 'icons/ico.png', // 您扩展的图标
+      title: 'SecondDownloader 拓展',
+      message: 'SecondDownloader 拓展开始接管您的浏览器。点我以继续，否则以后可能无法收到通知。'
+    }, function(notificationId) {});
+  }
   
-  chrome.browserAction.setIcon({path: iconPath});  
+  chrome.action.setIcon({path: iconPath}, () => {
+    if (chrome.runtime.lastError) {
+      console.error("设置图标失败:", chrome.runtime.lastError);
+    } else {
+      console.log("图标更新成功！");
+    }
+  });  
 }  
 // 初始化插件的启用状态（如果尚未设置）  
+
 chrome.storage.local.get('isPluginEnabled', function(items) {  
-  if (!('isPluginEnabled' in items)) {  
+  
     chrome.storage.local.set({'isPluginEnabled': true}); // 默认启用插件  
-  }  
+  
 });  
   
-// 监听插件图标的点击事件  
-chrome.browserAction.onClicked.addListener(function(tab) {  
+
+chrome.action.onClicked.addListener(function(tab) {  
+  
+  // 从本地存储中获取isPluginEnabled项的值  
   chrome.storage.local.get('isPluginEnabled', function(result) {  
-    let isEnabled = result.isPluginEnabled;  
+    // 检查result中是否包含isPluginEnabled属性  
+    let isEnabled = 'isPluginEnabled' in result ? result.isPluginEnabled : false; // 如果不存在，默认为false  
+  
     // 切换状态  
     isEnabled = !isEnabled;  
   
-    // 将新状态存回storage  
+    // 将新状态存回本地存储  
     chrome.storage.local.set({'isPluginEnabled': isEnabled}, function() {  
-      // 可以在这里添加额外的逻辑，比如发送消息给内容脚本  
-      console.log('Plugin is now', isEnabled ? 'enabled' : 'disabled');  
+      // 切换图标  
+      updateIcon(isEnabled); // 确保这个函数已经定义，并且能够根据isEnabled的值来更新图标  
   
-      // 注意：这里的console.log仅用于演示，实际上它不会在浏览器的控制台中显示  
-      // 除非你以某种方式（如通过DevTools）打开了背景脚本的调试  
+      // 如果需要，可以在这里添加更多的逻辑，比如显示通知等  
     });  
   });  
-});
+});  
 
 chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
-    chrome.downloads.cancel(item.id);
-    var downloadUrl = item.url;
-    chrome.runtime.sendNativeMessage('com.pinsoft.sder', { url: downloadUrl }, function(response) {
+  chrome.storage.local.get('isPluginEnabled', function(result) { 
+    let isEnabled = 'isPluginEnabled' in result ? result.isPluginEnabled : false; 
+    if(isEnabled){
+     
+      chrome.downloads.cancel(item.id);
+      var downloadUrl = item.url;
+      chrome.runtime.sendNativeMessage('com.pinsoft.sder', { url: downloadUrl }, function(response) {
       console.log('Message sent to native app:', response);
     });
+    }
+  });
+   
+    
   });
