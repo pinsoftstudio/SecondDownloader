@@ -8,7 +8,6 @@
    <a href="https://github.com/pinsoftstudio/SecondDownloader/pulls"><img src="https://img.shields.io/badge/PRs-welcome-red.svg" alt="GitHub Prs"></a>
   <a href="#" ><img src="https://img.shields.io/badge/Language-C++/CSharp-blue.svg" alt="Language"></a>
  <a href="#" style="text-decoration:none"><img src="https://img.shields.io/badge/Frame-Qt/WPF-purple.svg" alt="Frame"></a>
-  <a href="https://chat.vuejs.org/"><img src="https://img.shields.io/badge/chat-on%20discord-7289da.svg?sanitize=true" alt="Chat"></a>
     <a href="https://github.com/pinsoftstudio/SecondDownloader/blob/master/LICENSE.txt" style="text-decoration:none"><img src="https://img.shields.io/github/license/pinsoftstudio/seconddownloader?style=round-square" alt="GitHub License"></a>
     <a href="#" style="text-decoration:none"><img src="https://img.shields.io/github/repo-size/pinsoftstudio/seconddownloader" alt="Repo Size"/></a>
 </p>
