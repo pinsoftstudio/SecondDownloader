@@ -1,37 +1,16 @@
 ﻿  
-<p align="center">
-    <img src="imgs/ico.png" width="100" height="100">
-</p>
-<h1 align="center">SecondDownloader</h1>
-<p align="center" class="shields">
-  
-  <a href="https://github.com/pinsoftstudio/seconddownloader/stargazers" style="text-decoration:none">
-    <img src="https://img.shields.io/github/stars/pinsoftstudio/seconddownloader?style=round-square" alt="GitHub stars"/>
-  </a>
-  <a href="https://github.com/pinsoftstudio/SecondDownloader/graphs/commit-activity" style="text-decoration:none">
-    <img src="https://img.shields.io/github/last-commit/pinsoftstudio/seconddownloader" alt="Last Commit"/>
-  </a>
-  <a href="https://github.com/pinsoftstudio/SecondDownloader/pulls" style="text-decoration:none">
-    <img src="https://img.shields.io/badge/PRs-welcome-red
-.svg" alt="GitHub Prs"/>
-  </a>
-  
-  <a href="#" style="text-decoration:none">
-    <img src="https://img.shields.io/badge/Language-C++/CSharp-blue
-.svg" alt="Language"/>
-    </a>
-<a href="#" style="text-decoration:none">
-    <img src="https://img.shields.io/badge/Frame-Qt/WPF-purple
-.svg" alt="Frame"/>
-  </a>
+<p align="center"><img src="imgs/ico.png" width="100" height="100"></p>
 
-  <a href="https://github.com/pinsoftstudio/SecondDownloader/blob/master/LICENSE.txt" style="text-decoration:none">
-    <img src="https://img.shields.io/github/license/pinsoftstudio/seconddownloader?style=round-square" alt="GitHub License"/>
-  </a>
-  
-  <a href="#" style="text-decoration:none">
-    <img src="https://img.shields.io/github/repo-size/pinsoftstudio/seconddownloader" alt="Repo Size"/>
-  </a>
+<h1 align="center">SecondDownloader</h1>
+<p align="center">
+  <a href="https://github.com/pinsoftstudio/seconddownloader/stargazers" ><img src="https://img.shields.io/github/stars/pinsoftstudio/seconddownloader?style=round-square" alt="GitHub stars"></a>
+  <a href="https://github.com/pinsoftstudio/SecondDownloader/graphs/commit-activity"><img src="https://img.shields.io/github/last-commit/pinsoftstudio/seconddownloader" alt="Last Commit"></a>
+   <a href="https://github.com/pinsoftstudio/SecondDownloader/pulls"><img src="https://img.shields.io/badge/PRs-welcome-red.svg" alt="GitHub Prs"></a>
+  <a href="#" ><img src="https://img.shields.io/badge/Language-C++/CSharp-blue.svg" alt="Language"></a>
+ <a href="#" style="text-decoration:none"><img src="https://img.shields.io/badge/Frame-Qt/WPF-purple.svg" alt="Frame"></a>
+  <a href="https://chat.vuejs.org/"><img src="https://img.shields.io/badge/chat-on%20discord-7289da.svg?sanitize=true" alt="Chat"></a>
+    <a href="https://github.com/pinsoftstudio/SecondDownloader/blob/master/LICENSE.txt" style="text-decoration:none"><img src="https://img.shields.io/github/license/pinsoftstudio/seconddownloader?style=round-square" alt="GitHub License"></a>
+    <a href="#" style="text-decoration:none"><img src="https://img.shields.io/github/repo-size/pinsoftstudio/seconddownloader" alt="Repo Size"/></a>
 </p>
 
 
