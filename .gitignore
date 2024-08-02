@@ -79,6 +79,6 @@ CMakeLists.txt.user*
 bulid/
 temp/
 *.pem
+*.zip
 
-src/Setup/setup/cnt.zip
 
