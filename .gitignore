@@ -74,5 +74,11 @@ CMakeLists.txt.user*
 # --------
 *.dll
 *.exe
+
+
 bulid/
 temp/
+*.pem
+
+src/Setup/setup/cnt.zip
+

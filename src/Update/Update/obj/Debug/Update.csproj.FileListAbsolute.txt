@@ -1,0 +1,17 @@
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.csproj.AssemblyReference.cache
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\CheckForUpdate.g.cs
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\MainWindow.g.cs
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\App.g.cs
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update_MarkupCompile.cache
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update_MarkupCompile.lref
+E:\Document\Projects\SecondDownloader\src\Update\Update\bin\Debug\Update.exe.config
+E:\Document\Projects\SecondDownloader\src\Update\Update\bin\Debug\Update.exe
+E:\Document\Projects\SecondDownloader\src\Update\Update\bin\Debug\Update.pdb
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\CheckForUpdate.baml
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\MainWindow.baml
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.g.resources
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.Properties.Resources.resources
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.csproj.GenerateResource.cache
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.csproj.CoreCompileInputs.cache
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.exe
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.pdb

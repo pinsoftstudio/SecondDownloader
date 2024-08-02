@@ -64,20 +64,20 @@ DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalByte
         ui->labbytes->setStyleSheet(
                       "background-color:rgb(30,30,30)}");
         ui->label->setStyleSheet(
-            "background-color:rgb(30,30,30)}");
+            "{background-color:rgb(30,30,30)}");
         ui->labstate->setStyleSheet(
-            "background-color:rgb(30,30,30)}");
+            "{background-color:rgb(30,30,30)}");
         ui->laburl->setStyleSheet(
-            "background-color:rgb(30,30,30)}");
+            "{background-color:rgb(30,30,30)}");
     }else {
         setStyleSheet("#DownloadWindow{"
-                      "background-color:white");
+                      "background-color:white}");
         ui->label->setStyleSheet(
-            "background-color:white}");
+            "{background-color:white}");
         ui->labstate->setStyleSheet(
-            "background-color:white}");
+            "{background-color:white}");
         ui->laburl->setStyleSheet(
-            "background-color:white}");
+            "{background-color:white}");
     }
 
 
