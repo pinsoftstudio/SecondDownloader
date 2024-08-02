@@ -4,10 +4,26 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Update"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="450"
       Title="CheckForUpdate" Background="White">
     <Grid>
-        <Rectangle Height="27" Margin="48,468,48,0" VerticalAlignment="Top" Stroke="White" StrokeThickness="4" RadiusX="9" RadiusY="8.7"/>
+        
+        <Image HorizontalAlignment="Left" Height="20" Margin="10,1,0,0" VerticalAlignment="Top" Width="22" Source="/icon.ico">
+            <Image.OpacityMask>
+                <ImageBrush ImageSource="/update.png" Stretch="Uniform"/>
+            </Image.OpacityMask>
+        </Image>
+        <Image gif:ImageBehavior.AnimatedSource="/loading.gif" Margin="30,137,30,183" />
+
+        <Label Content="在线升级" HorizontalAlignment="Left" Margin="40,-4,0,0" VerticalAlignment="Top" Width="177" FontSize="15" Height="34"/>
+        <Label Content="正在获取版本信息..." HorizontalAlignment="Left" Margin="138,111,0,0" VerticalAlignment="Top" Width="286" FontSize="20">
+            <Label.Background>
+                <ImageBrush/>
+            </Label.Background>
+        </Label>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="95,437,0,0" VerticalAlignment="Top" Height="44" Width="130" Click="Button_Click"/>
+
     </Grid>
 </Page>

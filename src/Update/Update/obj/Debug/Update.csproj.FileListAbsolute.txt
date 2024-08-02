@@ -15,3 +15,13 @@ E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.csproj.
 E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.csproj.CoreCompileInputs.cache
 E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.exe
 E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.pdb
+E:\Document\Projects\SecondDownloader\src\Update\Update\bin\Debug\WpfAnimatedGif.dll
+E:\Document\Projects\SecondDownloader\src\Update\Update\bin\Debug\WpfAnimatedGif.pdb
+E:\Document\Projects\SecondDownloader\src\Update\Update\bin\Debug\WpfAnimatedGif.xml
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Update.csproj.Up2Date
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\UpdateInformation.g.cs
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\UpdateInformation.baml
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Updating.g.cs
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Updating.baml
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Finished.g.cs
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Finished.baml

@@ -54,7 +54,7 @@ private slots:
 #include "libDownload_global.h"
 #include "string"
 #include "QDebug"
-
+#include <QSysInfo>
 static int xferinfo_callback(void *clientp,
                              curl_off_t dltotal, curl_off_t dlnow,
                              curl_off_t ultotal, curl_off_t ulnow) ;
@@ -89,6 +89,9 @@ private:
 protected:
     void run()  Q_DECL_OVERRIDE
     {
+
+
+
          double contentLength = 0.0;
         curl_global_init(CURL_GLOBAL_ALL);
         curl = curl_easy_init();
@@ -98,18 +101,22 @@ protected:
 
         char* url=NULL;
         std::string *name;
-        QString range = "bytes=0-"; // 指定下载的文件范围
-        // struct curl_slist *headers = nullptr;
+        struct curl_slist *headers = nullptr;
 
-        // headers = curl_slist_append(headers, "Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,en-GB;q=0.6");
-        // headers = curl_slist_append(headers, "Sec-CH-UA: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Microsoft Edge\";v=\"102\"");
-        // headers = curl_slist_append(headers, "Sec-CH-UA-Mobile: ?0");
-        // headers = curl_slist_append(headers, "Sec-CH-UA-Platform: \"Windows\"");
-        // headers = curl_slist_append(headers, "Sec-Fetch-Dest: empty");
-        // headers = curl_slist_append(headers, "Sec-Fetch-Mode: cors");
-        // headers = curl_slist_append(headers, "Sec-Fetch-Site: cross-site");
-        // headers = curl_slist_append(headers, "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.30");
-        // curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        headers = curl_slist_append(headers, "Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,en-GB;q=0.6");
+        headers = curl_slist_append(headers, "Sec-CH-UA: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Microsoft Edge\";v=\"102\"");
+        headers = curl_slist_append(headers, "Sec-CH-UA-Mobile: ?0");
+        headers = curl_slist_append(headers, "Sec-CH-UA-Platform: \"Windows\"");
+        headers = curl_slist_append(headers, "Sec-Fetch-Dest: empty");
+        headers = curl_slist_append(headers, "Sec-Fetch-Mode: cors");
+        headers = curl_slist_append(headers, "Sec-Fetch-Site: cross-site");
+        if (QSysInfo::WordSize == 64) {
+            headers = curl_slist_append(headers, "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.30");
+        } else {
+            headers = curl_slist_append(headers, "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win32; x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.30");
+        }
+
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_URL, URL.toStdString().c_str());
         curl_easy_setopt(curl, CURLOPT_NOBODY, 1L); // 发送 HEAD 请求
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L); // 跟随重定向
@@ -145,19 +152,19 @@ protected:
         }
 
 
-        struct curl_slist *headers1 = nullptr;
-        headers1 = curl_slist_append(headers1, "Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,en-GB;q=0.6");
-        headers1 = curl_slist_append(headers1, "Sec-CH-UA: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Microsoft Edge\";v=\"102\"");
-        headers1 = curl_slist_append(headers1, "Sec-CH-UA-Mobile: ?0");
-        headers1 = curl_slist_append(headers1, "Sec-CH-UA-Platform: \"Windows\"");
-        headers1 = curl_slist_append(headers1, "Sec-Fetch-Dest: empty");
-        headers1 = curl_slist_append(headers1, "Sec-Fetch-Mode: cors");
-        headers1 = curl_slist_append(headers1, "Sec-Fetch-Site: cross-site");
-        headers1 = curl_slist_append(headers1, "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.30");
+        // struct curl_slist *headers1 = nullptr;
+        // headers1 = curl_slist_append(headers1, "Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,en-GB;q=0.6");
+        // headers1 = curl_slist_append(headers1, "Sec-CH-UA: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Microsoft Edge\";v=\"102\"");
+        // headers1 = curl_slist_append(headers1, "Sec-CH-UA-Mobile: ?0");
+        // headers1 = curl_slist_append(headers1, "Sec-CH-UA-Platform: \"Windows\"");
+        // headers1 = curl_slist_append(headers1, "Sec-Fetch-Dest: empty");
+        // headers1 = curl_slist_append(headers1, "Sec-Fetch-Mode: cors");
+        // headers1 = curl_slist_append(headers1, "Sec-Fetch-Site: cross-site");
+        // headers1 = curl_slist_append(headers1, "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.30");
         curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, 5);
         curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, 1000L);
         curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 20L);
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers1);
+        // curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers1);
         curl_easy_setopt(curl, CURLOPT_URL, URL.toStdString().c_str());
         curl_easy_setopt(curl, CURLOPT_NOBODY, 0L); // 发送 HEAD 请求
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L); // 跟随重定向
@@ -166,8 +173,8 @@ protected:
         curl_easy_setopt(curl, CURLOPT_XFERINFODATA, this);
         curl_easy_setopt(curl,CURLOPT_SSL_OPTIONS,CURLSSLOPT_NO_REVOKE);
         curl_easy_perform(curl);
-        // curl_slist_free_all(headers);
-        curl_slist_free_all(headers1);
+        curl_slist_free_all(headers);
+        // curl_slist_free_all(headers1);
         curl_easy_cleanup(curl);
         // double contentLength = 0.0;
         // char* url=NULL;

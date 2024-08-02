@@ -16,20 +16,18 @@ using System.Windows.Shapes;
 namespace Update
 {
     /// <summary>
-    /// CheckForUpdate.xaml 的交互逻辑
+    /// Finished.xaml 的交互逻辑
     /// </summary>
-    public partial class CheckForUpdate : Page
+    public partial class Finished : Page
     {
-        public CheckForUpdate()
+        public Finished()
         {
             InitializeComponent();
-            
-           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new UpdateInformation());
+
         }
     }
 }
