@@ -23,6 +23,7 @@ namespace setup
         public finish()
         {
             InitializeComponent();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

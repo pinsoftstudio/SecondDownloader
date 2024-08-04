@@ -126,11 +126,11 @@
             </Label.Background>
         </Label>
         <Image HorizontalAlignment="Left" Height="142" Margin="154,158,0,0" VerticalAlignment="Top" Width="151" Source="/update.png"/>
-        <TextBox HorizontalAlignment="Left" Margin="86,373,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="296" Height="124" TextChanged="TextBox_TextChanged" FontSize="18" Text="1." Foreground="#FF212121"/>
-        <Button Content="立即更新" Style="{StaticResource submitbtn}" FontFamily="Microsoft YaHei UI" FontSize="15" Margin="0,0,110,31" Width="212" Height="35" HorizontalAlignment="Right" VerticalAlignment="Bottom" ClickMode="Press" Click="Button_Click">
+        <TextBox x:Name="txtUpdate" HorizontalAlignment="Left" Margin="86,373,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="296" Height="124" TextChanged="TextBox_TextChanged" FontSize="18" Foreground="#FF212121"/>
+        <Button x:Name="btnUpdate" Content="立即更新" Style="{StaticResource submitbtn}" FontFamily="Microsoft YaHei UI" FontSize="15" Margin="0,0,110,31" Width="212" Height="35" HorizontalAlignment="Right" VerticalAlignment="Bottom" ClickMode="Press" Click="Button_Click">
 
         </Button>
-        <Label Content="最新版本" HorizontalAlignment="Left" Margin="91,318,0,0" VerticalAlignment="Top" Width="286" FontSize="20">
+        <Label x:Name="labVersion" Content="最新版本" HorizontalAlignment="Left" Margin="91,318,0,0" VerticalAlignment="Top" Width="286" FontSize="20">
             <Label.Background>
                 <ImageBrush/>
             </Label.Background>

@@ -25,3 +25,5 @@ E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Updating.g.cs
 E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Updating.baml
 E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Finished.g.cs
 E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\Finished.baml
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\NoNeed.g.cs
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\NoNeed.baml

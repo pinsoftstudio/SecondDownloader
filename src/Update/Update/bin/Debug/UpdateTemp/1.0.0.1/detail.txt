@@ -1,0 +1,28 @@
+[global] 
+addchangenumbers = 3
+delnumbers = 1
+plugin = false
+qt = false
+tr = true
+messagenum=2
+
+[addchange]
+file0 = SecondDownloader.exe
+file1 = libDownload.dll 
+file2 = libDialog.dll 
+
+[delete]
+file0 = a.exe
+
+[proxy]
+url = https://mirror.ghproxy.com/
+
+[lastsupported]
+major = 1
+minor = 0
+patch = 0
+date = 0
+
+[message]
+msg0 = 增加集成浏览器
+msg1 =修复用户代理问题

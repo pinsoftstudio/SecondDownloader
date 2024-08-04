@@ -45,7 +45,7 @@ namespace setup
                 string dest = System.IO.Path.Combine(t, name);
                 File.Copy(file, dest,true);
                 pb.Value++;
-
+               
             }
             string[] folders = System.IO.Directory.GetDirectories(p);
             foreach (string folder in folders)

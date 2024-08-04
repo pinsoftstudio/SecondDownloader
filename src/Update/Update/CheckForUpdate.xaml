@@ -8,6 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="450"
       Title="CheckForUpdate" Background="White">
+  
     <Grid>
         
         <Image HorizontalAlignment="Left" Height="20" Margin="10,1,0,0" VerticalAlignment="Top" Width="22" Source="/icon.ico">
@@ -23,7 +24,7 @@
                 <ImageBrush/>
             </Label.Background>
         </Label>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="95,437,0,0" VerticalAlignment="Top" Height="44" Width="130" Click="Button_Click"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="10,546,0,0" VerticalAlignment="Top" Height="44" Width="130" Click="Button_Click"/>
 
     </Grid>
 </Page>

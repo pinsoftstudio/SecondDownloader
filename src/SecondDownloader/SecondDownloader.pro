@@ -118,7 +118,9 @@ QMAKE_TARGET_PRODUCT = "SecondDownloader"
 QMAKE_TARGET_DESCRIPTION = "SecondDownloader"
 
 # # 版权信息
-QMAKE_TARGET_COPYRIGHT = "Copyright© 2024 Pinsoft Studio,org. All rights reserved."
+QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2024 Pinsoft Studio,org. All rights reserved."
 
 # 中文（简体）
 RC_LANG = 0x0004
+
+VERSION=1.0.1
