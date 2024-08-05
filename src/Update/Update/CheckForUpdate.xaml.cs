@@ -274,32 +274,32 @@ namespace Update
                                 //获取更新信息个数
                                 int messageCount = int.Parse(await getIniValue("global", "messagenum", tempTxtFilePath));
                                 //获取更新信息集合
-                                for(int j = 0; j < messageCount; j++)
+                                for (int j = 0; j < messageCount; j++)
                                 {
                                     string keyName = "msg" + j.ToString();
                                     string aDetail = await getIniValue("message", keyName, tempTxtFilePath);
                                     listMessage.Add(aDetail);
                                 }
-                                
+
                                 string needUpdateQtStr = await getIniValue("global", "qt", tempTxtFilePath);
                                 needUpdateQt.Add(bool.Parse(needUpdateQtStr));
                                 //needUpdateQt[i] = bool.Parse(needUpdateQtStr);
                                 //检查是否需要更新翻译文件
-                                string needUpdateTrStr=await getIniValue("global","tr",tempTxtFilePath);
+                                string needUpdateTrStr = await getIniValue("global", "tr", tempTxtFilePath);
                                 needUpdateTr.Add(bool.Parse(needUpdateTrStr));
                                 string needUpdatePluginStr = await getIniValue("global", "plugin", tempTxtFilePath);
                                 needUpdatePlugin.Add(bool.Parse(needUpdatePluginStr));
-                               
-                                
+
+
                             }
                             //检查最终是否需要更新Qt插件
                             bool final_needUpdateQt = false;
                             bool final_needUpdateTr = false;
-                            bool final_needUpdatePlugin=false;
+                            bool final_needUpdatePlugin = false;
                             final_needUpdateQt = needUpdateQt[0];
                             final_needUpdateTr = needUpdateTr[0];
-                            final_needUpdatePlugin=needUpdatePlugin[0];
-                            
+                            final_needUpdatePlugin = needUpdatePlugin[0];
+
                             for (int k = 1; k < needUpdateQt.Count(); k++)
                             {
                                 final_needUpdateQt = final_needUpdateQt && needUpdateQt[k];
@@ -316,23 +316,356 @@ namespace Update
                             if (final_needUpdateQt || final_needUpdateTr)
                             {
 
-                                
+
                                 LatestTempTxtFilePath = System.IO.Path.Combine(LatestTempPath, "detail.txt");
                                 proxyUrl = await getIniValue("proxy", "url", LatestTempTxtFilePath);
 
                             }
-                            
+
                             CommonUpdateUrl = "https://gitee.com/pinsoft/sdup/raw/master/" + Version + "/";
                             updateQt = final_needUpdateQt;
                             updateTr = final_needUpdateTr;
                             updatePlugin = final_needUpdatePlugin;
-                            
+
 
 
                         }
                     }
+                    else
+                    {
+                        //获取patch版本号的差
+                        int patchDiffer = latestSingleVersion[2] - currentSingleVersion[2];
+                        //先对与最新版本号的patch版本号不同的所有版本号进行遍历
+                        for (int i = currentSingleVersion[2]; i <= latestSingleVersion[2]; i++)
+                        {
+                            int startDateVersion = -1;
+                            int endDateVersion = 9;
+                            //如果是当前日期版本号（可能当前日期版本号不为0）
+                            if (i == currentSingleVersion[2])
+                            {
+                                startDateVersion = currentSingleVersion[3];
+                            }
+                            //如果是最新日期版本号（可能最新日期版本号不为9）
+                            if (i == latestSingleVersion[2])
+                            {
+                                endDateVersion = latestSingleVersion[3];
+                            }
+
+                            //对版本号进行遍历
+                            while (startDateVersion < endDateVersion)
+                            {
+                                startDateVersion++;
+                                string version = latestSingleVersion[0].ToString() + "." + latestSingleVersion[1].ToString() + "." +
+                                    i.ToString() + "." + startDateVersion.ToString();
+                                await getVersionDetailsToFile(version);
+                                string tempPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UpdateTemp", version);
+                                string tempTxtFilePath = System.IO.Path.Combine(tempPath, "detail.txt");
+                                //获取增加或修改文件个数
+                                int addCounts = int.Parse(await getIniValue("global", "addchangenumbers", tempTxtFilePath));
+                                //获取增加文件集合
+                                for (int j = 0; j < addCounts; j++)
+                                {
+                                    string keyName = "file" + j.ToString();
+                                    string aDetail = await getIniValue("addchange", keyName, tempTxtFilePath);
+                                    listAddOrChange.Add(aDetail);
+                                }
+                                //获取减少文件个数
+                                int delCounts = int.Parse(await getIniValue("global", "delnumbers", tempTxtFilePath));
+                                //获取减少文件集合
+                                for (int j = 0; j < delCounts; j++)
+                                {
+                                    string keyName = "file" + j.ToString();
+                                    string aDetail = await getIniValue("delete", keyName, tempTxtFilePath);
+                                    listDelete.Add(aDetail);
+                                }
+                                //获取更新信息个数
+                                int messageCount = int.Parse(await getIniValue("global", "messagenum", tempTxtFilePath));
+                                //获取更新信息集合
+                                for (int j = 0; j < messageCount; j++)
+                                {
+                                    string keyName = "msg" + j.ToString();
+                                    string aDetail = await getIniValue("message", keyName, tempTxtFilePath);
+                                    listMessage.Add(aDetail);
+                                }
+
+                                string needUpdateQtStr = await getIniValue("global", "qt", tempTxtFilePath);
+                                needUpdateQt.Add(bool.Parse(needUpdateQtStr));
+                                //needUpdateQt[i] = bool.Parse(needUpdateQtStr);
+                                //检查是否需要更新翻译文件
+                                string needUpdateTrStr = await getIniValue("global", "tr", tempTxtFilePath);
+                                needUpdateTr.Add(bool.Parse(needUpdateTrStr));
+                                string needUpdatePluginStr = await getIniValue("global", "plugin", tempTxtFilePath);
+                                needUpdatePlugin.Add(bool.Parse(needUpdatePluginStr));
+
+                            }
+                        }
+                        //检查最终是否需要更新Qt插件
+                        bool final_needUpdateQt = false;
+                        bool final_needUpdateTr = false;
+                        bool final_needUpdatePlugin = false;
+                        final_needUpdateQt = needUpdateQt[0];
+                        final_needUpdateTr = needUpdateTr[0];
+                        final_needUpdatePlugin = needUpdatePlugin[0];
+
+                        for (int k = 1; k < needUpdateQt.Count(); k++)
+                        {
+                            final_needUpdateQt = final_needUpdateQt && needUpdateQt[k];
+                        }
+                        for (int l = 1; l < needUpdateTr.Count(); l++)
+                        {
+                            final_needUpdateTr = final_needUpdateTr && needUpdateTr[l];
+                        }
+                        for (int m = 1; m < needUpdateTr.Count(); m++)
+                        {
+                            final_needUpdatePlugin = final_needUpdatePlugin && needUpdatePlugin[m];
+                        }
+
+                        if (final_needUpdateQt || final_needUpdateTr)
+                        {
+
+
+                            LatestTempTxtFilePath = System.IO.Path.Combine(LatestTempPath, "detail.txt");
+                            proxyUrl = await getIniValue("proxy", "url", LatestTempTxtFilePath);
+
+                        }
+
+                        CommonUpdateUrl = "https://gitee.com/pinsoft/sdup/raw/master/" + Version + "/";
+                        updateQt = final_needUpdateQt;
+                        updateTr = final_needUpdateTr;
+                        updatePlugin = final_needUpdatePlugin;
+                    }
 
                 }
+                else {
+                    //获取Minor版本号的差
+                    int minorDiffer = latestSingleVersion[1] - currentSingleVersion[1];
+                    for (int i = currentSingleVersion[1]; i <= latestSingleVersion[1]; i++)
+                    {
+                        int startPatchVersion = -1;
+                        int endPatchVersion = 9;
+                        if (i == currentSingleVersion[1])
+                        {
+                            startPatchVersion = currentSingleVersion[2];
+                        }
+                        if (i == latestSingleVersion[1])
+                        {
+                            endPatchVersion = latestSingleVersion[2];
+                        }
+                        while (startPatchVersion < endPatchVersion)
+                        {
+                            startPatchVersion++;
+                            int startDateVersion = -1;
+                            int endDateVersion = 9;
+                            if (startPatchVersion == currentSingleVersion[2])
+                            {
+                                startDateVersion = currentSingleVersion[3];
+                            }
+                            if (endPatchVersion == latestSingleVersion[2])
+                            {
+                                endDateVersion = latestSingleVersion[3];
+                            }
+                            string version = latestSingleVersion[0].ToString() + "." + i.ToString() + "." +
+                                startPatchVersion.ToString() + "." + startDateVersion.ToString();
+                            await getVersionDetailsToFile(version);
+                            string tempPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UpdateTemp", version);
+                            string tempTxtFilePath = System.IO.Path.Combine(tempPath, "detail.txt");
+                            //获取增加或修改文件个数
+                            int addCounts = int.Parse(await getIniValue("global", "addchangenumbers", tempTxtFilePath));
+                            //获取增加文件集合
+                            for (int j = 0; j < addCounts; j++)
+                            {
+                                string keyName = "file" + j.ToString();
+                                string aDetail = await getIniValue("addchange", keyName, tempTxtFilePath);
+                                listAddOrChange.Add(aDetail);
+                            }
+                            //获取减少文件个数
+                            int delCounts = int.Parse(await getIniValue("global", "delnumbers", tempTxtFilePath));
+                            //获取减少文件集合
+                            for (int j = 0; j < delCounts; j++)
+                            {
+                                string keyName = "file" + j.ToString();
+                                string aDetail = await getIniValue("delete", keyName, tempTxtFilePath);
+                                listDelete.Add(aDetail);
+                            }
+                            //获取更新信息个数
+                            int messageCount = int.Parse(await getIniValue("global", "messagenum", tempTxtFilePath));
+                            //获取更新信息集合
+                            for (int j = 0; j < messageCount; j++)
+                            {
+                                string keyName = "msg" + j.ToString();
+                                string aDetail = await getIniValue("message", keyName, tempTxtFilePath);
+                                listMessage.Add(aDetail);
+                            }
+
+                            string needUpdateQtStr = await getIniValue("global", "qt", tempTxtFilePath);
+                            needUpdateQt.Add(bool.Parse(needUpdateQtStr));
+                            //needUpdateQt[i] = bool.Parse(needUpdateQtStr);
+                            //检查是否需要更新翻译文件
+                            string needUpdateTrStr = await getIniValue("global", "tr", tempTxtFilePath);
+                            needUpdateTr.Add(bool.Parse(needUpdateTrStr));
+                            string needUpdatePluginStr = await getIniValue("global", "plugin", tempTxtFilePath);
+                            needUpdatePlugin.Add(bool.Parse(needUpdatePluginStr));
+
+
+                        }
+                    }
+                    //检查最终是否需要更新Qt插件
+                    bool final_needUpdateQt = false;
+                    bool final_needUpdateTr = false;
+                    bool final_needUpdatePlugin = false;
+                    final_needUpdateQt = needUpdateQt[0];
+                    final_needUpdateTr = needUpdateTr[0];
+                    final_needUpdatePlugin = needUpdatePlugin[0];
+
+                    for (int k = 1; k < needUpdateQt.Count(); k++)
+                    {
+                        final_needUpdateQt = final_needUpdateQt && needUpdateQt[k];
+                    }
+                    for (int l = 1; l < needUpdateTr.Count(); l++)
+                    {
+                        final_needUpdateTr = final_needUpdateTr && needUpdateTr[l];
+                    }
+                    for (int m = 1; m < needUpdateTr.Count(); m++)
+                    {
+                        final_needUpdatePlugin = final_needUpdatePlugin && needUpdatePlugin[m];
+                    }
+
+                    if (final_needUpdateQt || final_needUpdateTr)
+                    {
+
+
+                        LatestTempTxtFilePath = System.IO.Path.Combine(LatestTempPath, "detail.txt");
+                        proxyUrl = await getIniValue("proxy", "url", LatestTempTxtFilePath);
+
+                    }
+
+                    CommonUpdateUrl = "https://gitee.com/pinsoft/sdup/raw/master/" + Version + "/";
+                    updateQt = final_needUpdateQt;
+                    updateTr = final_needUpdateTr;
+                    updatePlugin = final_needUpdatePlugin;
+
+                }
+            }
+            else
+            {
+                //获取major版本号差
+                int majorDiffer = latestSingleVersion[0] - currentSingleVersion[0];
+                for (int i = currentSingleVersion[0]; i <= latestSingleVersion[0]; i++)
+                {
+                    int startMinor = -1;
+                    int endMinor = 9;
+                    if (i == currentSingleVersion[0])
+                    {
+                        startMinor = currentSingleVersion[1];
+                    }
+                    if (i == latestSingleVersion[0])
+                    {
+                        endMinor=latestSingleVersion[1];
+                    }
+                    while (startMinor < endMinor)
+                    {
+                        startMinor++;
+                        int startPatch = -1;
+                        int endPatch = 9;
+                        if (startMinor == currentSingleVersion[1])
+                        {
+                            startPatch = currentSingleVersion[2];
+                        }
+                        if(endMinor == currentSingleVersion[1])
+                        {
+                            endPatch = latestSingleVersion[2];
+                        }
+                        while(startPatch < endPatch)
+                        {
+                            startPatch++;
+                            int startDate = -1;
+                            int endDate = 9;
+                            if (startPatch == currentSingleVersion[2])
+                            {
+                                startDate = currentSingleVersion[3];
+                            }
+                            if(endPatch == currentSingleVersion[2])
+                            {
+                                endDate = latestSingleVersion[3];
+                            }
+                            string version = i.ToString() + "." + startMinor.ToString() + "."
+                                + startPatch.ToString() + "." + startDate.ToString();
+                            await getVersionDetailsToFile(version);
+                            string tempPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UpdateTemp", version);
+                            string tempTxtFilePath = System.IO.Path.Combine(tempPath, "detail.txt");
+                            //获取增加或修改文件个数
+                            int addCounts = int.Parse(await getIniValue("global", "addchangenumbers", tempTxtFilePath));
+                            //获取增加文件集合
+                            for (int j = 0; j < addCounts; j++)
+                            {
+                                string keyName = "file" + j.ToString();
+                                string aDetail = await getIniValue("addchange", keyName, tempTxtFilePath);
+                                listAddOrChange.Add(aDetail);
+                            }
+                            //获取减少文件个数
+                            int delCounts = int.Parse(await getIniValue("global", "delnumbers", tempTxtFilePath));
+                            //获取减少文件集合
+                            for (int j = 0; j < delCounts; j++)
+                            {
+                                string keyName = "file" + j.ToString();
+                                string aDetail = await getIniValue("delete", keyName, tempTxtFilePath);
+                                listDelete.Add(aDetail);
+                            }
+                            //获取更新信息个数
+                            int messageCount = int.Parse(await getIniValue("global", "messagenum", tempTxtFilePath));
+                            //获取更新信息集合
+                            for (int j = 0; j < messageCount; j++)
+                            {
+                                string keyName = "msg" + j.ToString();
+                                string aDetail = await getIniValue("message", keyName, tempTxtFilePath);
+                                listMessage.Add(aDetail);
+                            }
+
+                            string needUpdateQtStr = await getIniValue("global", "qt", tempTxtFilePath);
+                            needUpdateQt.Add(bool.Parse(needUpdateQtStr));
+                            //needUpdateQt[i] = bool.Parse(needUpdateQtStr);
+                            //检查是否需要更新翻译文件
+                            string needUpdateTrStr = await getIniValue("global", "tr", tempTxtFilePath);
+                            needUpdateTr.Add(bool.Parse(needUpdateTrStr));
+                            string needUpdatePluginStr = await getIniValue("global", "plugin", tempTxtFilePath);
+                            needUpdatePlugin.Add(bool.Parse(needUpdatePluginStr));
+                        }
+                    }
+                }
+                //检查最终是否需要更新Qt插件
+                bool final_needUpdateQt = false;
+                bool final_needUpdateTr = false;
+                bool final_needUpdatePlugin = false;
+                final_needUpdateQt = needUpdateQt[0];
+                final_needUpdateTr = needUpdateTr[0];
+                final_needUpdatePlugin = needUpdatePlugin[0];
+
+                for (int k = 1; k < needUpdateQt.Count(); k++)
+                {
+                    final_needUpdateQt = final_needUpdateQt && needUpdateQt[k];
+                }
+                for (int l = 1; l < needUpdateTr.Count(); l++)
+                {
+                    final_needUpdateTr = final_needUpdateTr && needUpdateTr[l];
+                }
+                for (int m = 1; m < needUpdateTr.Count(); m++)
+                {
+                    final_needUpdatePlugin = final_needUpdatePlugin && needUpdatePlugin[m];
+                }
+
+                if (final_needUpdateQt || final_needUpdateTr)
+                {
+
+
+                    LatestTempTxtFilePath = System.IO.Path.Combine(LatestTempPath, "detail.txt");
+                    proxyUrl = await getIniValue("proxy", "url", LatestTempTxtFilePath);
+
+                }
+
+                CommonUpdateUrl = "https://gitee.com/pinsoft/sdup/raw/master/" + Version + "/";
+                updateQt = final_needUpdateQt;
+                updateTr = final_needUpdateTr;
+                updatePlugin = final_needUpdatePlugin;
             }
             NavigationService.Navigate(new UpdateInformation(Version, CommonUpdateUrl,
                                 ref listAddOrChange, ref listDelete, ref listMessage, updateQt, updateTr, updatePlugin));
@@ -345,9 +678,6 @@ namespace Update
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
+       
     }
 }
