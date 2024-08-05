@@ -74,10 +74,10 @@
             </Label.Background>
         </Label>
         <Image HorizontalAlignment="Left" Height="142" Margin="154,158,0,0" VerticalAlignment="Top" Width="151" Source="/update.png"/>
-        <Button x:Name="btnOK" Content="好的" Style="{StaticResource submitbtn}" FontFamily="Microsoft YaHei UI" FontSize="15" Margin="0,0,110,87" Width="212" Height="35" HorizontalAlignment="Right" VerticalAlignment="Bottom" ClickMode="Press" Click="Button_Click">
+        <Button x:Name="btnOK" Content="好的" Style="{StaticResource submitbtn}" FontFamily="Microsoft YaHei UI" FontSize="15" Margin="0,477,0,0" Width="212" Height="35" HorizontalAlignment="Center" VerticalAlignment="Top" ClickMode="Press" Click="Button_Click">
 
         </Button>
-        <Label x:Name="labversion" Content="最新版本" HorizontalAlignment="Left" Margin="107,382,0,0" VerticalAlignment="Top" Width="286" FontSize="20">
+        <Label x:Name="labversion" Content="最新版本" HorizontalAlignment="Center" Margin="0,382,0,0" VerticalAlignment="Top" Width="286" FontSize="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
             <Label.Background>
                 <ImageBrush/>
             </Label.Background>

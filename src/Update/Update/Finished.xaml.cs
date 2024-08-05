@@ -20,14 +20,22 @@ namespace Update
     /// </summary>
     public partial class Finished : Page
     {
-        public Finished()
+        public Finished(string version,bool succeed)
         {
             InitializeComponent();
+            if (succeed)
+            {
+                labVersion.Content = "最新版本：V." + version;
+            }
+            else {
+                labState.Content = "更新失败！";
+                labVersion.Content = "请向我们反馈该问题，谢谢！";
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.MainWindow.Close();
         }
     }
 }

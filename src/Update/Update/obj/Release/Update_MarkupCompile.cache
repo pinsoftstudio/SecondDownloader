@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Debug\
+E:\Document\Projects\SecondDownloader\src\Update\Update\obj\Release\
 Update
 none
 false
-DEBUG;TRACE
+TRACE
 E:\Document\Projects\SecondDownloader\src\Update\Update\App.xaml
 61761128913
 

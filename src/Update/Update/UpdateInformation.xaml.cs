@@ -25,12 +25,30 @@ namespace Update
     
     public partial class UpdateInformation : Page
     {
+        string LatestVersion;
+        string UpdateUrl;
+        string ProxyUrl;
+        HashSet<string> AddChangeList;
+        HashSet<string> DeleteChangeList;
+        HashSet<string> MessageList;
+        bool UpdateQt;
+        bool UpdateTr;
+        bool UpDatePlugin;
         
         public UpdateInformation(string latestVersion,string updateUrl,
             ref HashSet<string> addChangeList,ref HashSet<string> deleteChangeList,
-            ref HashSet<string> messageList,bool upDateQt,bool upDateTr,bool upDatePlugin)
+            ref HashSet<string> messageList,bool upDateQt,bool upDateTr,bool upDatePlugin,string proxyUrl)
         {
             InitializeComponent();
+            LatestVersion = latestVersion;
+            UpdateUrl = updateUrl;
+            ProxyUrl = proxyUrl;
+            AddChangeList = addChangeList;
+            DeleteChangeList = deleteChangeList;
+            MessageList = messageList;
+            UpdateQt = upDateQt;
+            UpdateTr = upDateTr;
+            UpDatePlugin = upDatePlugin;
             labVersion.Content = "最新版本:" +" V."+ latestVersion;
             for(int i = 0; i < messageList.Count(); i++)
             {
@@ -46,7 +64,8 @@ namespace Update
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           
+            NavigationService.Navigate(new Updating(LatestVersion, UpdateUrl,ref AddChangeList,ref DeleteChangeList,
+                ref MessageList, UpdateQt, UpdateTr, UpDatePlugin,ProxyUrl));
         }
     }
 }

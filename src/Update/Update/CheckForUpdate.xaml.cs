@@ -668,7 +668,7 @@ namespace Update
                 updatePlugin = final_needUpdatePlugin;
             }
             NavigationService.Navigate(new UpdateInformation(Version, CommonUpdateUrl,
-                                ref listAddOrChange, ref listDelete, ref listMessage, updateQt, updateTr, updatePlugin));
+                                ref listAddOrChange, ref listDelete, ref listMessage, updateQt, updateTr, updatePlugin,proxyUrl));
         }
         public CheckForUpdate()
         {

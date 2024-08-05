@@ -121,18 +121,19 @@
             </Image.OpacityMask>
         </Image>
         <Label Content="在线升级" HorizontalAlignment="Left" Margin="40,-4,0,0" VerticalAlignment="Top" Width="177" FontSize="15" Height="34"/>
-        <Label Content="正在更新&#xD;&#xA;" HorizontalAlignment="Left" Margin="178,91,0,0" VerticalAlignment="Top" Width="286" FontSize="20" Height="34">
+        <Label Content="正在更新&#xA;" HorizontalAlignment="Left" Margin="178,91,0,0" VerticalAlignment="Top" Width="286" FontSize="20" Height="34">
             <Label.Background>
                 <ImageBrush/>
             </Label.Background>
         </Label>
-        <Image gif:ImageBehavior.AnimatedSource="/loading.gif" Margin="77,18,77,140" />
-        <Label Content="最新版本" HorizontalAlignment="Left" Margin="90,362,0,0" VerticalAlignment="Top" Width="286" FontSize="20">
+        <Image gif:ImageBehavior.AnimatedSource="/loading.gif" Margin="77,34,92,130" />
+        <Label x:Name="labVersion" Content="最新版本" HorizontalAlignment="Center" Margin="0,398,0,0" VerticalAlignment="Top" Width="232" FontSize="20" HorizontalContentAlignment="Center">
             <Label.Background>
                 <ImageBrush/>
             </Label.Background>
         </Label>
-        <Rectangle HorizontalAlignment="Left" Height="30" Margin="80,457,0,0" Stroke="Black" VerticalAlignment="Top" Width="306" RadiusX="10" RadiusY="10"/>
-
+        <Label x:Name="labelStatus" Content="正在准备下载：" HorizontalAlignment="Center" Margin="0,525,0,0" VerticalAlignment="Top" Width="430" FontSize="15"/>
+        <ProgressBar x:Name="progressbar" Height="19" Margin="10,0,10,10" VerticalAlignment="Bottom" Foreground="#FF2983CC" Background="#eee" BorderBrush="{x:Null}"/>
+        <Rectangle Height="27" Margin="6,0,6,6" VerticalAlignment="Bottom" Stroke="White" StrokeThickness="4" RadiusX="9" RadiusY="8.7"/>
     </Grid>
 </Page>
