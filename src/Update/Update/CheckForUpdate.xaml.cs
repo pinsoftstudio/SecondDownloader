@@ -302,15 +302,15 @@ namespace Update
 
                             for (int k = 1; k < needUpdateQt.Count(); k++)
                             {
-                                final_needUpdateQt = final_needUpdateQt && needUpdateQt[k];
+                                final_needUpdateQt = final_needUpdateQt || needUpdateQt[k];
                             }
                             for (int l = 1; l < needUpdateTr.Count(); l++)
                             {
-                                final_needUpdateTr = final_needUpdateTr && needUpdateTr[l];
+                                final_needUpdateTr = final_needUpdateTr || needUpdateTr[l];
                             }
                             for (int m = 1; m < needUpdateTr.Count(); m++)
                             {
-                                final_needUpdatePlugin = final_needUpdatePlugin && needUpdatePlugin[m];
+                                final_needUpdatePlugin = final_needUpdatePlugin || needUpdatePlugin[m];
                             }
 
                             if (final_needUpdateQt || final_needUpdateTr)
@@ -409,15 +409,15 @@ namespace Update
 
                         for (int k = 1; k < needUpdateQt.Count(); k++)
                         {
-                            final_needUpdateQt = final_needUpdateQt && needUpdateQt[k];
+                            final_needUpdateQt = final_needUpdateQt || needUpdateQt[k];
                         }
                         for (int l = 1; l < needUpdateTr.Count(); l++)
                         {
-                            final_needUpdateTr = final_needUpdateTr && needUpdateTr[l];
+                            final_needUpdateTr = final_needUpdateTr || needUpdateTr[l];
                         }
                         for (int m = 1; m < needUpdateTr.Count(); m++)
                         {
-                            final_needUpdatePlugin = final_needUpdatePlugin && needUpdatePlugin[m];
+                            final_needUpdatePlugin = final_needUpdatePlugin || needUpdatePlugin[m];
                         }
 
                         if (final_needUpdateQt || final_needUpdateTr)
@@ -519,15 +519,15 @@ namespace Update
 
                     for (int k = 1; k < needUpdateQt.Count(); k++)
                     {
-                        final_needUpdateQt = final_needUpdateQt && needUpdateQt[k];
+                        final_needUpdateQt = final_needUpdateQt || needUpdateQt[k];
                     }
                     for (int l = 1; l < needUpdateTr.Count(); l++)
                     {
-                        final_needUpdateTr = final_needUpdateTr && needUpdateTr[l];
+                        final_needUpdateTr = final_needUpdateTr || needUpdateTr[l];
                     }
                     for (int m = 1; m < needUpdateTr.Count(); m++)
                     {
-                        final_needUpdatePlugin = final_needUpdatePlugin && needUpdatePlugin[m];
+                        final_needUpdatePlugin = final_needUpdatePlugin || needUpdatePlugin[m];
                     }
 
                     if (final_needUpdateQt || final_needUpdateTr)
@@ -642,15 +642,15 @@ namespace Update
 
                 for (int k = 1; k < needUpdateQt.Count(); k++)
                 {
-                    final_needUpdateQt = final_needUpdateQt && needUpdateQt[k];
+                    final_needUpdateQt = final_needUpdateQt || needUpdateQt[k];
                 }
                 for (int l = 1; l < needUpdateTr.Count(); l++)
                 {
-                    final_needUpdateTr = final_needUpdateTr && needUpdateTr[l];
+                    final_needUpdateTr = final_needUpdateTr || needUpdateTr[l];
                 }
                 for (int m = 1; m < needUpdateTr.Count(); m++)
                 {
-                    final_needUpdatePlugin = final_needUpdatePlugin && needUpdatePlugin[m];
+                    final_needUpdatePlugin = final_needUpdatePlugin || needUpdatePlugin[m];
                 }
 
                 if (final_needUpdateQt || final_needUpdateTr)

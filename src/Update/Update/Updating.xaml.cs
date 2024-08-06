@@ -45,6 +45,20 @@ namespace Update
         WebClient clientQt;
         WebClient clientTr;
         WebClient clientPlugin;
+        public void deleteFile()
+        {
+            for (int i = 0; i < DeleteChangeList.Count(); i++)
+            {
+                string fullPath = System.IO.Path.Combine(regularSavePath, DeleteChangeList.ElementAt(i));
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                }
+                
+            }
+                
+               
+        }
         public async Task exactZip(string sourcePath, string destPath)
         {
             
@@ -68,11 +82,39 @@ namespace Update
                 //
             }
         }
+        public async Task DeleteDirectory(string targetDir)
+        {
+            try{
+                string[] files = Directory.GetFiles(targetDir);
+                string[] dirs = Directory.GetDirectories(targetDir);
+
+                foreach (string file in files)
+                {
+                    File.SetAttributes(file, FileAttributes.Normal);
+                    File.Delete(file);
+                }
+
+                foreach (string dir in dirs)
+                {
+                    await DeleteDirectory(dir);
+                }
+
+                Directory.Delete(targetDir, true);
+
+            }
+            catch
+            {
+
+            }
+            
+        }
         public async Task cleanUp(bool succeed)
         {
             //清理文件
-            
-                NavigationService.Navigate(new Finished(LatestVersion,succeed));
+
+            await DeleteDirectory(System.IO.Path.Combine(regularSavePath, "UpdateTemp"));
+            NavigationService.Navigate(new Finished(LatestVersion,succeed));
+                
                 
 
             
@@ -168,6 +210,7 @@ namespace Update
             InitializeComponent();
             labVersion.Content = "最新版本:"+"V." + LatestVersion;
             prepare();
+            deleteFile();
             downloadPlugin();
             downloadTr();
             downloadDownloadQt();
@@ -187,14 +230,18 @@ namespace Update
             // 更新ProgressBar的Value属性  
             progressbar.Value = e.ProgressPercentage;
             // 更新Label显示下载百分比
-            labelStatus.Content="("+downloadedRegular.ToString()+"/"+ 
-                AddChangeList.Count().ToString()+ $")正在更新...({e.ProgressPercentage}%):" +
+            if (downloadedRegular <= AddChangeList.Count() - 1)
+            {
+                labelStatus.Content = "(" + downloadedRegular.ToString() + "/" +
+                AddChangeList.Count().ToString() + $")正在更新...({e.ProgressPercentage}%):" +
                 AddChangeList.ElementAt(downloadedRegular);
-              
+
+            }
+            
             
         }
 
-        private void clientRegular_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        private async void clientRegular_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             // 下载完成后执行的逻辑（可选）  
             if (e.Error == null)
@@ -213,6 +260,9 @@ namespace Update
                 }
                 else
                 {
+                    labelStatus.Content = "(" + AddChangeList.Count().ToString() + "/" +
+                   AddChangeList.Count().ToString() + ")正在更新...(100%):" +
+                   AddChangeList.ElementAt(downloadedRegular-1);
                     if (UpdateQt)
                     {
                         labelStatus.Content = "(0/2)正在更新Qt组件...若更新速度较慢，请重启再试(0%)";
@@ -229,8 +279,8 @@ namespace Update
                         labelStatus.Content = "(0/2)正在更新翻译文件...若更新速度较慢，请重启再试(0%)";
 
                         progressbar.Value = 0;
-                        string nowurl = "https://gitee.com/ProgramCX/sdqt/raw/master/tr.zip";
-                        clientRegular.DownloadFileAsync(new Uri(nowurl), System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tempUpdate","tr.zip"));
+                        string nowurl = ProxyUrl + "https://github.com/ProgramCX/QtModulesForSD/releases/download/update/tr.zip";
+                        clientTr.DownloadFileAsync(new Uri(nowurl), System.IO.Path.Combine(regularSavePath, "UpdateTemp", "tr.zip"));
                     }
                     else if (UpDatePlugin)
                     {
@@ -240,7 +290,7 @@ namespace Update
                     }
                     else
                     {
-                        cleanUp(true);
+                        await cleanUp(true);
                         //NavigationService.Navigate(new Finished());
                     }
                     
@@ -250,7 +300,7 @@ namespace Update
             else
             {
                 labelStatus.Content = $"下载失败: {e.Error.Message}";
-                cleanUp(false);
+                await cleanUp(false);
             }
         }
 
@@ -277,8 +327,8 @@ namespace Update
                     labelStatus.Content = "(0/2)正在更新翻译文件...若更新速度较慢，请重启再试(0%)";
 
                     progressbar.Value = 0;
-                    string nowurl =  "https://gitee.com/ProgramCX/sdqt/raw/master/tr.zip";
-                    clientRegular.DownloadFileAsync(new Uri(nowurl), System.IO.Path.Combine(regularSavePath, "UpdateTemp", "tr.zip"));
+                    string nowurl = ProxyUrl + "https://github.com/ProgramCX/QtModulesForSD/releases/download/update/tr.zip"; ;
+                    clientTr.DownloadFileAsync(new Uri(nowurl), System.IO.Path.Combine(regularSavePath, "UpdateTemp", "tr.zip"));
                 }else if (UpDatePlugin)
                 {
                     labelStatus.Content = "(0/2)正在更新浏览器插件...(0%)";
@@ -288,14 +338,14 @@ namespace Update
                 }
                 else
                 {
-                   cleanUp(true);
+                   await cleanUp(true);
                     //NavigationService.Navigate(new Finished());
                 }
             }
             else
             {
                 labelStatus.Content = $"下载失败: {e.Error.Message}";
-                cleanUp(false);
+                await cleanUp(false);
             }
         }
 
@@ -305,7 +355,7 @@ namespace Update
             progressbar.Value = e.ProgressPercentage;
             // 更新Label显示下载百分比
 
-            labelStatus.Content = $"(0/2)正在更新翻译文件... ({e.ProgressPercentage}%)";
+            labelStatus.Content = $"(0/2)正在更新翻译文件... 若更新速度较慢，请重启再试({e.ProgressPercentage}%)";
         }
 
         private async void clientTr_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
@@ -313,23 +363,23 @@ namespace Update
             
             if (e.Error == null)
             {
-                labelStatus.Content = $"(1/2)正在更新翻译文件... (0%)";
+                labelStatus.Content = $"(1/2)正在更新翻译文件... 若更新速度较慢，请重启再试(0%)";
                 await exactZip(System.IO.Path.Combine(regularSavePath, "UpdateTemp", "tr.zip"), AppDomain.CurrentDomain.BaseDirectory);
-                labelStatus.Content = $"(2/2)正在更新翻译文件... (100%)";
+                labelStatus.Content = $"(2/2)正在更新翻译文件... 若更新速度较慢，请重启再试(100%)";
                 if (UpDatePlugin)
                 {
                     //TODO:更新浏览器插件
                 }
                 else
                 {
-                    cleanUp(true) ;
+                    await cleanUp(true) ;
                 }
 
             }
             else
             {
                 labelStatus.Content = $"下载失败: {e.Error.Message}";
-                cleanUp(false);
+                await cleanUp(false);
             }
         }
 
@@ -342,7 +392,7 @@ namespace Update
             labelStatus.Content = $"下载进度: {e.ProgressPercentage}%";
         }
 
-        private void clientPlugin_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        private async void clientPlugin_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             
             if (e.Error == null)
@@ -352,7 +402,7 @@ namespace Update
             else
             {
                 labelStatus.Content = $"下载失败: {e.Error.Message}";
-                cleanUp(false) ;
+                await cleanUp(false) ;
             }
         }
     }

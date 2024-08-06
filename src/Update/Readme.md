@@ -18,6 +18,8 @@ delnumbers=1
 plugin=1
 qt=0
 tr=1
+messagenum=2 
+
 [addchange]
 file0=SecondDownloader.exe
 file1=libDownload.dll 
@@ -26,6 +28,9 @@ file2=libDialog.dll
 file0=a.exe
 [proxy]
 url=https://mirror.ghproxy.com/
+[message]
+msg0 = 增加集成浏览器
+msg1 =修复用户代理问题
 ```
 
 ，如果当前版本号小于最新版本号，且qt=1，还需要下载https://github.com/ProgramCX/QtModulesForSD/releases/download/update/qt_win.zip ，并且解压替换；如果如果当前版本号小于最新版本号，且```tr=1``` ，还需要下载 https://github.com/ProgramCX/QtModulesForSD/releases/download/update/tr.zip ，然后解压替换；如果``` plugin=1 ```，则还需要下载最新版的浏览器插件进行替换。
