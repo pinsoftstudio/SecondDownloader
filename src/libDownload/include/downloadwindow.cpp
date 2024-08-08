@@ -468,8 +468,10 @@ void DownloadWindow::ontmGetProgress()
 void DownloadWindow::onsetMainProgress(){
 
     QString temp=downloaders[0]->getTrueFileName();
-    if(temp!=""){
-        savedFilename=temp;
+    if(temp!="" &&(!fileNameGetted)){
+        QString savePath=QFileInfo(savedFilename).absolutePath();
+        savedFilename=savePath+"/"+temp;
+        fileNameGetted=1;
     }
     qDebug()<<savedFilename;
     if(isMultipal){

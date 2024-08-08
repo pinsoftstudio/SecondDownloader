@@ -245,6 +245,16 @@ void frmSettings::on_chkRunAuto_clicked(bool checked)
 {
     QSettings set("Pinsoft","SecondDownloader");
     set.setValue("Common/Autorun",checked);
+    QSettings autoset("Microsoft","Windows");
+    if(checked){
+
+        QString runnerPath=QApplication::applicationDirPath()+"/run.exe";
+        autoset.setValue("CurrentVersion/Run/SecondDownloader",QDir::toNativeSeparators(runnerPath));
+
+    }else{
+        autoset.setValue("CurrentVersion/Run/SecondDownloader","");
+
+    }
 }
 
 

@@ -46,6 +46,7 @@ private:
     QList<QString> tempFilePathNames;
     bool isMultipal = 1;
     bool needtoclose = 0;
+    bool fileNameGetted=0;
     qint64 TotalBytes=0;
     qint64 commonToDownload;
     qint64 lastToDownload;

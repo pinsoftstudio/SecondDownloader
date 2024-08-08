@@ -74,7 +74,9 @@ void DialogDownloaded::on_btnOpenFolder_clicked()
 
 void DialogDownloaded::on_btnOpen_clicked()
 {
-    QDesktopServices::openUrl(QUrl(QDir::fromNativeSeparators(fileLocation)));
+
+    QUrl url=QUrl::fromLocalFile(fileLocation);
+    QDesktopServices::openUrl(url);
     close();
 }
 

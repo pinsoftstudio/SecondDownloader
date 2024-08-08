@@ -155,7 +155,8 @@ void frmDownloadContent::onCustomContextMenuRequested(const QPoint &pos)
     connect(actOpen,&QAction::triggered,[&]{
 
         QString pathName=QDir::fromNativeSeparators(clickedItem->text(frmDownloadContent::location));
-        if(!QDesktopServices::openUrl(QUrl(pathName))){
+        QUrl url=QUrl::fromLocalFile(pathName);
+        if(!QDesktopServices::openUrl(url)){
             QMessageBox::information(this,tr("错误"),tr("无法打开文件！"),tr("确定"));
         }
 
@@ -265,6 +266,8 @@ void frmDownloadContent::onUpdateShare()
                     if(aitem->
                         data(frmDownloadContent::filesize,Qt::UserRole)==aKey){
                         aitem->setText(frmDownloadContent::state,finalState);
+                        aitem->setText(frmDownloadContent::fileName,QFileInfo(filePathNameGetted).fileName());
+                        aitem->setText(frmDownloadContent::location,QDir::toNativeSeparators(filePathNameGetted.trimmed()));
                         aitem->setData(frmDownloadContent::state,Qt::UserRole,QVariant(stateGetted));
                         if(finalState=="下载成功" || finalState=="下载失败"){
                             aitem->setText(frmDownloadContent::downloadSpeed,"");
@@ -522,7 +525,8 @@ void frmDownloadContent::iniTree()
         Q_UNUSED(column);
         QFileInfo file(QDir::fromNativeSeparators(item->text(frmDownloadContent::location)));
         if(file.exists()){
-            if(!QDesktopServices::openUrl(QUrl(file.absoluteFilePath()))){
+            QUrl url=QUrl::fromLocalFile(file.absoluteFilePath());
+            if(!QDesktopServices::openUrl(url)){
                 QMessageBox::information(this,tr("错误"),tr("无法打开文件！"),tr("确定"));
             }
         }
