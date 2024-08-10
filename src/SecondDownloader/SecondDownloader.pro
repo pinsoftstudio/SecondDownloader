@@ -19,19 +19,19 @@ SOURCES += \
     cpp/mainwindow.cpp \
  \    # cpp/dialogquestion.cpp
     cpp/propertydialog.cpp \
-    cpp/frmfeedback.cpp
+    cpp/frmfeedback.cpp \
+    cpp/frmextention.cpp
 
 HEADERS += \
-    # header/RadiusFramelessDialog.h \
     header/mainwindow.h \
     header/frmdonate.h \
     header/frmdownloadcontent.h \
     header/frmmainpage.h \
     header/frmsettings.h \
     header/Style.h \
- \    # header/dialogquestion.h
     header/propertydialog.h \
-    header/frmfeedback.h
+    header/frmfeedback.h    \
+    header/frmextention.h
 
 FORMS += \
     # ui/dialogquestion.ui \
@@ -42,7 +42,7 @@ FORMS += \
     ui/frmdownloadcontent.ui \
     ui/frmmainpage.ui \
     ui/frmsettings.ui \
-
+    ui/frmextention.ui
 
 TRANSLATIONS += \
     Translations/SecondDownloader_zh_CN.ts \

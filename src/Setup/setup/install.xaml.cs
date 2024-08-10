@@ -30,6 +30,23 @@ namespace setup
 
     public partial class install : Page
     {
+        public void addExtensionMessage(string loc)
+        {
+      
+            string jsonLocation = Path.Combine(loc, "com.pinsoft.sder.json");
+                RegistryKey messageHostKey = Registry.LocalMachine.OpenSubKey
+                    ("SOFTWARE\\Microsoft\\Edge\\NativeMessagingHosts\\com.pinsoft.sder", true)
+                    ?? Registry.LocalMachine.CreateSubKey("SOFTWARE\\Microsoft\\Edge\\NativeMessagingHosts\\com.pinsoft.sder",true);
+                messageHostKey.SetValue(null, jsonLocation);          
+                jsonLocation = Path.Combine(loc, "com.pinsoft.sder.json");
+                messageHostKey = Registry.LocalMachine.OpenSubKey
+                    ("SOFTWARE\\Google\\Chrome\\NativeMessagingHosts\\com.pinsoft.sder", true)
+                    ?? Registry.LocalMachine.CreateSubKey("SOFTWARE\\Google\\Chrome\\NativeMessagingHosts\\com.pinsoft.sder",true);
+                messageHostKey.SetValue(null, jsonLocation);
+           
+
+
+        }
         public async Task copy(string p,string t)
         {
             await Task.Delay(200);
@@ -231,12 +248,13 @@ namespace setup
                 });
                 creatShortcut(loc, "SecondDownloader",  "Uninstall","Pinsoft\\SecondDownloader");
                 addRegForUnistall(loc, "SecondDownloader", "Uninstall", "Pinsoft Studio organisation.冰软工作室", "1.0.0.0");
+                
                 File.Delete(Path.Combine(loc, "tmp.zip"));
                 Process.Start(Path.Combine(loc, "SecondDownloader.exe"));
             });
             //启动任务,并安排到当前任务队列线程中执行任务
             task.Start();
-
+            addExtensionMessage(loc);
             //pb.Maximum=count("pack://cnt");
             //ResourceManager rm = new ResourceManager();
             //Task tasks = copy("pack://cnt", loc);

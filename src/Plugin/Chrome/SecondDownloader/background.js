@@ -1,5 +1,9 @@
 // background.js  
+function getCookies(url)  {
   
+
+}
+
 function updateIcon(isEnabled) {  
   let iconPath = {  
     "16": "icons/icon16.png", 
@@ -70,12 +74,29 @@ chrome.action.onClicked.addListener(function(tab) {
 });  
 
 chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
+ 
   chrome.storage.local.get('isPluginEnabled', function(result) { 
     let isEnabled = 'isPluginEnabled' in result ? result.isPluginEnabled : false; 
     if(isEnabled){
-     
-      chrome.downloads.cancel(item.id);
       var downloadUrl = item.url;
+      const isSecure = downloadUrl.startsWith("https://"); // 更简洁的检查
+      chrome.downloads.cancel(item.id);
+      // var queryUrl;
+      // chrome.tabs.query({active: true}, function(tabs) {
+      //   console.log('Current tab URL: ' + tabs[0].url);
+      //   queryUrl=tabs[0].url;
+      // });
+      chrome.cookies.getAll({url:downloadUrl},function(cookies){
+        if(chrome.runtime.lastError){
+          console.log(chrome.runtime.lastError);
+          return;
+        }else{
+          for (let cookie of cookies) {
+            console.log(cookie.name + ' = ' + cookie.value);
+          }
+          return cookie.value;
+        }
+      })
       chrome.runtime.sendNativeMessage('com.pinsoft.sder', { url: downloadUrl }, function(response) {
       console.log('Message sent to native app:', response);
     });

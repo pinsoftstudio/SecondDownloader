@@ -8,7 +8,7 @@
 // #include "header/dialogquestion.h"
 #include <newdownloadwindow.h>
 #include "header/mainwindow.h"
-
+#include "header/frmextention.h"
 frmMainPage::frmMainPage(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::frmMainPage)
@@ -151,8 +151,10 @@ void frmMainPage::on_toolFailed_clicked()
 
 void frmMainPage::on_toolExtention_clicked()
 {
-    //require
 
+    frmExtention *ext=new frmExtention;
+    ext->setAttribute(Qt::WA_DeleteOnClose);
+    ext->show();
 }
 
 
