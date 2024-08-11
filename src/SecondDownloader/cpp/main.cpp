@@ -208,14 +208,17 @@ int main(int argc, char *argv[])
 
     bool MainAppIsRunning=0;
     bool needExit=1;
+    //如果已经有实例运行
     if(!isSingleInstance("SecondDownloader"))
     {
         MainAppIsRunning=1;
+
     }
     a.setQuitOnLastWindowClosed(0);
     installTranslator(a);
     QSettings set("Pinsoft","SecondDownloader");
     bool autorun=set.value("Common/Autorun",1).toBool();
+    //检查要求静默运行
     bool silent=set.value("Common/HideAutorun",1).toBool();
     if(autorun){
         QSettings autoset("Microsoft","Windows");
@@ -223,16 +226,21 @@ int main(int argc, char *argv[])
         autoset.setValue("CurrentVersion/Run/SecondDownloader",QDir::toNativeSeparators(runnerPath));
 
     }
+    //获取命令行参数
     QStringList arguments=a.arguments();
+    //如果有命令行参数
     if(arguments.size()>1){
+        //获取URL
         QString url=arguments.at(1);
 
+        //如果是开机自启动运行的
         if(url=="autorun"){
             setCommonStyle();
             createMainTray();
             w=new MainWindow(0);
 
             QObject::connect(&detectWindowShow,&QTimer::timeout,w,[]{
+
                 link:
                     if(!shared.lock()){
                         goto link;
@@ -275,7 +283,8 @@ int main(int argc, char *argv[])
         }else{
 
             static QSharedMemory urlShare("newUrl");
-            if(!urlShare.create(1024)){
+
+            if(!urlShare.create(8192)){
                 if(urlShare.attach()){
                     if(urlShare.lock()){
 
@@ -308,7 +317,9 @@ int main(int argc, char *argv[])
         }
 
     }else{
+
         if(!MainAppIsRunning){
+            //如果没有实例运行
             setCommonStyle();
             createMainTray();
             w=new MainWindow(0);
@@ -324,6 +335,7 @@ int main(int argc, char *argv[])
                     buffer.setData((char*)shared.constData(),shared.size());
                     buffer.open(QBuffer::ReadWrite);
                     QDataStream stream(&buffer);
+                    //获取是否应该打开主界面
                     stream>>needToOpen;
 
                     shared.unlock();
@@ -349,12 +361,14 @@ int main(int argc, char *argv[])
             detectWindowShow.start(100);
             w->show();
         }else{
+            //如果有实例运行
             if(shared.lock()){
                 bool open=1;
                 char* to=static_cast<char*>(shared.data());
                 QBuffer buffer;
                 buffer.open(QBuffer::ReadWrite);
                 QDataStream stream(&buffer);
+                //写入共享内存，使已经运行的实例打开主界面
                 stream<<open;
                 memcpy(to,buffer.data().data(),buffer.size());
                 shared.unlock();

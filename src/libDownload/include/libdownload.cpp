@@ -140,6 +140,7 @@ void LibDownload::run()
     }
 
     struct curl_slist *headers = nullptr;
+    struct curl_slist *cookies=nullptr;
     headers = curl_slist_append(headers, ("Range: " + range.toStdString()).c_str());
     headers = curl_slist_append(headers, "Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,en-GB;q=0.6");
     headers = curl_slist_append(headers, "Sec-CH-UA: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Microsoft Edge\";v=\"102\"");
@@ -162,7 +163,7 @@ void LibDownload::run()
     curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L); // 确保启用进度报告
     curl_easy_setopt(curl, CURLOPT_XFERINFODATA, this);
     curl_easy_setopt(curl,CURLOPT_HEADEROPT,1L);
-    curl_easy_setopt(curl,CURLOPT_SSL_OPTIONS,CURLSSLOPT_NO_REVOKE);
+    curl_easy_setopt(curl,CURLOPT_COOKIELIST,cookies);
     if(getName){
         curl_easy_setopt(curl, CURLOPT_HEADERDATA, this);
         curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_callback);

@@ -8,6 +8,7 @@
 #include <QJsonObject>
 #include <QDebug>
 #include <QString>
+#include <QFile>
 std::string readMessage() {
     uint32_t len = 0;
     std::cin.read(reinterpret_cast<char*>(&len), sizeof(len));
@@ -55,7 +56,11 @@ int main() {
         }
         QString qJsonStr = stdStringToQString(input);
         QString url = getUrlFromJsonString(qJsonStr);
-        system("SecondDownloader.exe "+url.toLocal8Bit());
+        QFile file("1.txt");
+        file.open(QIODevice::WriteOnly);
+        file.write(url.toUtf8());
+        file.close();
+        system("SecondDownloader.exe \""+url.toUtf8()+"\"");
         std::string response = "Received URL: " + input;
         sendMessage(response);
 

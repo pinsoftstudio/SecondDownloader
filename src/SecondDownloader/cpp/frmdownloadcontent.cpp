@@ -40,7 +40,7 @@ frmDownloadContent::frmDownloadContent(QWidget *parent)
     updateShare=new QSharedMemory;
     newUrlShare=new QSharedMemory;
     newUrlShare->setKey("newUrl");
-    if(!newUrlShare->create(1024)){
+    if(!newUrlShare->create(8192)){
         newUrlShare->attach();
     }
 
@@ -609,6 +609,7 @@ void frmDownloadContent::detectNewDownload()
         QString newUrl;
         stream>>newUrl;
         if(!newUrl.isEmpty()){
+
             QString empty="";
             char *Key=static_cast<char*>(newUrlShare->data());
             QBuffer Buffer;

@@ -11,10 +11,12 @@
 #include <Style.h>
 #include <QFileDialog>
 #include <QRegularExpression>
+#include "QMessageBox"
 DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, bool passedNull, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DownloadMessageWindow)
 {
+    QMessageBox::information(this,"就是这个",url);
     passedNULL=passedNull;
     if(!passedNull){
         LastWindow=lastWindow;

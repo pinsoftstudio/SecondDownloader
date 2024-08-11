@@ -1,9 +1,9 @@
 // background.js  
-function getCookies(url)  {
-  
-
-}
-
+function removeNewLinesFromJson(jsonStr) {  
+  // 使用正则表达式匹配所有的换行符（\n, \r\n, \r）  
+  // g 标志表示全局搜索，即匹配字符串中所有的换行符，而不仅仅是第一个  
+  return jsonStr.replace(/[\r\n\t ]+/g, '');  
+}  
 function updateIcon(isEnabled) {  
   let iconPath = {  
     "16": "icons/icon16.png", 
@@ -11,7 +11,6 @@ function updateIcon(isEnabled) {
     "48": "icons/icon48.png",  
     "128": "icons/icon128.png" 
   };  
-  
 
   if (!isEnabled) {  
     console.log("hereIconDis");
@@ -36,6 +35,8 @@ function updateIcon(isEnabled) {
     }, function(notificationId) {});
   }
   
+
+
   chrome.action.setIcon({path: iconPath}, () => {
     if (chrome.runtime.lastError) {
       console.error("设置图标失败:", chrome.runtime.lastError);
@@ -73,35 +74,33 @@ chrome.action.onClicked.addListener(function(tab) {
   });  
 });  
 
-chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
- 
-  chrome.storage.local.get('isPluginEnabled', function(result) { 
-    let isEnabled = 'isPluginEnabled' in result ? result.isPluginEnabled : false; 
-    if(isEnabled){
-      var downloadUrl = item.url;
-      const isSecure = downloadUrl.startsWith("https://"); // 更简洁的检查
-      chrome.downloads.cancel(item.id);
-      // var queryUrl;
-      // chrome.tabs.query({active: true}, function(tabs) {
-      //   console.log('Current tab URL: ' + tabs[0].url);
-      //   queryUrl=tabs[0].url;
-      // });
-      chrome.cookies.getAll({url:downloadUrl},function(cookies){
-        if(chrome.runtime.lastError){
-          console.log(chrome.runtime.lastError);
-          return;
-        }else{
-          for (let cookie of cookies) {
-            console.log(cookie.name + ' = ' + cookie.value);
-          }
-          return cookie.value;
-        }
-      })
-      chrome.runtime.sendNativeMessage('com.pinsoft.sder', { url: downloadUrl }, function(response) {
-      console.log('Message sent to native app:', response);
-    });
-    }
-  });
-   
-    
-  });
+chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {  
+  chrome.storage.local.get('isPluginEnabled', function(result) {  
+    let isEnabled = 'isPluginEnabled' in result ? result.isPluginEnabled : false;  
+    if (isEnabled) {  
+      let downloadUrl = item.url;  
+      chrome.downloads.cancel(item.id); // 注意：这可能会取消用户期望的下载  
+  
+      let objCookies = [];  
+      chrome.cookies.getAll({ url: downloadUrl }, function(cookies) {  
+        if (chrome.runtime.lastError) {  
+          console.log(chrome.runtime.lastError);  
+          return;  
+        }  
+  
+        for (let cookie of cookies) {  
+          objCookies.push({ name: cookie.name, value: cookie.value });  
+          console.log(cookie.name + ' = ' + cookie.value);  
+        }  
+  
+        let jsonString = JSON.stringify(objCookies, null, 2);  
+        let finalString = downloadUrl + removeNewLinesFromJson(jsonString); // 注意：这里将URL和JSON字符串拼接可能不是最佳实践  
+  
+        console.log("final" + finalString);  
+        chrome.runtime.sendNativeMessage('com.pinsoft.sder', { url: finalString }, function(response) {  
+          console.log('Message sent to native app:', response);  
+        });  
+      });  
+    }  
+  });  
+});
