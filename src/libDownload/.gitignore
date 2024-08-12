@@ -50,7 +50,6 @@ CMakeLists.txt.user*
 *.idb
 *.ilk
 *.pdb
-*.sln
 *.suo
 *.vcproj
 *vcproj.*.*.user
@@ -72,3 +71,6 @@ CMakeLists.txt.user*
 *.dll
 *.exe
 
+build/
+.vs/
+temp/
