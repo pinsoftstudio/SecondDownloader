@@ -30,6 +30,27 @@ static size_t header_callback(void *contents, size_t size, size_t nmemb, void *u
     it=exp.globalMatch(headContent);
     if(it.hasNext()){
         downloader->emitOnlyOne();
+
+
+    }
+
+
+    return size * nmemb;
+}
+static size_t header_callback_forNoGetName(void *contents, size_t size, size_t nmemb, void *userp) {
+    fwrite(contents, size, nmemb, stdout);
+    LibDownload *downloader=static_cast<LibDownload*>(userp);
+
+
+    QRegularExpression exp("200 OK");
+    QString headContent=QString::fromUtf8(static_cast<char*>(contents));
+    qDebug()<<headContent;
+    QRegularExpressionMatchIterator it;
+    it=exp.globalMatch(headContent);
+    if(it.hasNext()){
+        downloader->stopDownload();
+        downloader->setNoEmitSuccess();
+
     }
 
 
@@ -54,17 +75,17 @@ static int xferinfo_callback(void *clientp,
          downloader->setCtotal(dltotal);
         downloader->setCnow(dlnow);
          // downloader->setUnknown(0);
-        // qDebug() << "Downloaded" << dlnow << "of" << dltotal << "bytes (" << percent << "%)";
+        qDebug() << "Downloaded" << dlnow << "of" << dltotal << "bytes (" << percent << "%)";
     } else {
 
          downloader->setCnow(dlnow);
         // downloader->setUnknown(1);
-        // qDebug() << "Downloaded" << dlnow << "bytes (total size unknown)";
+        qDebug() << "Downloaded" << dlnow << "bytes (total size unknown)";
     }
 
     return 0; // 成功
 }
-LibDownload::LibDownload(QString startBytes, QString endBytes, QString savingLocation, QString &downloadURL, bool getFileName, QObject *parent = nullptr) : QThread(parent) {
+LibDownload::LibDownload(QString startBytes, QString endBytes, QString savingLocation, QString &downloadURL, bool getFileName, QObject *parent , QMap<QString, QString> cookieMap) : QThread(parent) {
 
     curl_global_init(CURL_GLOBAL_ALL);
     StartBytes=startBytes;
@@ -72,6 +93,7 @@ LibDownload::LibDownload(QString startBytes, QString endBytes, QString savingLoc
     location=savingLocation;
     URL=downloadURL;
     getName=getFileName;
+    mapCookie=cookieMap;
     qDebug()<<"CBegin";
 }
 
@@ -120,6 +142,16 @@ void LibDownload::emitOnlyOne()
     emit onlyOne();
 }
 
+void LibDownload::setNoEmitSuccess()
+{
+    noEmitSuccess=1;
+}
+
+void LibDownload::stopDownload()
+{
+    curl_easy_pause(curl, CURLPAUSE_RECV);
+}
+
 void LibDownload::run()
 {
 
@@ -140,7 +172,14 @@ void LibDownload::run()
     }
 
     struct curl_slist *headers = nullptr;
-    struct curl_slist *cookies=nullptr;
+    QMap<QString,QString>::const_iterator i=mapCookie.constBegin();
+    std::string strCookie;
+    while(i!=mapCookie.constEnd()){
+        QString acookie=i.key()+"="+i.value()+";";
+        strCookie+=acookie.toStdString();
+
+        ++i;
+    }
     headers = curl_slist_append(headers, ("Range: " + range.toStdString()).c_str());
     headers = curl_slist_append(headers, "Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,en-GB;q=0.6");
     headers = curl_slist_append(headers, "Sec-CH-UA: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Microsoft Edge\";v=\"102\"");
@@ -163,22 +202,29 @@ void LibDownload::run()
     curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L); // 确保启用进度报告
     curl_easy_setopt(curl, CURLOPT_XFERINFODATA, this);
     curl_easy_setopt(curl,CURLOPT_HEADEROPT,1L);
-    curl_easy_setopt(curl,CURLOPT_COOKIELIST,cookies);
-    if(getName){
-        curl_easy_setopt(curl, CURLOPT_HEADERDATA, this);
+    curl_easy_setopt(curl,CURLOPT_COOKIE,strCookie.c_str());
+    curl_easy_setopt(curl, CURLOPT_HEADERDATA, this);
+    if(getName){  
         curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_callback);
+    }else{
+        curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_callback_forNoGetName);
     }
 
 
 
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
+        if(!noEmitSuccess){
          emit downloadFailed();
+        }
     } else {
+        if(!noEmitSuccess){
         emit downloadFinished();
+        }
     }
 
     file.close();
     curl_slist_free_all(headers);
     curl_easy_cleanup(curl);
+
 }

@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QString>
 #include <QFile>
+#include <QProcess>
 std::string readMessage() {
     uint32_t len = 0;
     std::cin.read(reinterpret_cast<char*>(&len), sizeof(len));
@@ -49,6 +50,7 @@ void sendMessage(const std::string& message) {
 }
 
 int main() {
+
     while (true) {
         std::string input = readMessage();
         if (input.empty()) {
@@ -56,13 +58,19 @@ int main() {
         }
         QString qJsonStr = stdStringToQString(input);
         QString url = getUrlFromJsonString(qJsonStr);
+        std::string response = "Received URL: " + input;
+        sendMessage(response);
         QFile file("1.txt");
         file.open(QIODevice::WriteOnly);
         file.write(url.toUtf8());
         file.close();
-        system("SecondDownloader.exe \""+url.toUtf8()+"\"");
-        std::string response = "Received URL: " + input;
-        sendMessage(response);
+        QProcess ps;
+        QStringList sl;
+        sl.append(url);
+        ps.start("SecondDownloader.exe",sl);
+        ps.waitForFinished();
+        // system("SecondDownloader.exe \""+url.toUtf8()+"\"");
+
 
     }
     return 0;

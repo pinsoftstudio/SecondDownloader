@@ -94,7 +94,7 @@ chrome.downloads.onDeterminingFilename.addListener(function(item, suggest) {
         }  
   
         let jsonString = JSON.stringify(objCookies, null, 2);  
-        let finalString = downloadUrl + removeNewLinesFromJson(jsonString); // 注意：这里将URL和JSON字符串拼接可能不是最佳实践  
+        let finalString = downloadUrl +"startCookies:"+ removeNewLinesFromJson(jsonString); // 注意：这里将URL和JSON字符串拼接可能不是最佳实践  
   
         console.log("final" + finalString);  
         chrome.runtime.sendNativeMessage('com.pinsoft.sder', { url: finalString }, function(response) {  

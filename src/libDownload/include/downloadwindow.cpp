@@ -22,13 +22,13 @@
 #include "QSoundEffect"
 #include "QDesktopServices"
 
-DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalBytes,QWidget *parent)
+DownloadWindow::DownloadWindow(QString url,QString saveFileName,qint64 totalBytes,QMap<QString,QString>mapCookies,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DownloadWindow)
 {
     URL=url;
     savedFilename=saveFileName;
-
+    cookieMap=mapCookies;
     TotalBytes=totalBytes;
     iniSharedMemory();  //初始化共享内存
 
@@ -212,11 +212,11 @@ void DownloadWindow::startDownload()
             qDebug()<<"CNBegin";
             if(i==0){
                 downloaders[i]=new LibDownload(QString::number(startBytes+1),QString::number(endBytes),
-                                                 QDir::toNativeSeparators(tempFilePathNames[i]),URL,1,this);
+                                                 QDir::toNativeSeparators(tempFilePathNames[i]),URL,1,this,cookieMap);
                 connect(downloaders[0],&LibDownload::onlyOne,this,&DownloadWindow::onOnlyOne);
             }else{
                 downloaders[i]=new LibDownload(QString::number(startBytes+1),QString::number(endBytes),
-                                                 QDir::toNativeSeparators(tempFilePathNames[i]),URL,0,this);
+                                                 QDir::toNativeSeparators(tempFilePathNames[i]),URL,0,this,cookieMap);
             }
 
             connect(downloaders[i],&LibDownload::started,this,&DownloadWindow::ondownloadFailed);
@@ -226,7 +226,7 @@ void DownloadWindow::startDownload()
         }
         tempFilePathNames.append(tempPath+randomPath()+".downloading");
         downloaders[7]=new LibDownload(QString::number(startBytes+1),"",
-                                         QDir::toNativeSeparators(tempFilePathNames[7]),URL,0,this);
+                                         QDir::toNativeSeparators(tempFilePathNames[7]),URL,0,this,cookieMap);
         connect(downloaders[7],&LibDownload::started,this,&DownloadWindow::ondownloadFailed);
         connect(downloaders[7],&LibDownload::finished,this,&DownloadWindow::ondownloadFinished);
         downloaders[7]->start();
@@ -235,7 +235,7 @@ void DownloadWindow::startDownload()
         isMultipal=false;
         tempFilePathNames.append(tempPath+randomPath()+".downloading");
         downloaders[0]=new LibDownload("0","",
-                                         QDir::toNativeSeparators(tempFilePathNames[0]),URL,1,this);
+                                         QDir::toNativeSeparators(tempFilePathNames[0]),URL,1,this,cookieMap);
         connect(downloaders[0],&LibDownload::started,this,&DownloadWindow::ondownloadFailed);
         connect(downloaders[0],&LibDownload::finished,this,&DownloadWindow::ondownloadFinished);
         downloaders[0]->start();
@@ -715,16 +715,10 @@ void DownloadWindow::onsendMemory()
 void DownloadWindow::onOnlyOne()
 {
     if(isMultipal){
-        for(int i=1;i<8;i++){
-            if(downloaders[i]->isRunning()){
-                downloaders[i]->terminate();
-                downloaders[i]->wait();
-                ui->frame->hide();
-
-            }
-
-        }
         isMultipal=0;
+        ui->frame->hide();
+
+
     }
 
 }

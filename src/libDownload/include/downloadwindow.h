@@ -11,7 +11,7 @@
 #include "QMenu"
 #include "QSharedMemory"
 #include "QDataStream"
-
+#include "QMap"
 namespace Ui {
 class DownloadWindow;
 }
@@ -21,11 +21,12 @@ class LIBDOWNLOAD_EXPORT DownloadWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit DownloadWindow(QString url,QString saveFileName,qint64 totalBytes,QWidget *parent = nullptr);
+    explicit DownloadWindow(QString url,QString saveFileName,qint64 totalBytes,QMap<QString,QString>mapCookies,QWidget *parent = nullptr);
     ~DownloadWindow();
     // struct sendShareDownloadData data;
 
 private:
+    QMap<QString,QString> cookieMap;
     // Qt UI 相关
     Ui::DownloadWindow *ui;
     QSystemTrayIcon *tray;

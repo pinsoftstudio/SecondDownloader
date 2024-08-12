@@ -12,17 +12,22 @@
 #include <QFileDialog>
 #include <QRegularExpression>
 #include "QMessageBox"
+#include "QJsonDocument"
+#include "QJsonArray"
+#include "QJsonObject"
 DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, bool passedNull, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DownloadMessageWindow)
 {
-    QMessageBox::information(this,"就是这个",url);
+    // QMessageBox::information(this,"就是这个",url);
     passedNULL=passedNull;
     if(!passedNull){
         LastWindow=lastWindow;
 
     }
+
     URL=url;
+
     QSettings set("Pinsoft","SecondDownloader");
     bool useGithubProxy=set.value("Download/EnableGithubProxy",1).toBool();
     if(useGithubProxy){
@@ -40,7 +45,7 @@ DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, b
             URL="https://mirror.ghproxy.com/"+url;
         }
     }
-
+    getCookiesMap(URL);
     ui->setupUi(this);
     Qt::WindowFlags flags;
     setWindowFlags(flags|Qt::WindowCloseButtonHint|Qt::WindowMinimizeButtonHint|Qt::WindowStaysOnTopHint);
@@ -49,7 +54,7 @@ DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, b
 
     iniUi();
 
-    FileUrlInfo *urlinfo=new FileUrlInfo(URL);
+    FileUrlInfo *urlinfo=new FileUrlInfo(URL,cookiesMap);
     // QThread *thread =new QThread;
     // urlinfo->moveToThread(thread);
     connect(urlinfo,SIGNAL(sizeReady(qint64)),this,SLOT(onsizeready(qint64)));
@@ -134,6 +139,53 @@ QPixmap DownloadMessageWindow::getFilePixmap(QString fileLocation)
     return provider.icon(fi).pixmap(60,60);
 }
 
+void DownloadMessageWindow::getCookiesMap(QString &url)
+{
+    QRegularExpression regx("startCookies:(.*)");
+    QRegularExpressionMatchIterator regxmi=regx.globalMatch(url);
+
+    if(regxmi.hasNext()){
+
+        QRegularExpressionMatch match=regxmi.next();
+        QString cookieString=match.captured(1);
+
+        regx.setPattern("(.*?)startCookies:");
+        regxmi=regx.globalMatch(url);
+        if(regxmi.hasNext()){
+            match=regxmi.next();
+            url=match.captured(1);
+        }
+
+        // 解析JSON文档
+        QJsonParseError parseError;
+
+        QJsonDocument doc = QJsonDocument::fromJson(cookieString.toUtf8(), &parseError);
+        qDebug()<<cookieString.toUtf8();
+        if (parseError.error != QJsonParseError::NoError) {
+            qDebug() << "JSON解析错误:" << parseError.errorString();
+            return ;
+        }
+
+        if (doc.isArray()) {
+            QJsonArray array = doc.array();
+
+            for (const QJsonValue &value : array) {
+                QJsonObject obj = value.toObject();
+
+                QString name = obj["name"].toString();
+                QString valueStr = obj["value"].toString();
+                cookiesMap.insert(name,valueStr);
+
+
+            }
+        } else {
+            qDebug() << "JSON数据不是一个数组";
+        }
+
+
+    }
+}
+
 
 
 void DownloadMessageWindow::onsizeready(qint64 filesize)
@@ -171,7 +223,7 @@ void DownloadMessageWindow::onurlready(QString finalUrl)
 
 void DownloadMessageWindow::on_btnStart_clicked()
 {
-    downloadwindow=new DownloadWindow(URL,savedFileName,size);
+    downloadwindow=new DownloadWindow(URL,savedFileName,size,cookiesMap);
     qDebug()<<size;
     connect(downloadwindow,SIGNAL(downloadThreadExist(DownloadWindow*)),SLOT(ondownloadThreadExist(DownloadWindow*)));
     downloadwindow->show();

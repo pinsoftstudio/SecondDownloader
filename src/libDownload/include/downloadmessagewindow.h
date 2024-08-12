@@ -6,6 +6,7 @@
 #include "libDownload_global.h"
 #include "QIcon"
 #include "QPixmap"
+#include "QMap"
 namespace Ui {
 class LIBDOWNLOAD_EXPORT DownloadMessageWindow;
 }
@@ -22,6 +23,7 @@ private:
     Ui::DownloadMessageWindow *ui;
     DownloadWindow *downloadwindow;
     QString URL;
+    QMap<QString,QString> cookiesMap;
     QString finalSize;
     QString savingLocation;
     QString savedFileName;
@@ -29,6 +31,7 @@ private:
     void iniUi();
     bool passedNULL;
     QPixmap getFilePixmap(QString fileLocation);
+    void getCookiesMap(QString &url);
     QWidget *LastWindow;
     QTimer tmGetprogress;
 
@@ -55,6 +58,7 @@ private slots:
 #include "string"
 #include "QDebug"
 #include <QSysInfo>
+#include <QMap>
 static int xferinfo_callback(void *clientp,
                              curl_off_t dltotal, curl_off_t dlnow,
                              curl_off_t ultotal, curl_off_t ulnow) ;
@@ -63,7 +67,9 @@ class LIBDOWNLOAD_EXPORT FileUrlInfo : public QThread
 {
     Q_OBJECT
 public:
-    explicit FileUrlInfo(QString url) :  URL(url) {}
+    explicit FileUrlInfo(QString url,QMap<QString,QString> &map) :  URL(url) {
+        cookiesMap=map;
+    }
     void  fakeDownloadFinished(qint64 fileSize)
     {
         emit sizeReady(fileSize);
@@ -86,6 +92,8 @@ private:
     CURL *curl;
     CURLcode res;
     qint64 size=0;
+    QMap<QString,QString> cookiesMap;
+
 protected:
     void run()  Q_DECL_OVERRIDE
     {
@@ -103,6 +111,7 @@ protected:
         std::string *name;
         struct curl_slist *headers = nullptr;
 
+        //设置请求头
         headers = curl_slist_append(headers, "Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,en-GB;q=0.6");
         headers = curl_slist_append(headers, "Sec-CH-UA: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Microsoft Edge\";v=\"102\"");
         headers = curl_slist_append(headers, "Sec-CH-UA-Mobile: ?0");
@@ -110,6 +119,7 @@ protected:
         headers = curl_slist_append(headers, "Sec-Fetch-Dest: empty");
         headers = curl_slist_append(headers, "Sec-Fetch-Mode: cors");
         headers = curl_slist_append(headers, "Sec-Fetch-Site: cross-site");
+        //判断系统架构
         if (QSysInfo::WordSize == 64) {
             headers = curl_slist_append(headers, "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36 Edg/102.0.1245.30");
         } else {
@@ -121,7 +131,15 @@ protected:
         curl_easy_setopt(curl, CURLOPT_NOBODY, 1L); // 发送 HEAD 请求
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L); // 跟随重定向
         curl_easy_setopt(curl,CURLOPT_SSL_OPTIONS,CURLSSLOPT_NO_REVOKE);
+        QMap<QString,QString>::const_iterator i=cookiesMap.constBegin();
+        std::string strCookie;
+        while(i!=cookiesMap.constEnd()){
+            QString acookie=i.key()+"="+i.value()+";";
+            strCookie+=acookie.toStdString();
 
+            ++i;
+        }
+        curl_easy_setopt(curl,CURLOPT_COOKIE,strCookie.c_str());
         // 执行 HEAD 请求
         res = curl_easy_perform(curl);
         if (res != CURLE_OK) {
