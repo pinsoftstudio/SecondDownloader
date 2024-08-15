@@ -75,12 +75,12 @@ static int xferinfo_callback(void *clientp,
          downloader->setCtotal(dltotal);
         downloader->setCnow(dlnow);
          // downloader->setUnknown(0);
-        qDebug() << "Downloaded" << dlnow << "of" << dltotal << "bytes (" << percent << "%)";
+        // qDebug() << "Downloaded" << dlnow << "of" << dltotal << "bytes (" << percent << "%)";
     } else {
 
          downloader->setCnow(dlnow);
         // downloader->setUnknown(1);
-        qDebug() << "Downloaded" << dlnow << "bytes (total size unknown)";
+        // qDebug() << "Downloaded" << dlnow << "bytes (total size unknown)";
     }
 
     return 0; // 成功

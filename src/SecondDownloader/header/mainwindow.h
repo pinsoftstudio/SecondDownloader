@@ -8,6 +8,7 @@
 #include "frmdonate.h"
 #include "frmfeedback.h"
 #include <downloadwindow.h>
+ #include<QProcess>
 namespace Ui {
 class MainWindow;
 }
@@ -30,6 +31,8 @@ private:
     QTimer *tmGetClipUrl;
     QTimer *tmNeedLaunchGetUrl;
     QStringList LastUrlList;
+
+    QProcess *pro;
     void addToLastUrlList();
 private slots:
     void on_toolMenu_clicked();
@@ -47,6 +50,8 @@ private slots:
     void onGetClipUrl();
 
     void on_toolFeedback_clicked();
+
+    void on_toolUpdate_clicked();
 
 private:
     Ui::MainWindow *ui;

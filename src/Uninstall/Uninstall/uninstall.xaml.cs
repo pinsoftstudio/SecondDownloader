@@ -136,7 +136,16 @@ namespace setup
                 }
             }
 
-            
+            using (RegistryKey DeleteVersionKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Pinsoft\\SecondDownloader", true))
+            {
+                if (DeleteVersionKey != null)
+                {
+                    Registry.CurrentUser.DeleteSubKeyTree("SOFTWARE\\Pinsoft\\SecondDownloader", false);
+                }
+            }
+
+
+
 
         }
         public void deleteShortcuts(string exeName,string folderName)

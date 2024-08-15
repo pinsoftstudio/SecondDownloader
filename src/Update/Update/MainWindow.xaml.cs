@@ -22,13 +22,14 @@ namespace Update
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(bool silent)
         {
-            InitializeComponent();
+
             InitializeComponent();
             MouseLeftButtonDown += (o, e) => { DragMove(); };
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            frame.Navigate(new CheckForUpdate());
+            frame.Navigate(new CheckForUpdate(silent));
+            
         }
         private void frame_Navigated(object sender, NavigationEventArgs e)
         {

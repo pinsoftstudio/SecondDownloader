@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using System.Diagnostics;
 namespace Update
 {
     /// <summary>
@@ -19,6 +20,7 @@ namespace Update
     /// </summary>
     public partial class CheckForUpdate : Page
     {
+        bool Silent = false;
         [DllImport("kernel32")] //返回0表示失败，非0为成功
         private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
         [DllImport("kernel32")] //返回取得字符串缓冲区的长度
@@ -46,7 +48,8 @@ namespace Update
                 //获取注册表中当前版本号
                 if (regKey != null)
                 {
-                    currentVersion = regKey.GetValue("Version", "V.1.0.0.1") as string;
+
+                    currentVersion = regKey.GetValue("Version", "v.1.0.0.1") as string;
                 }
             }
             try
@@ -199,7 +202,23 @@ namespace Update
                 latestSingleVersion[2] = patch;
                 latestSingleVersion[3] = date;
             }
-
+            if (latestSingleVersion[0] == currentSingleVersion[0] &&
+                latestSingleVersion[1] == currentSingleVersion[1] &&
+                latestSingleVersion[2] == currentSingleVersion[2])
+            {
+                if (Silent)
+                {
+                    App.Current.Shutdown();
+                }
+                else
+                {
+                    string v = "V." + latestSingleVersion[0].ToString() + "." +
+                                   latestSingleVersion[1].ToString() + "." + latestSingleVersion[2].ToString() + "." + latestSingleVersion[3].ToString();
+                    NavigationService.Navigate(new NoNeed(v));
+                    return;
+                }
+                
+            }
             string Version = latestSingleVersion[0].ToString() + "." +
                                     latestSingleVersion[1].ToString() + "." + latestSingleVersion[2].ToString() + "." + latestSingleVersion[3].ToString();
             string LatestTempPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UpdateTemp", Version);
@@ -210,25 +229,52 @@ namespace Update
                 int.Parse(await getIniValue("lastsupported","patch",LatestTempTxtFilePath)),
                 int.Parse(await getIniValue("lastsupported","date",LatestTempTxtFilePath)),
             };
+            
+
+          
+
+
             if (currentSingleVersion[0] < lastSupported[0])
             {
-                //TODO:下载新的安装包
-                return;
-            }else if (currentSingleVersion[1] < lastSupported[1]) {
+                MessageBox.Show("抱歉，由于您的版本SecondDownloader软件版本太旧，已经不受支持。请到 https://github.com/pinsoftstudio/SecondDownloader/releases 下载最新版本。我们对给您带来的不便深感抱歉。", "您的SecondDownloader版本不受支持", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                Process.Start("https://github.com/pinsoftstudio/SecondDownloader/releases");
+                Application.Current.Shutdown();
                 //TODO:下载新的安装包
                 return;
             }
-            else if (currentSingleVersion[2] < lastSupported[2])
+            else
             {
-                //TODO:下载新的安装包
-                return;
+                if (currentSingleVersion[1] < lastSupported[1])
+                {
+                    MessageBox.Show("抱歉，由于您的SecondDownloader软件版本太旧，已经不受支持。请到 https://github.com/pinsoftstudio/SecondDownloader/releases 下载最新版本。我们对给您带来的不便深感抱歉。", "您的SecondDownloader版本不受支持", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    Process.Start("https://github.com/pinsoftstudio/SecondDownloader/releases");
+                    Application.Current.Shutdown();
+                    //TODO:下载新的安装包
+                    return;
+                }
+                else
+                {
+                    if (currentSingleVersion[2] < lastSupported[2])
+                    {
+                        MessageBox.Show("抱歉，由于您的SecondDownloader软件版本太旧，已经不受支持。请到 https://github.com/pinsoftstudio/SecondDownloader/releases 下载最新版本。我们对给您带来的不便深感抱歉。", "您的SecondDownloader版本不受支持", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        Process.Start("https://github.com/pinsoftstudio/SecondDownloader/releases");
+                        Application.Current.Shutdown();
+                        //TODO:下载新的安装包
+                        return;
+                    }
+                    else
+                    {
+                        if (currentSingleVersion[3] < lastSupported[3])
+                        {
+                            MessageBox.Show("抱歉，由于您的SecondDownloader软件版本太旧，已经不受支持。请到 https://github.com/pinsoftstudio/SecondDownloader/releases 下载最新版本。我们对给您带来的不便深感抱歉。", "您的SecondDownloader版本不受支持", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            Process.Start("https://github.com/pinsoftstudio/SecondDownloader/releases");
+                            Application.Current.Shutdown();
+                            //TODO:下载新的安装包
+                            return;
+                        }
+                    }
+                }
             }
-            else if (currentSingleVersion[3] < lastSupported[3])
-            {
-                //TODO:下载新的安装包
-                return;
-            }
-
 
             if (currentSingleVersion[0] == latestSingleVersion[0])
             {
@@ -238,8 +284,18 @@ namespace Update
                     {
                         if (currentSingleVersion[3] == latestSingleVersion[3])
                         {
-
-                            NavigationService.Navigate(new NoNeed(latestVersion));
+                            if (Silent)
+                            {
+                                Application.Current.Shutdown();
+                            }
+                            else
+                            {
+                                string v="V."+ latestSingleVersion[0].ToString() + "." +
+                                    latestSingleVersion[1].ToString() + "." + latestSingleVersion[2].ToString() + "." + latestSingleVersion[3].ToString();
+                                NavigationService.Navigate(new NoNeed(v));
+                                return;
+                            }
+                           
                         }
                         else
                         {
@@ -667,11 +723,21 @@ namespace Update
                 updateTr = final_needUpdateTr;
                 updatePlugin = final_needUpdatePlugin;
             }
-            NavigationService.Navigate(new UpdateInformation(Version, CommonUpdateUrl,
-                                ref listAddOrChange, ref listDelete, ref listMessage, updateQt, updateTr, updatePlugin,proxyUrl));
+            if (!Silent)
+            {
+                NavigationService.Navigate(new UpdateInformation(Version, CommonUpdateUrl,
+                               ref listAddOrChange, ref listDelete, ref listMessage, updateQt, updateTr, updatePlugin, proxyUrl, Silent));
+            }
+            else
+            {
+                NavigationService.Navigate(new Updating(latestVersion, CommonUpdateUrl, ref listAddOrChange, ref listDelete,
+                    ref listMessage, updateQt, updateTr, updatePlugin, proxyUrl,Silent));
+            }
+           
         }
-        public CheckForUpdate()
+        public CheckForUpdate(bool silent)
         {
+            Silent=silent;
             InitializeComponent();
             getToDownloads();
 

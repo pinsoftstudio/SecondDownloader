@@ -20,6 +20,14 @@ private slots:
 
     void on_btnCrx_clicked();
 
+    void on_btnchrome_clicked();
+
+    void on_btn360_clicked();
+
+    void on_btnMolizza_clicked();
+
+    void on_btnmsedge_clicked();
+
 private:
     Ui::frmExtention *ui;
 };

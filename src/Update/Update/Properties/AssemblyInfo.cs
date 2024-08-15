@@ -7,12 +7,12 @@ using System.Windows;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Update")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SecondDownloader更新程序")]
+[assembly: AssemblyDescription("SecondDownloader更新程序")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HP")]
-[assembly: AssemblyProduct("Update")]
-[assembly: AssemblyCopyright("Copyright © HP 2024")]
+[assembly: AssemblyCompany("冰软工作室")]
+[assembly: AssemblyProduct("SecondDownloader更新程序")]
+[assembly: AssemblyCopyright("Copyright © Pinsoft Studio 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

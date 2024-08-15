@@ -17,6 +17,7 @@
         <file>res/Main-Page_dark.png</file>
         <file>res/Menu_dark.png</file>
         <file>res/Settings_dark.png</file>
+        <file>res/update.png</file>
     </qresource>
     <qresource prefix="/common">
         <file>qss/white_base.qss</file>

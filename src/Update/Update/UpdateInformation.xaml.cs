@@ -37,7 +37,7 @@ namespace Update
         
         public UpdateInformation(string latestVersion,string updateUrl,
             ref HashSet<string> addChangeList,ref HashSet<string> deleteChangeList,
-            ref HashSet<string> messageList,bool upDateQt,bool upDateTr,bool upDatePlugin,string proxyUrl)
+            ref HashSet<string> messageList,bool upDateQt,bool upDateTr,bool upDatePlugin,string proxyUrl,bool silent)
         {
             InitializeComponent();
             LatestVersion = latestVersion;
@@ -55,6 +55,7 @@ namespace Update
                 txtUpdate.AppendText((i+1).ToString()+"."+messageList.ElementAt(i)+"\n");
             }
             
+
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -65,7 +66,7 @@ namespace Update
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Updating(LatestVersion, UpdateUrl,ref AddChangeList,ref DeleteChangeList,
-                ref MessageList, UpdateQt, UpdateTr, UpDatePlugin,ProxyUrl));
+                ref MessageList, UpdateQt, UpdateTr, UpDatePlugin,ProxyUrl,false));
         }
     }
 }

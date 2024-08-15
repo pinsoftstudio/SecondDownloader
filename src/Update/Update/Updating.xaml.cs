@@ -18,6 +18,8 @@ using System.Net;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Configuration;
+using Microsoft.Win32;
+using System.Windows.Media.Animation;
 namespace Update
 {
     /// <summary>
@@ -38,6 +40,7 @@ namespace Update
         bool UpdateQt;
         bool UpdateTr;
         bool UpDatePlugin;
+        bool Silent=false;
         int downloadedRegular = 0;
         int totals=0;
         int totalDownloaded=0;
@@ -113,7 +116,25 @@ namespace Update
             //清理文件
 
             await DeleteDirectory(System.IO.Path.Combine(regularSavePath, "UpdateTemp"));
-            NavigationService.Navigate(new Finished(LatestVersion,succeed));
+            if (Silent)
+            {
+                App.Current.Shutdown();
+            }
+            else
+            {
+                if (succeed) {
+                    RegistryView useRegistryView = Environment.Is64BitOperatingSystem ?
+        RegistryView.Registry64 : RegistryView.Registry32;
+                    using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, useRegistryView))
+                    using (RegistryKey subKey = baseKey.CreateSubKey("SOFTWARE\\Pinsoft\\SecondDownloader", true))
+                    {
+                        subKey.SetValue("Version", "v." + LatestVersion);
+                    }
+                }
+                
+                NavigationService.Navigate(new Finished(LatestVersion, succeed));
+            }
+           
                 
                 
 
@@ -195,7 +216,7 @@ namespace Update
 
         public Updating(string latestVersion, string updateUrl,
             ref HashSet<string> addChangeList, ref HashSet<string> deleteChangeList,
-            ref HashSet<string> messageList, bool upDateQt, bool upDateTr, bool upDatePlugin,string proxyUrl)
+            ref HashSet<string> messageList, bool upDateQt, bool upDateTr, bool upDatePlugin,string proxyUrl,bool silent)
         {
             LatestVersion = latestVersion;
             UpdateUrl = updateUrl;
@@ -206,6 +227,7 @@ namespace Update
             UpdateQt = upDateQt;
             UpdateTr = upDateTr;
             ProxyUrl = proxyUrl;
+            Silent=silent;
             regularSavePath= AppDomain.CurrentDomain.BaseDirectory;
             InitializeComponent();
             labVersion.Content = "最新版本:"+"V." + LatestVersion;
@@ -251,7 +273,7 @@ namespace Update
                 if(downloadedRegular != AddChangeList.Count())
                 {
                    labelStatus.Content = "(" + (downloadedRegular+1).ToString() + "/" +
-                   AddChangeList.Count().ToString() + ")正在更新...(0%):"+
+                   AddChangeList.Count().ToString() + ")正在更新... (0%):"+
                    AddChangeList.ElementAt(downloadedRegular);
                    progressbar.Value = 0;
                    string nowUrl=UpdateUrl+ AddChangeList.ElementAt(downloadedRegular);
@@ -261,11 +283,11 @@ namespace Update
                 else
                 {
                     labelStatus.Content = "(" + AddChangeList.Count().ToString() + "/" +
-                   AddChangeList.Count().ToString() + ")正在更新...(100%):" +
+                   AddChangeList.Count().ToString() + ")正在更新... (100%):" +
                    AddChangeList.ElementAt(downloadedRegular-1);
                     if (UpdateQt)
                     {
-                        labelStatus.Content = "(0/2)正在更新Qt组件...若更新速度较慢，请重启再试(0%)";
+                        labelStatus.Content = "(0/2)正在更新Qt组件... 若更新速度较慢，请重启再试(0%)";
                         progressbar.Value = 0;
                         string nowurl = ProxyUrl+ "https://github.com/ProgramCX/QtModulesForSD/releases/download/update/qt_win.zip";
                         
@@ -276,7 +298,7 @@ namespace Update
                     }
                     else if (UpdateTr)
                     {
-                        labelStatus.Content = "(0/2)正在更新翻译文件...若更新速度较慢，请重启再试(0%)";
+                        labelStatus.Content = "(0/2)正在更新翻译文件... 若更新速度较慢，请重启再试(0%)";
 
                         progressbar.Value = 0;
                         string nowurl = ProxyUrl + "https://github.com/ProgramCX/QtModulesForSD/releases/download/update/tr.zip";
@@ -284,9 +306,11 @@ namespace Update
                     }
                     else if (UpDatePlugin)
                     {
-                        labelStatus.Content = "(0/2)正在更新浏览器插件...(0%)";
+                        labelStatus.Content = "(0/1)正在更新浏览器插件... (0%)";
                         progressbar.Value = 0;
-                        //TODO：更新浏览器插件
+                        string nowurl = "https://gitee.com/pinsoft/sdup/raw/master/com.pinsoft.sder.crx";
+                        clientPlugin.DownloadFileAsync(new Uri(nowurl), System.IO.Path.Combine(regularSavePath, "com.pinsoft.sder.crx"));
+
                     }
                     else
                     {
@@ -324,17 +348,18 @@ namespace Update
                 await Task.Delay(TimeSpan.FromSeconds(1));
                 if (UpdateTr)
                 {
-                    labelStatus.Content = "(0/2)正在更新翻译文件...若更新速度较慢，请重启再试(0%)";
+                    labelStatus.Content = "(0/2)正在更新翻译文件... 若更新速度较慢，请重启再试(0%)";
 
                     progressbar.Value = 0;
                     string nowurl = ProxyUrl + "https://github.com/ProgramCX/QtModulesForSD/releases/download/update/tr.zip"; ;
                     clientTr.DownloadFileAsync(new Uri(nowurl), System.IO.Path.Combine(regularSavePath, "UpdateTemp", "tr.zip"));
                 }else if (UpDatePlugin)
                 {
-                    labelStatus.Content = "(0/2)正在更新浏览器插件...(0%)";
+                    labelStatus.Content = "(0/1)正在更新浏览器插件... (0%)";
                     progressbar.Value = 0;
-                    //TODO：更新浏览器插件
-                    
+                    string nowurl = "https://gitee.com/pinsoft/sdup/raw/master/com.pinsoft.sder.crx";
+                    clientPlugin.DownloadFileAsync(new Uri(nowurl), System.IO.Path.Combine(regularSavePath, "com.pinsoft.sder.crx"));
+
                 }
                 else
                 {
@@ -368,7 +393,10 @@ namespace Update
                 labelStatus.Content = $"(2/2)正在更新翻译文件... 若更新速度较慢，请重启再试(100%)";
                 if (UpDatePlugin)
                 {
-                    //TODO:更新浏览器插件
+                    labelStatus.Content = "(0/1)正在更新浏览器插件... (0%)";
+                    progressbar.Value = 0;
+                    string nowurl = "https://gitee.com/pinsoft/sdup/raw/master/com.pinsoft.sder.crx";
+                    clientPlugin.DownloadFileAsync(new Uri(nowurl), System.IO.Path.Combine(regularSavePath, "com.pinsoft.sder.crx"));
                 }
                 else
                 {
@@ -387,9 +415,9 @@ namespace Update
         {
             // 更新ProgressBar的Value属性  
             progressbar.Value = e.ProgressPercentage;
+            // 更新Label显示下载百分比
 
-            // 更新Label显示下载百分比  
-            labelStatus.Content = $"下载进度: {e.ProgressPercentage}%";
+            labelStatus.Content = $"(0/1)正在更新浏览器插件... ({e.ProgressPercentage}%)";
         }
 
         private async void clientPlugin_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
@@ -397,7 +425,9 @@ namespace Update
             
             if (e.Error == null)
             {
-               
+                labelStatus.Content = "(1/1)正在更新浏览器插件... (100%)";
+                MessageBox.Show("已经下载新版本的SecondDownloader浏览器插件，请在SecondDownloader程序目录里找到crx文件，按照SecondDownloader的浏览器插件安装教程更新浏览器插件。否则可能出现不兼容问题。","SecondDownloader更新",MessageBoxButton.OK,MessageBoxImage.Asterisk);
+                await cleanUp(true);
             }
             else
             {

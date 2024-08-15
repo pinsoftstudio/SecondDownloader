@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Update"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="450" WindowStyle="None" 
+        Title="SecondDownloader 更新程序" Height="600" Width="450" WindowStyle="None" 
         WindowStartupLocation="CenterScreen" MinWidth="450" MinHeight="600" MaxWidth="450" MaxHeight="600">
 
     <Grid>

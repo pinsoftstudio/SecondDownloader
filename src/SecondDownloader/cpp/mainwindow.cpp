@@ -14,6 +14,7 @@
 #include "QRegularExpression"
 #include "downloadmessagewindow.h"
 #include "QSettings"
+
 MainWindow::MainWindow(int mode, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -84,6 +85,8 @@ MainWindow::MainWindow(int mode, QWidget *parent)
     connect(ui->toolDonate,&QToolButton::clicked,this,&MainWindow::on_toolDonate_clicked);
     connect(ui->toolSettings,&QToolButton::clicked,this,&MainWindow::on_toolSettings_clicked);
     connect(ui->toolFeedback,&QToolButton::clicked,this,&MainWindow::on_toolFeedback_clicked);
+    connect(ui->toolUpdate,&QToolButton::clicked,this,&MainWindow::on_toolUpdate_clicked);
+    pro=new QProcess(this);
 
 
 
@@ -172,6 +175,8 @@ void MainWindow::setClassToolButtonStyle()
         ui->toolSettings->setIcon(QIcon(":/MainWindow/res/Settings_dark.png"));
          ui->toolMenu->setIcon(QIcon(":/MainWindow/res/Menu_dark.png"));
         ui->toolFeedback->setIcon(QIcon(":/MainWindow/res/feedback_dark.png"));
+
+
     }else{
         ui->toolMain->setIcon(QIcon(":/MainWindow/res/Main-Page_white.png"));
         ui->toolDownload->setIcon(QIcon(":/MainWindow/res/Download-Content_white.png"));
@@ -180,6 +185,7 @@ void MainWindow::setClassToolButtonStyle()
         ui->toolFeedback->setIcon(QIcon(":/MainWindow/res/feedback_white.png"));
         ui->toolMenu->setIcon(QIcon(":/MainWindow/res/Menu_white.png"));
     }
+     ui->toolUpdate->setIcon(QIcon(":/frmmain/res/update.png"));
 
     QSettings settings("Pinsoft","SecondDownloader");
     bool maxed=settings.value("MainWindow/ToolbarMaxed",0).toBool();
@@ -189,6 +195,8 @@ void MainWindow::setClassToolButtonStyle()
         ui->toolDonate->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolSettings->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolFeedback->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->toolUpdate->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+
         ui->toolMain->setMinimumWidth(201);
         ui->toolMain->setFixedWidth(201);
 
@@ -204,12 +212,17 @@ void MainWindow::setClassToolButtonStyle()
         ui->toolFeedback->setMinimumWidth(201);
         ui->toolFeedback->setFixedWidth(201);
 
+        ui->toolUpdate->setMinimumWidth(201);
+        ui->toolUpdate->setFixedWidth(201);
+
     }else{
         ui->toolMain->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolDownload->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolDonate->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolSettings->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolFeedback->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        ui->toolUpdate->setToolButtonStyle(Qt::ToolButtonIconOnly);
+
         ui->toolMain->setMinimumWidth(35);
         ui->toolMain->setFixedWidth(35);
 
@@ -224,6 +237,9 @@ void MainWindow::setClassToolButtonStyle()
 
         ui->toolFeedback->setMinimumWidth(35);
         ui->toolFeedback->setFixedWidth(35);
+
+        ui->toolUpdate->setMinimumWidth(35);
+        ui->toolUpdate->setFixedWidth(35);
 
     }
     ui->toolMenu->setChecked(!maxed);
@@ -246,6 +262,8 @@ void MainWindow::on_toolMenu_clicked()
         ui->toolDonate->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolSettings->setToolButtonStyle(Qt::ToolButtonIconOnly);
         ui->toolFeedback->setToolButtonStyle(Qt::ToolButtonIconOnly);
+         ui->toolUpdate->setToolButtonStyle(Qt::ToolButtonIconOnly);
+
         ui->toolMain->setMinimumWidth(35);
         ui->toolMain->setFixedWidth(35);
 
@@ -261,6 +279,9 @@ void MainWindow::on_toolMenu_clicked()
         ui->toolFeedback->setMinimumWidth(35);
         ui->toolFeedback->setFixedWidth(35);
 
+        ui->toolUpdate->setMinimumWidth(35);
+        ui->toolUpdate->setFixedWidth(35);
+
 
 
     }else{
@@ -269,6 +290,8 @@ void MainWindow::on_toolMenu_clicked()
         ui->toolDonate->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolSettings->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         ui->toolFeedback->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        ui->toolUpdate->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+
         ui->toolMain->setMinimumWidth(201);
         ui->toolMain->setFixedWidth(201);
 
@@ -283,6 +306,9 @@ void MainWindow::on_toolMenu_clicked()
 
         ui->toolFeedback->setMinimumWidth(201);
         ui->toolFeedback->setFixedWidth(201);
+
+        ui->toolUpdate->setMinimumWidth(201);
+        ui->toolUpdate->setFixedWidth(201);
 
 
     }
@@ -486,5 +512,14 @@ void MainWindow::on_toolFeedback_clicked()
     ui->toolFeedback->setProperty("select","true");
     ui->stackedWidget->setCurrentIndex(4);
     setCommonStyle();
+}
+
+
+void MainWindow::on_toolUpdate_clicked()
+{
+
+
+    pro->start("Update.exe");
+
 }
 

@@ -20,6 +20,7 @@ using System.Resources;
 using System.Reflection;
 using System.Diagnostics;
 using Microsoft.Win32;
+using Microsoft.Win32.TaskScheduler;
 namespace setup
 {
     /// <summary>
@@ -47,9 +48,9 @@ namespace setup
 
 
         }
-        public async Task copy(string p,string t)
+        public async System.Threading.Tasks.Task copy(string p,string t)
         {
-            await Task.Delay(200);
+            await System.Threading.Tasks.Task.Delay(200);
             if (!Directory.Exists(t))
             {
                 Directory.CreateDirectory(t);
@@ -237,7 +238,7 @@ namespace setup
                 Directory.CreateDirectory(loc);
             }
             
-            Task task = new Task(() => {
+            System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(() => {
                 deleteForReInstall(loc);
                 exfile(loc);
                 Console.Write("释放完成\n");
@@ -255,9 +256,44 @@ namespace setup
             //启动任务,并安排到当前任务队列线程中执行任务
             task.Start();
             addExtensionMessage(loc);
-            //pb.Maximum=count("pack://cnt");
-            //ResourceManager rm = new ResourceManager();
-            //Task tasks = copy("pack://cnt", loc);
+            RegistryView useRegistryView = Environment.Is64BitOperatingSystem ?
+            RegistryView.Registry64 : RegistryView.Registry32;
+            using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, useRegistryView))
+            using (RegistryKey subKey = baseKey.CreateSubKey("SOFTWARE\\Pinsoft\\SecondDownloader", true))
+            {
+                subKey.SetValue("Version", "v." + "1.0.0.0");
+            }
+
+            TaskService ts = new TaskService();
+            TaskDefinition td = ts.NewTask();
+
+            // 设置任务的基本信息  
+            td.RegistrationInfo.Description = "Update SecondDownloader";
+
+            // 创建一个每小时的触发器  
+            var trigger = new TimeTrigger
+            {
+                StartBoundary = DateTime.Now.AddHours(1).ToUniversalTime(), // 调整为下一个小时的开始  
+                Repetition = new RepetitionPattern(TimeSpan.FromHours(1), TimeSpan.Zero)
+            };
+
+            td.Triggers.Add(trigger);
+
+            // 创建一个执行操作  
+            td.Actions.Add(new ExecAction(Path.Combine (loc,"Update.exe"),"1", null));
+
+            // 注册任务  
+            try
+            {
+                ts.RootFolder.RegisterTaskDefinition("Update SecondDownloader", td, TaskCreation.CreateOrUpdate, null, null, TaskLogonType.InteractiveToken);
+                Console.WriteLine("Task created successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error creating task: " + ex.Message);
+            }
+
+            ts.Dispose();
 
         }
     }

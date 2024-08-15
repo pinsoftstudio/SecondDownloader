@@ -27,7 +27,7 @@ DownloadMessageWindow::DownloadMessageWindow(QString url, QWidget *lastWindow, b
     }
 
     URL=url;
-
+    QMessageBox::information(this,"",URL);
     QSettings set("Pinsoft","SecondDownloader");
     bool useGithubProxy=set.value("Download/EnableGithubProxy",1).toBool();
     if(useGithubProxy){
