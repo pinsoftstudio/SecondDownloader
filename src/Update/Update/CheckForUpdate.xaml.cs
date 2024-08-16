@@ -204,7 +204,8 @@ namespace Update
             }
             if (latestSingleVersion[0] == currentSingleVersion[0] &&
                 latestSingleVersion[1] == currentSingleVersion[1] &&
-                latestSingleVersion[2] == currentSingleVersion[2])
+                latestSingleVersion[2] == currentSingleVersion[2] &&
+                latestSingleVersion[3] == currentSingleVersion[3])
             {
                 if (Silent)
                 {
