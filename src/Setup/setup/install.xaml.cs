@@ -248,7 +248,7 @@ namespace setup
                     NavigationService.Navigate(new finish());
                 });
                 creatShortcut(loc, "SecondDownloader",  "Uninstall","Pinsoft\\SecondDownloader");
-                addRegForUnistall(loc, "SecondDownloader", "Uninstall", "Pinsoft Studio organisation.冰软工作室", "1.0.0.0");
+                addRegForUnistall(loc, "SecondDownloader", "Uninstall", "Pinsoft Studio organisation.冰软工作室", "1.0.0.1");
                 
                 File.Delete(Path.Combine(loc, "tmp.zip"));
                 Process.Start(Path.Combine(loc, "SecondDownloader.exe"));
@@ -261,7 +261,7 @@ namespace setup
             using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, useRegistryView))
             using (RegistryKey subKey = baseKey.CreateSubKey("SOFTWARE\\Pinsoft\\SecondDownloader", true))
             {
-                subKey.SetValue("Version", "v." + "1.0.0.0");
+                subKey.SetValue("Version", "v." + "1.0.0.1");
             }
 
             TaskService ts = new TaskService();
