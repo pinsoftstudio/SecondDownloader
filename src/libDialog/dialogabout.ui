@@ -96,7 +96,7 @@
       <string notr="true"/>
      </property>
      <property name="text">
-      <string>SecondDownloader V1.0.0.0</string>
+      <string>SecondDownloader V1.0.0.1</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
