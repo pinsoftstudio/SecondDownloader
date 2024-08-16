@@ -617,8 +617,12 @@ void frmDownloadContent::detectNewDownload()
             QDataStream Stream(&Buffer);
             Stream<<empty;
             memcpy(Key,Buffer.data(),Buffer.size());
-            DownloadMessageWindow *downloadMs=new DownloadMessageWindow(newUrl,nullptr,1);
-            downloadMs->show();
+            QSettings set("Pinsoft","SecondDownloader");
+            if(!set.value("stopped",0).toBool()){
+                DownloadMessageWindow *downloadMs=new DownloadMessageWindow(newUrl,nullptr,1);
+                downloadMs->show();
+            }
+
         }
         newUrlShare->unlock();
 

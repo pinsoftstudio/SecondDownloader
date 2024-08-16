@@ -81,9 +81,7 @@ QPushButton[highlight="true"]:pressed{
 /* QPushButton:focus{
 	border:3px solid rgb(35,35,35);
 } */
-QPushButton{
-    
-}
+
 /*QLineEdit*/
 QLineEdit {  
     border: 1px solid rgb(229,229,229); 
@@ -398,17 +396,6 @@ QScrollBar::sub-line:horizontal {
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {  
     background: none;  
 }
-
-
-
-
-
-
-
-
-
-
-
 
 QScrollBar:vertical:hover {  
     border: none; /* 移除边框 */  

@@ -4,6 +4,7 @@
 #include <QTranslator>
 #include <QFile>
 #include "header/Style.h"
+#include "header/frmextention.h"
 #include <QMessageBox>
 #include <downloadwindow.h>
 #include <QUrl>
@@ -376,6 +377,11 @@ int main(int argc, char *argv[])
             return 0;
         }
 
+    }
+    if(!set.value("Runned",0).toBool()){
+        set.setValue("Runned",1);
+        frmExtention *fe=new frmExtention;
+        fe->show();
     }
     return a.exec();
 }

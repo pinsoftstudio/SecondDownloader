@@ -24,7 +24,17 @@
         <translation>Sponsor</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="394"/>
+        <location filename="../ui/mainwindow.ui" line="407"/>
+        <source>  检查更新</source>
+        <translation>Update</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="455"/>
+        <source>  反馈</source>
+        <translation>Feedback</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="503"/>
         <source>  设置</source>
         <translation>Settings</translation>
     </message>
@@ -110,47 +120,47 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../cpp/main.cpp" line="49"/>
+        <location filename="../cpp/main.cpp" line="50"/>
         <source>打开主界面(&amp;O)</source>
         <translation>Home(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="50"/>
+        <location filename="../cpp/main.cpp" line="51"/>
         <source>新建下载任务(&amp;N)</source>
         <translation>New Download Task(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="51"/>
+        <location filename="../cpp/main.cpp" line="52"/>
         <source>管理下载任务(&amp;M)</source>
         <translation>Manage Download Task(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="52"/>
+        <location filename="../cpp/main.cpp" line="53"/>
         <source>打开设置(&amp;S)</source>
         <translation>Settings(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="53"/>
+        <location filename="../cpp/main.cpp" line="54"/>
         <source>捐赠(&amp;D)</source>
         <translation>Sponsor(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="54"/>
+        <location filename="../cpp/main.cpp" line="55"/>
         <source>关于SecondDownloader(&amp;A)</source>
         <translation>About SecondDownloader(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="55"/>
+        <location filename="../cpp/main.cpp" line="56"/>
         <source>在Github上的仓库(&amp;R)</source>
         <translation>Github Respository(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="56"/>
+        <location filename="../cpp/main.cpp" line="57"/>
         <source>检查更新(&amp;U)</source>
         <translation>Update(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../cpp/main.cpp" line="57"/>
+        <location filename="../cpp/main.cpp" line="58"/>
         <source>退出本软件(&amp;E)</source>
         <translation>Exit(&amp;E)</translation>
     </message>
@@ -222,18 +232,18 @@
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="195"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="257"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="259"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="342"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="579"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="258"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="260"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="345"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="583"/>
         <source>下载成功</source>
         <translation>Downloaded</translation>
     </message>
     <message>
         <location filename="../ui/frmdownloadcontent.ui" line="255"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="255"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="340"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="577"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="256"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="343"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="581"/>
         <source>下载失败</source>
         <translation>Failed</translation>
     </message>
@@ -303,53 +313,130 @@
         <translation>Properties(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="159"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="169"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="526"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="160"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="170"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="530"/>
         <source>错误</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="159"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="526"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="160"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="530"/>
         <source>无法打开文件！</source>
         <translation>Failed to open the file!</translation>
     </message>
     <message>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="159"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="169"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="526"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="160"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="170"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="530"/>
         <source>确定</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="169"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="170"/>
         <source>无法打开文件夹！</source>
         <translation>Failed to open the folder!</translation>
     </message>
     <message>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="178"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="179"/>
         <source>问题</source>
         <translation>Question</translation>
     </message>
     <message>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="179"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="180"/>
         <source>需要原文件需要一同删除吗？</source>
         <translation>Should the original file be deleted as well?</translation>
     </message>
     <message>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="251"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="336"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="573"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="252"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="339"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="577"/>
         <source>准备下载</source>
         <translation>Preparing to download...</translation>
     </message>
     <message>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="253"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="338"/>
-        <location filename="../cpp/frmdownloadcontent.cpp" line="575"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="254"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="341"/>
+        <location filename="../cpp/frmdownloadcontent.cpp" line="579"/>
         <source>正在下载</source>
         <translation>Downloading...</translation>
+    </message>
+</context>
+<context>
+    <name>frmExtention</name>
+    <message>
+        <location filename="../ui/frmextention.ui" line="14"/>
+        <location filename="../ui/frmextention.ui" line="72"/>
+        <source>SecondDownloader 浏览器插件安装指南</source>
+        <translation>Installation Guide for SDer Browser Extension</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmextention.ui" line="105"/>
+        <source>SeocndDownloader 浏览器插件是为了使SecondDownloader能够接管您的浏览器的下载内容，从而获得更好的使用体验。下面是配置浏览器插件的演示视频：</source>
+        <translation>The SeocndDownloader browser extension is designed to allow SecondDownloader to take over the download content of your browser, providing a better user experience. Below is a demonstration video on how to configure the browser extension:</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmextention.ui" line="132"/>
+        <source>Microsoft Edge 浏览器演示视频</source>
+        <translation>Demonstration Video for Microsoft Edge Browser</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmextention.ui" line="151"/>
+        <source>Google Chrome 浏览器演示视频</source>
+        <translation>Demonstration Video for Google Chrome Browser</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmextention.ui" line="174"/>
+        <source>360安全浏览器 演示视频</source>
+        <translation>Demonstration Video for 360 Safe Browser</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmextention.ui" line="193"/>
+        <source>火狐浏览器 演示视频</source>
+        <translation>Demonstration Video for Firefox Browser</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmextention.ui" line="216"/>
+        <source>获取 Micorosoft Edge拓展</source>
+        <translation>Obtaining Microsoft Edge Extensions</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmextention.ui" line="235"/>
+        <source>下载 crx文件</source>
+        <translation>Download crx File</translation>
+    </message>
+</context>
+<context>
+    <name>frmFeedback</name>
+    <message>
+        <location filename="../ui/frmfeedback.ui" line="14"/>
+        <source>Form</source>
+        <translation>Feedback</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmfeedback.ui" line="42"/>
+        <source>反馈</source>
+        <translation>Feedback</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmfeedback.ui" line="59"/>
+        <source>方式一：在Github的issue里反馈（推荐，容易得到重视）</source>
+        <translation>Method 1: Feedback via Github issues (recommended)</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmfeedback.ui" line="103"/>
+        <source>如果你有github账号，您对我们产品的任何建议都可以点击下方按钮在issue里反馈。</source>
+        <translation>If you have a Github account, you can click the button below to provide any feedback or suggestions for our product within an issue.</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmfeedback.ui" line="212"/>
+        <source>去issue里反馈</source>
+        <translation>Go to the issues to provide feedback</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmfeedback.ui" line="245"/>
+        <source>方式二：在Microsoft Form里反馈（也会得到重视）</source>
+        <translation>Method 2: Provide feedback via Microsoft Form</translation>
     </message>
 </context>
 <context>
@@ -605,38 +692,38 @@
     <message>
         <location filename="../cpp/frmsettings.cpp" line="147"/>
         <location filename="../cpp/frmsettings.cpp" line="158"/>
-        <location filename="../cpp/frmsettings.cpp" line="440"/>
+        <location filename="../cpp/frmsettings.cpp" line="450"/>
         <source>自定义</source>
         <translation>Customize</translation>
     </message>
     <message>
-        <location filename="../cpp/frmsettings.cpp" line="254"/>
-        <location filename="../cpp/frmsettings.cpp" line="269"/>
-        <location filename="../cpp/frmsettings.cpp" line="285"/>
-        <location filename="../cpp/frmsettings.cpp" line="303"/>
-        <location filename="../cpp/frmsettings.cpp" line="320"/>
-        <location filename="../cpp/frmsettings.cpp" line="334"/>
-        <location filename="../cpp/frmsettings.cpp" line="348"/>
+        <location filename="../cpp/frmsettings.cpp" line="264"/>
+        <location filename="../cpp/frmsettings.cpp" line="279"/>
+        <location filename="../cpp/frmsettings.cpp" line="295"/>
+        <location filename="../cpp/frmsettings.cpp" line="313"/>
+        <location filename="../cpp/frmsettings.cpp" line="330"/>
+        <location filename="../cpp/frmsettings.cpp" line="344"/>
+        <location filename="../cpp/frmsettings.cpp" line="358"/>
         <source>提示</source>
         <translation>Information</translation>
     </message>
     <message>
-        <location filename="../cpp/frmsettings.cpp" line="255"/>
-        <location filename="../cpp/frmsettings.cpp" line="270"/>
-        <location filename="../cpp/frmsettings.cpp" line="286"/>
+        <location filename="../cpp/frmsettings.cpp" line="265"/>
+        <location filename="../cpp/frmsettings.cpp" line="280"/>
+        <location filename="../cpp/frmsettings.cpp" line="296"/>
         <source>新主题将在重启后生效！</source>
         <translation>The new theme will come into effect after restarting the software!</translation>
     </message>
     <message>
-        <location filename="../cpp/frmsettings.cpp" line="304"/>
-        <location filename="../cpp/frmsettings.cpp" line="321"/>
-        <location filename="../cpp/frmsettings.cpp" line="335"/>
-        <location filename="../cpp/frmsettings.cpp" line="349"/>
+        <location filename="../cpp/frmsettings.cpp" line="314"/>
+        <location filename="../cpp/frmsettings.cpp" line="331"/>
+        <location filename="../cpp/frmsettings.cpp" line="345"/>
+        <location filename="../cpp/frmsettings.cpp" line="359"/>
         <source>新语言将在重启后生效！</source>
         <translation>The new language will come into effect after restarting the software!</translation>
     </message>
     <message>
-        <location filename="../cpp/frmsettings.cpp" line="442"/>
+        <location filename="../cpp/frmsettings.cpp" line="452"/>
         <source>Wav文件(*.wav)</source>
         <translation>Wav FIles(*.wav)</translation>
     </message>

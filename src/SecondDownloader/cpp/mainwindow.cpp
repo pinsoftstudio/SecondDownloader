@@ -329,6 +329,7 @@ void MainWindow::on_toolMain_clicked()
     ui->toolFeedback->setProperty("select","false");
     ui->stackedWidget->setCurrentIndex(0);
     setCommonStyle();
+    mainPage->refresh();
 
 
 }
@@ -369,6 +370,7 @@ void MainWindow::on_toolSettings_clicked()
     ui->toolSettings->setProperty("select","true");
     ui->toolFeedback->setProperty("select","false");
     ui->stackedWidget->setCurrentIndex(3);
+    set->refresh();
     setCommonStyle();
 }
 

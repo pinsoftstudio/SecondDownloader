@@ -56,4 +56,21 @@ win32:LIBS += -luxtheme
 RESOURCES += \
     res.qrc
 
-TRANSLATIONS +=
+
+QMAKE_TARGET_COMPANY = "Pinsoft Studio"
+
+# 产品名称
+QMAKE_TARGET_PRODUCT = "SecondDownloader"
+
+# 文件说明
+QMAKE_TARGET_DESCRIPTION = "SecondDownloader"
+
+# # 版权信息
+QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2024 Pinsoft Studio,org. All rights reserved."
+
+# 中文（简体）
+RC_LANG = 0x0004
+
+VERSION=1.0.0.0
+
+TARGET=libDialog

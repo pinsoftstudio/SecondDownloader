@@ -14,6 +14,9 @@ class frmSettings : public QWidget
 
 public:
     explicit frmSettings(QWidget *parent = nullptr);
+    inline void refresh(){
+        iniSettings();
+    }
     ~frmSettings();
 private slots:
     void on_chkRunHide_clicked(bool checked);

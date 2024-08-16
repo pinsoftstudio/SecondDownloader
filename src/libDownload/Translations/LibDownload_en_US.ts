@@ -122,17 +122,17 @@
         <translation>Fetching file size...</translation>
     </message>
     <message>
-        <location filename="../include/downloadmessagewindow.cpp" line="144"/>
+        <location filename="../include/downloadmessagewindow.cpp" line="198"/>
         <source>文件大小： %1 MB</source>
         <translation>File size: %1 MB</translation>
     </message>
     <message>
-        <location filename="../include/downloadmessagewindow.cpp" line="147"/>
+        <location filename="../include/downloadmessagewindow.cpp" line="201"/>
         <source>文件大小： %1 KB</source>
         <translation>File size: %1 KB</translation>
     </message>
     <message>
-        <location filename="../include/downloadmessagewindow.cpp" line="150"/>
+        <location filename="../include/downloadmessagewindow.cpp" line="204"/>
         <source>文件大小： %1 B</source>
         <translation>File size： %1 B</translation>
     </message>
@@ -214,39 +214,39 @@
         <translation>Merging files...</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="495"/>
-        <location filename="../include/downloadwindow.cpp" line="538"/>
+        <location filename="../include/downloadwindow.cpp" line="497"/>
+        <location filename="../include/downloadwindow.cpp" line="540"/>
         <source>正在下载...( %1 MB/s)</source>
         <translation>Downloading...( %1 MB/s)</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="499"/>
-        <location filename="../include/downloadwindow.cpp" line="542"/>
+        <location filename="../include/downloadwindow.cpp" line="501"/>
+        <location filename="../include/downloadwindow.cpp" line="544"/>
         <source>正在下载...( %1 KB/s)</source>
         <translation>Downloading...( %1 KB/s)</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="503"/>
-        <location filename="../include/downloadwindow.cpp" line="546"/>
+        <location filename="../include/downloadwindow.cpp" line="505"/>
+        <location filename="../include/downloadwindow.cpp" line="548"/>
         <source>正在下载...( %1 B/s)</source>
         <translation>Downloading...( %1 B/s)</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="516"/>
-        <location filename="../include/downloadwindow.cpp" line="517"/>
-        <location filename="../include/downloadwindow.cpp" line="559"/>
-        <location filename="../include/downloadwindow.cpp" line="560"/>
+        <location filename="../include/downloadwindow.cpp" line="518"/>
+        <location filename="../include/downloadwindow.cpp" line="519"/>
+        <location filename="../include/downloadwindow.cpp" line="561"/>
+        <location filename="../include/downloadwindow.cpp" line="562"/>
         <source>下载状态：%1 %2/%3 %4</source>
         <translation>State：%1 %2/%3 %4</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="581"/>
+        <location filename="../include/downloadwindow.cpp" line="583"/>
         <source>合并失败！</source>
         <translation>Merge Failed!</translation>
     </message>
     <message>
-        <location filename="../include/downloadwindow.cpp" line="591"/>
-        <location filename="../include/downloadwindow.cpp" line="592"/>
+        <location filename="../include/downloadwindow.cpp" line="593"/>
+        <location filename="../include/downloadwindow.cpp" line="594"/>
         <source>合并成功！</source>
         <translation>Merge Suceed!</translation>
     </message>

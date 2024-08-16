@@ -111,7 +111,7 @@ void frmSettings::iniSettings()
     }
 
     //接管
-    bool manageAll=set.value("Common/Manage/ManageAll",1).toBool();
+    bool manageAll=(!set.value("stopped",0).toBool());
     ui->rdbManageAll->setChecked(manageAll);
     ui->rdbManageNone->setChecked(!manageAll);
 
@@ -366,7 +366,7 @@ void frmSettings::on_rdbLanEn_clicked(bool checked)
 void frmSettings::on_rdbManageAll_clicked(bool checked)
 {
     QSettings set("Pinsoft","SecondDownloader");
-    set.setValue("Common/Manage/ManageAll",1);
+    set.setValue("stopped",0);
 
 }
 
@@ -374,7 +374,7 @@ void frmSettings::on_rdbManageAll_clicked(bool checked)
 void frmSettings::on_rdbManageNone_clicked(bool checked)
 {
     QSettings set("Pinsoft","SecondDownloader");
-    set.setValue("Common/Manage/ManageAll",0);
+    set.setValue("stopped",1);
 }
 
 

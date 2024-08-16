@@ -102,6 +102,7 @@ void frmMainPage::on_pushButton_clicked(bool checked)
         ui->labtxt->setText("SecondDownloader 正在接管您电脑的下载任务");
         ui->labpic->setPixmap(QPixmap(":/frmmain/res/started.png"));
         settings.setValue("stopped",0);
+
         //其他操作...
     }else {
         ui->pushButton->setText("继续接管(建议)");
@@ -170,4 +171,6 @@ void frmMainPage::on_toolAbout_clicked()
     about->exec();
     delete about;
 }
+
+
 

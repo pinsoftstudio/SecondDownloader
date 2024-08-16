@@ -17,6 +17,9 @@ public:
     explicit frmMainPage(QWidget *parent = nullptr);
     ~frmMainPage();
     void setDark(bool isDark);
+    inline void refresh(){
+        iniControl();
+    }
 private:
     Ui::frmMainPage *ui;
     bool Dark=false;
@@ -33,8 +36,6 @@ signals:
 private slots:
     void on_pushButton_clicked(bool checked);
     void on_toolNew_clicked();
-
-
     void on_toolAll_clicked();
     void on_toolSuc_clicked();
     void on_toolDownloading_clicked();
