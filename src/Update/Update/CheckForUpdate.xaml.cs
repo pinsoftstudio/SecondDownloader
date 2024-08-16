@@ -49,7 +49,7 @@ namespace Update
                 if (regKey != null)
                 {
 
-                    currentVersion = regKey.GetValue("Version", "v.1.0.0.1") as string;
+                    currentVersion = regKey.GetValue("Version", "v.1.0.0.0") as string;
                 }
             }
             try
@@ -202,6 +202,7 @@ namespace Update
                 latestSingleVersion[2] = patch;
                 latestSingleVersion[3] = date;
             }
+            //MessageBox.Show(currentVersion.ToString());
             if (latestSingleVersion[0] == currentSingleVersion[0] &&
                 latestSingleVersion[1] == currentSingleVersion[1] &&
                 latestSingleVersion[2] == currentSingleVersion[2] &&

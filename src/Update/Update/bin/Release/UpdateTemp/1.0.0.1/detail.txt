@@ -3,16 +3,16 @@ addchangenumbers = 3
 delnumbers = 0
 plugin = false
 qt = false
-tr = true
-messagenum=2
+tr = false
+messagenum=1
 
 [addchange]
 file0 = SecondDownloader.exe
 file1 = libDownload.dll 
-file2 = libDialog.dll 
+file2 = libDialog.dll
 
 [delete]
-file0 = a.exe
+
 
 [proxy]
 url = https://mirror.ghproxy.com/
@@ -24,5 +24,4 @@ patch = 0
 date = 0
 
 [message]
-msg0 = 修复已知BUG
-msg1 = 该版本其实是1.0.0.0，作为内测人员是1.0.0.1
+msg0 = 删除多余工程调试代码
